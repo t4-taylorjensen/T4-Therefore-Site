@@ -37,15 +37,9 @@
   width: 100%;
 }
 
+/* Override default ink-subtle from .text-eyebrow */
 .faq-eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);      /* 11px */
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: var(--tracking-wider);  /* 1px */
-  text-transform: uppercase;
   color: var(--color-ink);
-  margin: 0;
   white-space: nowrap;
 }
 

@@ -19,7 +19,7 @@ const MENU = {
 function IconChevron() {
   return (
     <svg width="6" height="6" viewBox="0 0 6 6" fill="none" aria-hidden="true">
-      <path d="M1 2L3 4L5 2" stroke="rgba(18,18,18,0.7)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M1 2L3 4L5 2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

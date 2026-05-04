@@ -4,16 +4,6 @@
    utility classes come from global.css.
 ───────────────────────────────────────── */
 
-/* Component-level shadow token */
-.hs-section {
-  --blue-shadow:
-    0px 1px 1px rgba(85, 136, 229, 0.10),
-    0px 2px 2px rgba(85, 136, 229, 0.15),
-    0px 5px 3px rgba(85, 136, 229, 0.05),
-    0px 10px 4px rgba(85, 136, 229, 0.01),
-    0px 15px 4px rgba(85, 136, 229, 0.00);
-}
-
 /* ── Section ── */
 
 .hs-section {
@@ -44,19 +34,12 @@
   margin-bottom: 150px;
 }
 
+/* Override default tracking-wider from .text-eyebrow */
 .hs-eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);           /* 11px */
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: var(--tracking-mono);  /* 0.2em */
-  text-transform: uppercase;
-  color: var(--color-ink-subtle);        /* rgba(18,18,18,0.5) */
-  margin: 0;
+  letter-spacing: var(--tracking-mono);
 }
 
-/* ── Scroll-reveal headline ── */
-
+/* Layout-only overrides — reveal mechanics live in ScrollRevealHeadline.css */
 .hs-headline {
   font-family: var(--font-primary);
   font-size: var(--text-xl);             /* clamp(40px,5vw,55px) */
@@ -64,34 +47,6 @@
   line-height: var(--leading-tight);     /* 1.15 */
   letter-spacing: var(--tracking-tight); /* -0.02em */
   max-width: 1000px;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 0.28em;
-  align-items: baseline;
-}
-
-.hs-word-wrap {
-  position: relative;
-  display: inline-block;
-}
-
-.hs-word-ghost {
-  display: block;
-  color: #8a8a8a;
-  opacity: 0.35;
-  user-select: none;
-  pointer-events: none;
-  transition: opacity 700ms var(--ease-out-expo);
-}
-
-.hs-word-reveal {
-  position: absolute;
-  inset: 0;
-  color: var(--color-ink);
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity 700ms var(--ease-out-expo);
 }
 
 /* ── Split layout ── */
@@ -155,7 +110,7 @@
 .hs-card:hover,
 .hs-card--email {
   border-color: var(--color-accent);
-  box-shadow: var(--blue-shadow);
+  box-shadow: var(--shadow-blue-soft);
 }
 
 .hs-card-body {
@@ -268,7 +223,7 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   flex-shrink: 0;
-  box-shadow: var(--blue-shadow);
+  box-shadow: var(--shadow-blue-soft);
   transition: background var(--duration-fast) ease;
 }
 
@@ -306,7 +261,7 @@
   gap: var(--space-5);                   /* 20px */
   height: 58px;
   padding: 12px 12px 12px 20px;
-  background: #f8f8f8;
+  background: var(--color-surface-50);
   border: 1px solid var(--color-border);
   border-radius: 7px;
   cursor: text;
@@ -319,7 +274,7 @@
 .hs-email-form--active,
 .hs-email-form--success {
   border-color: var(--color-accent);
-  box-shadow: var(--blue-shadow);
+  box-shadow: var(--shadow-blue-soft);
 }
 
 .hs-email-form--success {
@@ -402,7 +357,7 @@
 }
 
 .hs-card-meta-dark  { color: var(--color-ink); }
-.hs-card-meta-muted { color: #888888; }
+.hs-card-meta-muted { color: var(--color-gray-300); }
 
 /* ── Mobile ── */
 

@@ -21,7 +21,7 @@
   align-items: center;
   width: 100%;
   max-width: 800px;
-  background: #F5F6F1;
+  background: var(--color-surface-warm);
   border-radius: 999px;
   padding: 8px 8px 8px 8px;
   box-shadow:
@@ -130,10 +130,11 @@
   flex-shrink: 0;
   margin-left: 4px;
   position: relative;
+  color: var(--color-white);
 
   /* blind-wipe: two-stop gradient slides left→right on hover */
-  background: #4297FF;
-  background-image: linear-gradient(to right, #4297FF 50%, #5aa5ff 50%);
+  background: var(--color-accent);
+  background-image: linear-gradient(to right, var(--color-accent) 50%, var(--color-accent-hover) 50%);
   background-size: 200% 100%;
   background-position: left center;
   transition:
@@ -177,7 +178,7 @@
   top: calc(100% + 10px);
   left: 0;
   z-index: 200;
-  background: #F5F6F1;
+  background: var(--color-surface-warm);
   border-radius: 18px;
   box-shadow:
     0 2px 8px rgba(0,0,0,0.05),
@@ -382,12 +383,12 @@
 .bw-cal__cell--start,
 .bw-cal__cell--end {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .bw-cal__cell--start:hover,
 .bw-cal__cell--end:hover {
-  background: #3486ee;
+  background: var(--color-accent-active);
 }
 
 .bw-cal__cell--range {
@@ -565,7 +566,7 @@
 
   .bw-submit:hover {
     transform: none;
-    background: #5aa5ff;
+    background: var(--color-accent-hover);
   }
 
   .bw-panel {
