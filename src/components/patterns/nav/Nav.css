@@ -53,13 +53,8 @@
   transition: color var(--transition-base) var(--ease-out-expo);
 }
 
-.nav-link:hover {
-  color: #121212;
-}
-
-.nav-more {
-  padding: 6px 8px;
-}
+.nav-link:hover { color: #121212; }
+.nav-more       { padding: 6px 8px; }
 
 .nav-cta {
   font-family: var(--font-mono);
@@ -80,14 +75,88 @@
   white-space: nowrap;
   transition: background var(--transition-base) var(--ease-out-expo);
 }
+.nav-cta:hover { background: #e6e6e6; }
 
-.nav-cta:hover {
-  background: #e6e6e6;
+.nav-burger {
+  display: none;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.burger-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 20px;
+}
+
+.burger-line {
+  display: block;
+  height: 1.5px;
+  background: #121212;
+  border-radius: 2px;
+  transform-origin: center;
+  transition:
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   200ms ease,
+    width     300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.burger-line--top    { width: 20px; }
+.burger-line--bottom { width: 14px; }
+
+.burger-icon.is-open .burger-line--top {
+  width: 20px;
+  transform: translateY(3.75px) rotate(45deg);
+}
+.burger-icon.is-open .burger-line--bottom {
+  width: 20px;
+  transform: translateY(-3.75px) rotate(-45deg);
 }
 
 
 /* ─────────────────────────────────────────
-   OVERLAY
+   OVERLAY — KEYFRAMES
+───────────────────────────────────────── */
+
+/* Open: blue floods down from top, retreats back up from bottom */
+@keyframes curtain-open {
+  0%   { transform: scaleY(0); transform-origin: top;    }
+  42%  { transform: scaleY(1); transform-origin: top;    }
+  48%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* Close: blue floods up from bottom, retreats back down from top */
+@keyframes curtain-close {
+  0%   { transform: scaleY(0); transform-origin: bottom; }
+  42%  { transform: scaleY(1); transform-origin: bottom; }
+  48%  { transform: scaleY(1); transform-origin: top;    }
+  100% { transform: scaleY(0); transform-origin: top;    }
+}
+
+/* Display links rise up through overflow clip */
+@keyframes link-rise {
+  from { transform: translateY(112%); }
+  to   { transform: translateY(0);    }
+}
+
+/* Softer fade-up for secondary content */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+
+/* ─────────────────────────────────────────
+   OVERLAY — SHELL
 ───────────────────────────────────────── */
 .nav-overlay {
   position: fixed;
@@ -97,22 +166,62 @@
   flex-direction: column;
   background: #ffffff;
   pointer-events: none;
-  opacity: 0;
-  transform: translateY(-12px);
-  transition:
-    opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 580ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* Open — wipe down from top */
 .nav-overlay.is-open {
-  opacity: 1;
-  transform: translateY(0);
+  clip-path: inset(0 0 0% 0);
   pointer-events: all;
+  transition: clip-path 580ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* ── Mirror nav bar ── */
-.nav-overlay-bar {
+/* Closing — wait for curtain, then wipe back up */
+.nav-overlay.is-closing {
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+  transition: clip-path 380ms 340ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Blue curtain — always positioned above white bg, below content */
+.nav-overlay-curtain {
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  z-index: 10;
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+
+.nav-overlay.is-open .nav-overlay-curtain {
+  animation: curtain-open 720ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.nav-overlay.is-closing .nav-overlay-curtain {
+  animation: curtain-close 600ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* Bar + body float above curtain */
+.nav-overlay-bar,
+.nav-overlay-body {
   position: relative;
+  z-index: 20;
+}
+
+/* Fade content out instantly on close so curtain is clean */
+.nav-overlay.is-closing .nav-overlay-bar,
+.nav-overlay.is-closing .nav-overlay-body {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+
+/* ─────────────────────────────────────────
+   OVERLAY — BAR
+───────────────────────────────────────── */
+.nav-overlay-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -125,39 +234,63 @@
   flex-shrink: 0;
 }
 
+.nav-overlay.is-open .nav-overlay-bar {
+  animation: fade-up 380ms 420ms var(--ease-out-expo) both;
+}
+
 .nav-overlay-close {
   width: 34px;
   height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #121212;
   background: none;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background var(--transition-fast) var(--ease-out-expo);
 }
 
-.nav-overlay-close:hover {
-  background: #f2f2f2;
+/* On hover, one arm shortens toward the centre */
+.close-line {
+  transition: stroke-dasharray 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              stroke-dashoffset 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  stroke-dasharray: 23;
+  stroke-dashoffset: 0;
 }
 
-/* ── Body ── */
+.nav-overlay-close:hover .close-line--a {
+  stroke-dasharray: 16 23;
+  stroke-dashoffset: -3.5;
+}
+
+.nav-overlay-close:hover .close-line--b {
+  stroke-dasharray: 16 23;
+  stroke-dashoffset: -3.5;
+}
+
+
+/* ─────────────────────────────────────────
+   OVERLAY — BODY
+───────────────────────────────────────── */
 .nav-overlay-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 60px 30px;
+  padding: 60px 60px 60px;
   overflow-y: auto;
 }
 
-/* ── Top section ── */
-.nav-overlay-top {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 120px;
+/* Shared eyebrow label — reduced 2px from 14 → 12 */
+.nav-overlay-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1em;
+  letter-spacing: 0.035714em;
+  text-transform: uppercase;
+  color: rgba(18, 18, 18, 0.7);
 }
 
 .nav-overlay-group {
@@ -166,57 +299,195 @@
   gap: 40px;
 }
 
-.nav-overlay-label {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1em;
-  letter-spacing: 0.035714em;
-  text-transform: uppercase;
-  color: #888888;
-}
 
-.nav-overlay-cols {
+/* ─────────────────────────────────────────
+   TOP — main links + discover
+───────────────────────────────────────── */
+.nav-overlay-top {
   display: flex;
   flex-direction: row;
-  gap: 120px;
+  align-items: flex-end;
+  gap: clamp(60px, 15vw, 220px);
 }
 
-.nav-overlay-col {
+
+/* ── Main display links (left) ── */
+.nav-overlay-main-links {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 4px;
+}
+
+.nav-overlay-main-link-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Outer clip — hides the rise entrance animation */
+.nav-overlay-main-link-reveal {
+  /* clip-path used here too for consistency — GPU composited */
+  clip-path: inset(0 -10px -10px -10px);
+  padding-bottom: 8px;
+  margin-bottom: -8px;
+}
+
+/* Inner rise element — animates up on open */
+.nav-overlay-main-link-rise {
+  transform: translateY(112%);
+}
+
+.nav-overlay.is-open .nav-overlay-main-link-rise {
+  animation: link-rise 680ms var(--ease-out-expo) both;
+}
+
+/* ─── DisplayLink — custom flip for large display type ───────
+   Uses clip-path (GPU-composited) instead of overflow:hidden.
+   Two spans stack vertically; on hover top exits up, bottom enters.
+   A third sr-only span holds the accessible text.
+─────────────────────────────────────────────────────────────── */
+.nav-display-link {
+  display: block;
+  position: relative;
+  /* clip-path is GPU-composited — no subpixel bleed at large sizes */
+  clip-path: inset(0 0 0 0);
+  text-decoration: none;
+  cursor: pointer;
+  /* Smooth opacity for active/dimmed states */
+  transition: opacity 250ms var(--ease-out-expo);
+}
+
+.nav-display-link.is-dimmed {
+  opacity: 0.2;
+}
+
+.nav-display-link.is-dimmed:hover {
+  opacity: 1;
+}
+
+.nav-display-link-a,
+.nav-display-link-b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(52px, 6.8vw, 98px);
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: #121212;
+  /* Each span on its own GPU layer — prevents paint artifacts */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Bottom copy sits directly below, hidden by clip-path */
+.nav-display-link-b {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateZ(0) translateY(105%);
+}
+
+/* Hover — top exits upward, bottom enters from below */
+.nav-display-link:hover .nav-display-link-a {
+  transform: translateZ(0) translateY(-105%);
+}
+.nav-display-link:hover .nav-display-link-b {
+  transform: translateZ(0) translateY(0);
+}
+
+/* Screen-reader text */
+.nav-display-link-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+.nav-overlay-main-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+/* Arrow paths animate independently for a draw-retrace effect */
+.nav-overlay-main-arrow svg path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-overlay-main-link-row:hover .nav-overlay-main-arrow svg path {
+  stroke-dashoffset: -8;
+}
+
+
+/* ── Discover section (right) ── */
+.nav-overlay-discover {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  opacity: 0;
+}
+
+.nav-overlay.is-open .nav-overlay-discover {
+  animation: fade-up 500ms 500ms var(--ease-out-expo) both;
+}
+
+.nav-overlay-discover-cols {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.nav-overlay-discover-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
-  min-width: 240px;
+  min-width: 160px;
 }
 
-.nav-overlay-item {
+.nav-overlay-discover-item {
   font-family: var(--font-primary);
-  font-size: 32px;
+  font-size: clamp(20px, 2.1vw, 30px);
   font-weight: 400;
   line-height: 1.4em;
   color: #121212;
   text-decoration: none;
-  transition: opacity var(--transition-base) var(--ease-out-expo);
 }
 
-.nav-overlay-item:hover {
-  opacity: 0.45;
-}
 
-/* ── Bottom row ── */
+/* ─────────────────────────────────────────
+   BOTTOM — contact + social
+───────────────────────────────────────── */
 .nav-overlay-bottom {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: 120px;
-  padding-top: 60px;
+  padding-top: 40px;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
+  opacity: 0;
 }
 
-/* ── Contact links ── */
+.nav-overlay.is-open .nav-overlay-bottom {
+  animation: fade-up 500ms 560ms var(--ease-out-expo) both;
+}
+
 .nav-overlay-contact {
   display: flex;
   flex-direction: column;
@@ -234,18 +505,13 @@
   letter-spacing: 0.0333em;
   color: #121212;
   text-decoration: none;
-  transition: opacity var(--transition-base) var(--ease-out-expo);
 }
 
-.nav-overlay-contact-link:hover {
-  opacity: 0.5;
-}
-
-/* ── Social icons ── */
+/* ── Social buttons ── */
 .nav-overlay-social {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 10px;
 }
 
 .nav-overlay-social-btn {
@@ -257,11 +523,19 @@
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   text-decoration: none;
-  transition: background var(--transition-fast) var(--ease-out-expo);
+  color: #121212;
+  background: transparent;
+  transition:
+    background   220ms var(--ease-out-expo),
+    border-color 220ms var(--ease-out-expo),
+    transform    220ms var(--ease-out-expo);
 }
 
 .nav-overlay-social-btn:hover {
-  background: #f2f2f2;
+  background:   var(--color-accent);
+  border-color: var(--color-accent);
+  transform:    translateY(-2px);
+  /* Icon stays black */
 }
 
 
@@ -269,30 +543,76 @@
    MOBILE
 ───────────────────────────────────────── */
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
+  /* Top nav bar */
+  .nav { padding: 15px 20px; }
+  .nav-links { display: none; }
+  .nav-cta    { display: none; }
+  .nav-burger { display: flex; }
 
+  /* On mobile the logo is left-aligned (not absolutely centred) */
   .nav-logo {
     position: static;
     transform: none;
   }
 
+  /* Overlay bar — match top nav exactly: 20px padding, logo left, close right */
+  .nav-overlay-bar {
+    padding: 15px 20px;
+  }
+
+  /* Logo inside overlay stays left-aligned, same size as top nav */
+  .nav-overlay-bar .nav-logo {
+    position: static;
+    transform: none;
+  }
+
+  /* Body padding 20px sides */
+  .nav-overlay-body {
+    padding: 32px 20px 40px;
+  }
+
+  /* Top section stacks vertically */
   .nav-overlay-top {
     flex-direction: column;
-    gap: 60px;
+    align-items: flex-start;
+    gap: 48px;
   }
 
-  .nav-overlay-cols {
-    gap: 40px;
+  /* Large link rows — 4px more gap between items */
+  .nav-overlay-main-links {
+    gap: 8px;
   }
 
+  /* Discover columns stack tighter */
+  .nav-overlay-discover-cols { gap: 32px; }
+
+  /* Bottom border spans full width — negate body padding */
   .nav-overlay-bottom {
     flex-direction: column;
     gap: 40px;
+    padding-top: 30px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  .nav-overlay-item {
-    font-size: 24px;
+  /* Eyebrow labels 2px smaller on mobile */
+  .nav-overlay-label {
+    font-size: 10px;
+  }
+
+  /* Less space below eyebrow labels */
+  .nav-overlay-group {
+    gap: 30px;
+  }
+
+  .nav-overlay-discover {
+    gap: 30px;
+  }
+
+  /* Hide "Social" eyebrow label on mobile only */
+  .nav-overlay-label--social-desktop {
+    display: none;
   }
 }
