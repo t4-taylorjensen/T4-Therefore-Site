@@ -1,0 +1,103 @@
+/* ─────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────── */
+
+/* Used in: Hero, Stats, Stack, WhyTherefore, Stack-2 */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Used in: Hero (media panel) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Used in: TestimonialsCarousel (quote transition) */
+@keyframes quoteIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Used in: Hero, CaseStudy, Stack-2, WhyTherefore, TestimonialsCarousel — next arrow */
+@keyframes nudge-right {
+  0%,100% { transform: translateX(0); }
+  40%     { transform: translateX(5px); }
+  70%     { transform: translateX(2px); }
+}
+
+/* Used in: WhyTherefore, TestimonialsCarousel — prev arrow */
+@keyframes nudge-left {
+  0%,100% { transform: translateX(0); }
+  40%     { transform: translateX(-5px); }
+  70%     { transform: translateX(-2px); }
+}
+
+/* Used in: Stack — download icon */
+@keyframes nudge-down {
+  0%,100% { transform: translateY(0); }
+  40%     { transform: translateY(4px); }
+  70%     { transform: translateY(2px); }
+}
+
+/* Used in: Stack — loading spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Used in: LogoCarousel — ticker */
+@keyframes logo-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Used in: CaseStudy — scroll hint pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.8; }
+}
+
+/* Used in: WhyTherefore — card bg blob */
+@keyframes blobDrift {
+  0%,  100% { transform: translate(-22%, -22%) scale(1);    opacity: 1;   }
+  33%        { transform: translate(-14%, -28%) scale(1.06); opacity: 0.9; }
+  66%        { transform: translate(-28%, -15%) scale(0.96); opacity: 0.82;}
+}
+
+/* ─────────────────────────────────────────
+   ANIMATION UTILITY CLASSES
+───────────────────────────────────────── */
+.anim-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.anim-quote-in {
+  animation: quoteIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Stagger delays */
+.anim-delay-1 { animation-delay: 0.05s; }
+.anim-delay-2 { animation-delay: 0.15s; }
+.anim-delay-3 { animation-delay: 0.25s; }
+.anim-delay-4 { animation-delay: 0.38s; }
+.anim-delay-5 { animation-delay: 0.52s; }
+
+/* ─────────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-in,
+  .anim-quote-in {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

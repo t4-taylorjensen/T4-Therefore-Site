@@ -1,0 +1,117 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+@keyframes quoteIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.quote-in { animation: quoteIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+@keyframes nudge-right {
+  0%,100% { transform: translateX(0); }
+  40%     { transform: translateX(5px); }
+  70%     { transform: translateX(2px); }
+}
+@keyframes nudge-left {
+  0%,100% { transform: translateX(0); }
+  40%     { transform: translateX(-5px); }
+  70%     { transform: translateX(-2px); }
+}
+
+:root {
+  --card-w: clamp(240px, 27vw, 400px);
+  --card-h: calc(var(--card-w) * 710 / 510);
+}
+
+.stack-container {
+  position: relative;
+  padding: 14px 0;
+  margin: 0 auto;
+}
+
+.stack-inner {
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin-left: 80px;
+}
+
+.stack-card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
+  will-change: transform;
+}
+.stack-card--active {
+  cursor: none;
+}
+
+/* ── Compact desktop ── */
+@media (max-width: 1250px) {
+  .carousel-section {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+}
+
+/* ── Tablet + mobile ── */
+@media (max-width: 1024px) {
+  :root {
+    --card-w: min(calc(100vw - 180px), 380px);
+  }
+
+  .carousel-section {
+    min-height: 0 !important;
+  }
+
+  .carousel-section > p {
+    margin-bottom: 40px !important;
+  }
+
+  .carousel-columns {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 25px !important;
+  }
+
+  .carousel-left {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-shrink: 0;
+  }
+
+  .stack-container {
+    width: var(--card-w);
+    margin: 0 0 0 20px;
+  }
+
+  .stack-inner {
+    margin-left: 0;
+  }
+
+  .carousel-right {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    min-width: 0 !important;
+    justify-content: flex-start !important;
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .carousel-right .arrows {
+    margin-top: 40px !important;
+  }
+}
+
+/* ── Mobile only ── */
+@media (max-width: 768px) {
+  .carousel-right {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+}

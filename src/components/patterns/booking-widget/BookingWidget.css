@@ -1,0 +1,604 @@
+/* ─────────────────────────────────────────
+   BOOKING WIDGET
+   Premium travel hero search bar.
+   Pill container · 3 fields · blind-wipe CTA
+───────────────────────────────────────── */
+
+/* ── Story wrapper ── */
+.bw-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-8) var(--space-6);
+}
+
+/* ─────────────────────────────────────────
+   PILL CONTAINER
+───────────────────────────────────────── */
+.bw-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  background: #F5F6F1;
+  border-radius: 999px;
+  padding: 8px 8px 8px 8px;
+  box-shadow:
+    0 1px 4px rgba(0,0,0,0.03),
+    0 4px 16px rgba(0,0,0,0.05),
+    0 16px 48px rgba(0,0,0,0.04);
+  position: relative;
+  gap: 0;
+}
+
+/* ─────────────────────────────────────────
+   FIELD WRAP  (positions dropdown/popover)
+───────────────────────────────────────── */
+.bw-field-wrap {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────
+   DIVIDER
+───────────────────────────────────────── */
+.bw-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(18,18,18,0.1);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ─────────────────────────────────────────
+   FIELD BUTTON
+───────────────────────────────────────── */
+.bw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease-out-soft);
+  outline: none;
+}
+
+.bw-field:hover {
+  background: rgba(18,18,18,0.04);
+}
+
+.bw-field--active {
+  background: rgba(18,18,18,0.06);
+}
+
+.bw-field:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+/* ── Label (top) ── */
+.bw-field__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(18,18,18,0.42);
+  line-height: 1;
+  white-space: nowrap;
+  display: block;
+}
+
+/* ── Value / placeholder (bottom) ── */
+.bw-field__value {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-ink);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.bw-field__value--placeholder {
+  color: rgba(18,18,18,0.38);
+}
+
+/* ─────────────────────────────────────────
+   SUBMIT BUTTON  (circular · blind-wipe)
+───────────────────────────────────────── */
+.bw-submit {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 4px;
+  position: relative;
+
+  /* blind-wipe: two-stop gradient slides left→right on hover */
+  background: #4297FF;
+  background-image: linear-gradient(to right, #4297FF 50%, #5aa5ff 50%);
+  background-size: 200% 100%;
+  background-position: left center;
+  transition:
+    background-position 260ms var(--ease-out-soft),
+    transform var(--duration-fast) var(--ease-out-soft);
+}
+
+.bw-submit:hover {
+  background-position: right center;
+  transform: scale(1.03);
+}
+
+.bw-submit:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.bw-submit:active {
+  transform: scale(0.97);
+}
+
+/* Arrow icon — translates right on hover */
+.bw-submit__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 260ms var(--ease-out-soft);
+  position: relative;
+  z-index: 1;
+}
+
+.bw-submit:hover .bw-submit__icon {
+  transform: translateX(2px);
+}
+
+/* ─────────────────────────────────────────
+   PANELS  (shared base)
+───────────────────────────────────────── */
+.bw-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 200;
+  background: #F5F6F1;
+  border-radius: 18px;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.05),
+    0 8px 28px rgba(0,0,0,0.08),
+    0 24px 56px rgba(0,0,0,0.06);
+  padding: 18px 16px;
+  min-width: 260px;
+  animation: bwPanelIn 180ms var(--ease-out-soft) both;
+}
+
+@keyframes bwPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Guests panel anchors to right edge */
+.bw-panel--guests {
+  left: auto;
+  right: 0;
+  min-width: 290px;
+}
+
+/* Date panel nudges left to visually center */
+.bw-panel--dates {
+  left: -24px;
+  min-width: 308px;
+}
+
+/* ─────────────────────────────────────────
+   DESTINATION DROPDOWN
+───────────────────────────────────────── */
+.bw-panel--destination {
+  min-width: 280px;
+}
+
+.bw-panel__section {
+  margin-bottom: 14px;
+}
+.bw-panel__section:last-child {
+  margin-bottom: 0;
+}
+
+.bw-panel__section-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(18,18,18,0.38);
+  display: block;
+  margin-bottom: 6px;
+  padding: 0 10px;
+}
+
+.bw-panel__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease-out-soft);
+  line-height: 1.2;
+}
+
+.bw-panel__item:hover {
+  background: rgba(18,18,18,0.05);
+}
+
+.bw-panel__item:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.bw-panel__item--selected {
+  background: rgba(66,151,255,0.08);
+  color: var(--color-accent);
+}
+
+.bw-panel__item-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: rgba(18,18,18,0.35);
+}
+
+.bw-panel__item-icon--recent {
+  color: rgba(18,18,18,0.3);
+}
+
+/* ─────────────────────────────────────────
+   DATE PICKER
+───────────────────────────────────────── */
+.bw-cal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.bw-cal__month {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+
+.bw-cal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: rgba(18,18,18,0.45);
+  padding: 0;
+  transition:
+    background var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.bw-cal__nav:hover {
+  background: rgba(18,18,18,0.06);
+  color: var(--color-ink);
+}
+
+.bw-cal__days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+}
+
+.bw-cal__day-name {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(18,18,18,0.32);
+  text-align: center;
+  padding: 2px 0;
+}
+
+.bw-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.bw-cal__cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition:
+    background var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.bw-cal__cell--empty {
+  pointer-events: none;
+}
+
+.bw-cal__cell--past {
+  color: rgba(18,18,18,0.22);
+  cursor: default;
+}
+
+.bw-cal__cell:hover:not(:disabled):not(.bw-cal__cell--start):not(.bw-cal__cell--end) {
+  background: rgba(18,18,18,0.06);
+}
+
+.bw-cal__cell--start,
+.bw-cal__cell--end {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.bw-cal__cell--start:hover,
+.bw-cal__cell--end:hover {
+  background: #3486ee;
+}
+
+.bw-cal__cell--range {
+  background: rgba(66,151,255,0.10);
+  border-radius: 0;
+  color: var(--color-ink);
+}
+
+/* bookend range caps */
+.bw-cal__cell--start.bw-cal__cell--range,
+.bw-cal__cell--end.bw-cal__cell--range {
+  border-radius: 50%;
+}
+
+.bw-cal__cell:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.bw-cal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(18,18,18,0.07);
+}
+
+.bw-cal__selection {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  color: rgba(18,18,18,0.5);
+}
+
+.bw-cal__clear {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(18,18,18,0.38);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--duration-fast) ease;
+}
+
+.bw-cal__clear:hover {
+  color: var(--color-ink);
+}
+
+/* ─────────────────────────────────────────
+   GUESTS POPOVER
+───────────────────────────────────────── */
+.bw-guests__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 4px;
+  border-bottom: 1px solid rgba(18,18,18,0.06);
+}
+
+.bw-guests__row:last-child {
+  border-bottom: none;
+  padding-bottom: 4px;
+}
+
+.bw-guests__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bw-guests__label {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.bw-guests__sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: rgba(18,18,18,0.38);
+}
+
+.bw-guests__controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bw-guests__btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(18,18,18,0.16);
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--color-ink);
+  padding: 0 0 1px;
+  transition:
+    background var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
+}
+
+.bw-guests__btn:hover:not(:disabled) {
+  background: rgba(18,18,18,0.06);
+  border-color: rgba(18,18,18,0.28);
+}
+
+.bw-guests__btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.bw-guests__btn:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.bw-guests__count {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .bw-container {
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 8px;
+    gap: 2px;
+  }
+
+  .bw-field-wrap {
+    width: 100%;
+  }
+
+  .bw-field {
+    padding: 12px 16px;
+    border-radius: 12px;
+  }
+
+  .bw-divider {
+    width: calc(100% - 32px);
+    height: 1px;
+    align-self: auto;
+    margin: 0 16px;
+  }
+
+  .bw-submit {
+    width: 100%;
+    border-radius: 12px;
+    height: 50px;
+    margin-left: 0;
+    background-image: none;
+    background: var(--color-accent);
+  }
+
+  .bw-submit:hover {
+    transform: none;
+    background: #5aa5ff;
+  }
+
+  .bw-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    border-radius: 20px 20px 0 0;
+    min-width: 0;
+  }
+
+  .bw-panel--guests {
+    right: 0;
+    left: 0;
+  }
+
+  .bw-panel--dates {
+    left: 0;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .bw-submit,
+  .bw-submit__icon,
+  .bw-field,
+  .bw-panel,
+  .bw-panel__item,
+  .bw-cal__cell,
+  .bw-cal__nav,
+  .bw-guests__btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}

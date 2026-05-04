@@ -1,0 +1,137 @@
+@import './tokens.css';
+
+/* ─────────────────────────────────────────
+   DISPLAY — ABC Gravity X Compressed
+   Used in: Hero headline, Case Study headline
+───────────────────────────────────────── */
+.heading-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: var(--leading-display);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   HEADING XL — Roobert
+   Used in: Stack headline, WhyTherefore headline, FAQ headline (55px)
+───────────────────────────────────────── */
+.heading-xl {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   HEADING LG — Roobert
+   Used in: Stat numbers (42px)
+───────────────────────────────────────── */
+.heading-lg {
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+  letter-spacing: 0;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   HEADING MD — Roobert
+   Used in: Card titles, carousel titles (30px)
+───────────────────────────────────────── */
+.heading-md {
+  font-family: var(--font-primary);
+  font-size: var(--text-md);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+  letter-spacing: 0;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   BODY LG — Roobert
+   Used in: Hero copy, FAQ answers, profile names, quotes (20px)
+───────────────────────────────────────── */
+.body-lg {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-lg);
+  font-weight: 400;
+  line-height: var(--leading-normal);
+  letter-spacing: 0;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   BODY MD — Roobert
+   Used in: Card descriptions, hero main copy (16px)
+───────────────────────────────────────── */
+.body-md {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-md);
+  font-weight: 400;
+  line-height: var(--leading-relaxed);
+  letter-spacing: 0;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   BODY SM — Roobert
+   Used in: Hero subtext, stat subtitles (15px)
+───────────────────────────────────────── */
+.body-sm {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: 400;
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   EYEBROW / MONO — Roobert Mono
+   Used in: Section labels, tags, button text (11px)
+───────────────────────────────────────── */
+.text-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-ink-subtle);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   MONO LABEL — Roobert Mono (medium size)
+   Used in: Button labels, scroll hints (14px)
+───────────────────────────────────────── */
+.text-mono-md {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-md);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   MUTED MODIFIERS
+───────────────────────────────────────── */
+.text-muted    { color: var(--color-ink-faint); }
+.text-subtle   { color: var(--color-ink-subtle); }
+.text-on-dark  { color: var(--color-text-on-dark); }

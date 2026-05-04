@@ -1,0 +1,433 @@
+/* ─────────────────────────────────────────
+   CONTACT CTA — Component Styles
+   Keyframes: shader-drift defined locally.
+   nudge-right comes from global animations.css.
+───────────────────────────────────────── */
+
+/* ── Local keyframe: shader blob drift ── */
+@keyframes shader-drift {
+  0%, 100% { opacity: 0.45; transform: scale(1)    translate(0,    0);   }
+  33%       { opacity: 0.40; transform: scale(1.06) translate(2%, -3%);  }
+  66%       { opacity: 0.50; transform: scale(0.96) translate(-2%, 2%);  }
+}
+
+/* ── Section ── */
+.cta-section {
+  background: var(--color-bg-page);
+  padding: var(--space-10) var(--space-6);
+}
+
+/* ── Card ── */
+.cta-card {
+  background: var(--color-bg-dark);
+  overflow: hidden;
+}
+
+/* ── Shader ── */
+.cta-shader {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Card inner ── */
+.cta-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-6);
+}
+
+/* ─────────────────────────────────────────
+   LEFT PANEL
+───────────────────────────────────────── */
+.cta-left {
+  width: 459px;
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-6);
+}
+
+.cta-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.cta-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: 400;
+  color: var(--color-text-on-dark);
+  letter-spacing: var(--tracking-wider);
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cta-title-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.cta-headline {
+  font-family: var(--font-primary);
+  font-size: 55px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-text-on-dark);
+  margin: 0;
+}
+
+/* ── Buttons ── */
+.cta-btn-list {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cta-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 10px;
+  background: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: background var(--duration-fast) ease;
+}
+
+.cta-btn-primary:hover {
+  background: var(--color-accent);
+}
+
+.cta-btn-primary span {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-md);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  color: var(--color-ink);
+  transition: color var(--duration-fast) ease;
+}
+
+.cta-btn-primary:hover span {
+  color: var(--color-white);
+}
+
+.cta-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 15px;
+  background: transparent;
+  border: 1px solid var(--color-white);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: background var(--duration-fast) ease;
+}
+
+.cta-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cta-btn-secondary span {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-md);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  color: var(--color-white);
+}
+
+/* ── Profile card ── */
+.cta-profile {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.cta-profile-photo {
+  width: 62px;
+  height: 62px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow:
+    0px 1px 1px rgba(85, 136, 229, 0.10),
+    0px 2px 2px rgba(85, 136, 229, 0.15),
+    0px 5px 3px rgba(85, 136, 229, 0.05),
+    0px 10px 4px rgba(85, 136, 229, 0.01),
+    0px 15px 4px rgba(85, 136, 229, 0.00);
+}
+
+.cta-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.cta-profile-name {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-lg);
+  font-weight: 400;
+  color: var(--color-text-on-dark);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+.cta-profile-role {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: 400;
+  color: var(--color-text-on-dark);
+  letter-spacing: var(--tracking-wider);
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   RIGHT PANEL — form
+───────────────────────────────────────── */
+.cta-form-panel {
+  flex: 0 1 740px;
+  background: var(--color-white);
+  padding: var(--space-8);
+}
+
+.cta-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.cta-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.cta-field-row {
+  display: flex;
+  gap: var(--space-7);
+  align-items: flex-start;
+}
+
+.cta-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cta-field-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: 400;
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-wider);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cta-input {
+  height: 60px;
+  padding: 0 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink);
+  outline: none;
+  width: 100%;
+  transition:
+    border-color 0.15s ease,
+    box-shadow   0.15s ease;
+}
+
+.cta-input::placeholder {
+  color: var(--color-ink-subtle);
+}
+
+.cta-input:focus {
+  border-color: var(--color-accent);
+  box-shadow:
+    0px 1px 1px rgba(85, 136, 229, 0.10),
+    0px 2px 2px rgba(85, 136, 229, 0.15),
+    0px 5px 3px rgba(85, 136, 229, 0.05),
+    0px 10px 4px rgba(85, 136, 229, 0.01),
+    0px 15px 4px rgba(85, 136, 229, 0.00);
+}
+
+.cta-textarea {
+  display: block;
+  width: 100%;
+  padding: 20px 20px 60px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink);
+  line-height: 1.45;
+  outline: none;
+  resize: none;
+  min-height: 111px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow   0.15s ease;
+}
+
+.cta-textarea::placeholder {
+  color: var(--color-ink-subtle);
+}
+
+.cta-textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow:
+    0px 1px 1px rgba(85, 136, 229, 0.10),
+    0px 2px 2px rgba(85, 136, 229, 0.15),
+    0px 5px 3px rgba(85, 136, 229, 0.05),
+    0px 10px 4px rgba(85, 136, 229, 0.01),
+    0px 15px 4px rgba(85, 136, 229, 0.00);
+}
+
+.cta-submit {
+  height: 71px;
+  width: 100%;
+  background: var(--color-ink);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-fast) ease;
+}
+
+.cta-submit:hover:not(:disabled) {
+  background: var(--color-accent);
+}
+
+.cta-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cta-submit span {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-md);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-white);
+  line-height: 1;
+}
+
+/* ── Success state ── */
+.cta-success {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-height: 400px;
+  justify-content: center;
+}
+
+.cta-success-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-ink-subtle);
+  margin: 0;
+}
+
+.cta-success-msg {
+  font-family: var(--font-primary);
+  font-size: var(--text-md);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .cta-inner {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .cta-left {
+    width: 100%;
+    align-self: auto;
+    gap: var(--space-8);
+  }
+
+  .cta-form-panel {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: var(--space-5);
+  }
+
+  .cta-inner {
+    padding: var(--space-5);
+  }
+
+  .cta-left {
+    padding: var(--space-5);
+  }
+
+  .cta-headline {
+    font-size: clamp(32px, 7vw, 55px);
+  }
+
+  .cta-form-panel {
+    padding: var(--space-6);
+  }
+
+  .cta-field-row {
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+}
+
+/* ─────────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cta-shader {
+    animation: none !important;
+  }
+}

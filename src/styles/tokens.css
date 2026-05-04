@@ -1,0 +1,137 @@
+:root {
+
+  /* ─────────────────────────────────────────
+     BRAND COLORS
+  ───────────────────────────────────────── */
+  --color-ink:           #121212;        /* primary text, dark surfaces */
+  --color-ink-muted:     rgba(18,18,18,0.55);
+  --color-ink-subtle:    rgba(18,18,18,0.5);
+  --color-ink-faint:     rgba(18,18,18,0.7);
+
+  --color-accent:        #4297FF;        /* hover states, highlight bg */
+
+  /* ─────────────────────────────────────────
+     NEUTRAL / SURFACE COLORS
+  ───────────────────────────────────────── */
+  --color-white:         #ffffff;
+  --color-surface-1:     #f2f2f2;        /* card backgrounds, tags */
+  --color-surface-2:     #f0f0ef;        /* section backgrounds (testimonials) */
+  --color-surface-dark:  #121212;        /* inverted section backgrounds */
+
+  /* ─────────────────────────────────────────
+     BACKGROUND COLORS
+  ───────────────────────────────────────── */
+  --color-bg-page:       #ffffff;
+  --color-bg-card:       #f2f2f2;
+  --color-bg-section:    #f0f0ef;
+  --color-bg-dark:       #121212;
+
+  /* ─────────────────────────────────────────
+     BORDER COLORS
+  ───────────────────────────────────────── */
+  --color-border:        rgba(0,0,0,0.1);
+  --color-border-medium: rgba(0,0,0,0.15);
+  --color-border-light:  #E8E8E8;
+
+  /* ─────────────────────────────────────────
+     TEXT ON DARK
+  ───────────────────────────────────────── */
+  --color-text-on-dark:         #ffffff;
+  --color-text-on-dark-muted:   rgba(255,255,255,0.8);
+  --color-text-on-dark-subtle:  rgba(255,255,255,0.6);
+  --color-text-on-dark-faint:   rgba(242,242,242,0.4);
+
+  /* ─────────────────────────────────────────
+     TYPOGRAPHY
+  ───────────────────────────────────────── */
+  --font-primary:   'Roobert', sans-serif;
+  --font-mono:      'Roobert Mono', monospace;
+  --font-display:   'ABC Gravity X Compressed', sans-serif;
+
+  /* ─────────────────────────────────────────
+     FONT SIZES
+  ───────────────────────────────────────── */
+  --text-display:   112px;
+  --text-xl:        clamp(40px, 5vw, 55px);
+  --text-lg:        42px;
+  --text-md:        30px;
+  --text-body-lg:   20px;
+  --text-body-md:   16px;
+  --text-body-sm:   15px;
+  --text-mono:      11px;
+  --text-mono-md:   14px;
+
+  /* ─────────────────────────────────────────
+     LINE HEIGHTS
+  ───────────────────────────────────────── */
+  --leading-display: 0.85;
+  --leading-tight:   1.15;
+  --leading-snug:    1.4;
+  --leading-normal:  1.6;
+  --leading-relaxed: 1.8;
+
+  /* ─────────────────────────────────────────
+     LETTER SPACING
+  ───────────────────────────────────────── */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.5px;
+  --tracking-wider:  1px;
+  --tracking-widest: 1.5px;
+  --tracking-mono:   0.2em;
+
+  /* ─────────────────────────────────────────
+     SPACING SCALE
+  ───────────────────────────────────────── */
+  --space-1:    4px;
+  --space-2:    8px;
+  --space-3:    12px;
+  --space-4:    15px;
+  --space-5:    20px;
+  --space-6:    30px;
+  --space-7:    40px;
+  --space-8:    60px;
+  --space-9:    80px;
+  --space-10:   90px;
+  --space-11:  120px;
+  --space-12:  160px;
+
+  /* ─────────────────────────────────────────
+     BORDER RADIUS
+  ───────────────────────────────────────── */
+  --radius-sm:  5px;
+  --radius-md:  16px;
+
+  /* ─────────────────────────────────────────
+     SHADOWS
+  ───────────────────────────────────────── */
+  --shadow-card:
+    0px 8px 18px rgba(0,0,0,0.10),
+    0px 33px 33px rgba(0,0,0,0.09),
+    0px 74px 45px rgba(0,0,0,0.05),
+    0px 132px 53px rgba(0,0,0,0.01);
+
+  --shadow-hover:
+    0 12px 32px rgba(0,0,0,0.12),
+    0 4px 12px rgba(0,0,0,0.08);
+
+  /* ─────────────────────────────────────────
+     TRANSITIONS
+  ───────────────────────────────────────── */
+  --ease-out-expo:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-soft:  cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-standard:  cubic-bezier(0.4, 0, 0.2, 1);
+
+  --duration-fast:   200ms;
+  --duration-base:   280ms;
+  --duration-slow:   350ms;
+  --duration-slower: 700ms;
+
+  /* ─────────────────────────────────────────
+     LAYOUT
+  ───────────────────────────────────────── */
+  --container-max:  1440px;
+  --container-md:   1280px;
+  --padding-x:      clamp(24px, 6.25vw, 90px);
+  --padding-x-sm:   20px;
+}

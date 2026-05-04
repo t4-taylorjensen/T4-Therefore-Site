@@ -1,0 +1,216 @@
+/* ─────────────────────────────────────────
+   FOOTER — Component Styles
+   nudge-right keyframe comes from global.css.
+───────────────────────────────────────── */
+
+/* ── Section ── */
+
+.footer-section {
+  background: var(--color-bg-page);
+  border-top: 1px solid var(--color-border-medium);   /* rgba(0,0,0,0.15) */
+  padding: 0 var(--space-6);                           /* 0 30px */
+  overflow-x: clip;
+}
+
+/* ── Inner frame ── */
+
+.footer-frame {
+  display: flex;
+  align-items: stretch;
+  min-height: 500px;
+  border-left:  1px solid var(--color-border-medium);
+  border-right: 1px solid var(--color-border-medium);
+}
+
+/* ─────────────────────────────────────────
+   LEFT SIDE
+───────────────────────────────────────── */
+
+.footer-left {
+  width: 798px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-6);                             /* 30px */
+  border-right: 1px solid var(--color-border-medium);
+}
+
+/* ── About block ── */
+
+.footer-about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);                                 /* 30px */
+}
+
+.footer-about-text {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-md);                      /* 16px */
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--color-ink);
+  max-width: 427px;
+  margin: 0;
+}
+
+/* ── CTA button ── */
+
+.footer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                                 /* 12px */
+  height: 34px;
+  padding: 10px 10px 9px;
+  background: var(--color-ink);
+  border-radius: var(--radius-sm);                     /* 5px */
+  text-decoration: none;
+  align-self: flex-start;
+  color: var(--color-white);
+  transition:
+    background var(--duration-fast) ease,
+    color      var(--duration-fast) ease;
+}
+
+.footer-cta:hover {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.footer-cta-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-md);                      /* 14px */
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);                /* 0.5px */
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.footer-btn-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.footer-icon-nudge {
+  animation: nudge-down 0.55s ease-in-out 1;
+}
+
+/* ── Wordmark ── */
+
+.footer-wordmark {
+  display: flex;
+  align-items: flex-end;
+}
+
+.footer-logo-img {
+  display: block;
+  height: 52px;
+  width: auto;
+  user-select: none;
+}
+
+/* ─────────────────────────────────────────
+   RIGHT SIDE
+───────────────────────────────────────── */
+
+.footer-right {
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: 90px;
+  padding: var(--space-6);                             /* 30px */
+}
+
+/* ── Nav ── */
+
+/* display: contents removes the nav box so the two <ul>s
+   become direct grid children, flowing into columns 1 and 2 */
+.footer-nav {
+  display: contents;
+}
+
+.footer-nav-col {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);                                 /* 20px */
+  align-self: start;
+  grid-row: 1;
+}
+
+.footer-nav-col li a {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);                      /* 15px */
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+.footer-nav-col li a:hover {
+  color: var(--color-accent);
+}
+
+/* ── Legal ── */
+
+/* grid-column: 2 pins these under Contact/LinkedIn/Instagram */
+.footer-legal {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                                 /* 12px */
+  align-self: end;
+  padding-top: var(--space-6);                         /* 30px breathing room */
+}
+
+.footer-legal a {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);                         /* 11px */
+  font-weight: 400;
+  letter-spacing: var(--tracking-wider);               /* 1px */
+  text-transform: uppercase;
+  color: #888888;
+  text-decoration: none;
+  line-height: 1;
+  transition: color var(--duration-fast) ease;
+}
+
+.footer-legal a:hover {
+  color: var(--color-ink);
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .footer-frame {
+    flex-direction: column;
+  }
+
+  .footer-left {
+    width: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-medium);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-section {
+    padding: 0 var(--space-5);                         /* 0 20px */
+  }
+
+  .footer-right {
+    column-gap: var(--space-8);                        /* 60px */
+  }
+
+  .footer-logo-img {
+    height: 36px;
+  }
+}
