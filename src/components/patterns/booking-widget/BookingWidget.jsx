@@ -10,7 +10,7 @@ function ArrowIcon() {
     <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
       <path
         d="M16.5 7H1M16.5 7L10.5 1M16.5 7L10.5 13"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="1.2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -442,7 +442,7 @@ export default function BookingWidget() {
         <SubmitButton
           onClick={() => {
             setActiveField(null);
-            console.log({ destination, startDate, endDate, adults, childCount, infants });
+            // TODO: hand off { destination, startDate, endDate, adults, childCount, infants } to a search action
           }}
         />
       </div>

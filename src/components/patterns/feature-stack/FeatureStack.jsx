@@ -1,84 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import './FeatureStack.css';
 
 import coverDigitalProducts    from '../../ui/brand assets/cover-digital-products.jpg';
 import coverAiCapabilities     from '../../ui/brand assets/cover-ai-capabilities.svg';
 import coverAiCapabilitiesHover from '../../ui/brand assets/cover-ai-capabilities-hover.svg';
 import { IconCornerDownRight } from '../../ui/Button/Button';
-
-/* ─────────────────────────────────────────
-   SCROLL-REVEAL HEADLINE
-───────────────────────────────────────── */
+import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
+import Eyebrow from '../../ui/Eyebrow';
 
 const HEADLINE_DARK  = 'We design content models that reflect real workflows';
 const HEADLINE_MUTED = ', integrate with your ecosystem, and scale as your business evolves.';
-
-function tokenize(text) {
-  return text.split(' ').filter(Boolean).reduce((acc, w) => {
-    if (/^[,\.;:!?]/.test(w) && acc.length > 0) { acc[acc.length - 1] += w; }
-    else acc.push(w);
-    return acc;
-  }, []);
-}
-
-function HeadlineWords({ darkText, mutedText }) {
-  const darkCount  = tokenize(darkText).length;
-  const fullTokens = tokenize(darkText + ' ' + mutedText);
-
-  return fullTokens.map((word, i) => (
-    <span key={i} className="word-wrap">
-      <span className="word-ghost" aria-hidden="true">{word}</span>
-      <span className="word-reveal" data-word={i}>{word}</span>
-    </span>
-  ));
-}
 
 /* ─────────────────────────────────────────
    STACK 2
 ───────────────────────────────────────── */
 
 export default function FeatureStack() {
-  const headlineRef = useRef(null);
   const [iconNudge, setIconNudge] = useState(false);
-
-  useEffect(() => {
-    const el = headlineRef.current;
-    if (!el) return;
-
-    const reveals = Array.from(el.querySelectorAll('.word-reveal'));
-    const n = reveals.length;
-    let rafId;
-
-    function update() {
-      const rect = el.getBoundingClientRect();
-      const vh   = window.innerHeight;
-      const progress = Math.min(1, Math.max(0,
-        (0.9 * vh - rect.top) / (0.65 * vh)
-      ));
-
-      reveals.forEach((span, i) => {
-        const start   = i / n;
-        const end     = start + 1 / n;
-        const opacity = Math.min(1, Math.max(0, (progress - start) / (end - start)));
-        span.style.opacity = opacity;
-      });
-
-      rafId = requestAnimationFrame(update);
-    }
-
-    rafId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
 
   return (
     <section className="s2-section">
 
         {/* ── Large Title ── */}
         <div className="s2-large-title">
-          <p className="s2-eyebrow anim-fade-up anim-delay-1">Our Capabilities</p>
-          <h2 className="s2-headline" ref={headlineRef}>
-            <HeadlineWords darkText={HEADLINE_DARK} mutedText={HEADLINE_MUTED} />
-          </h2>
+          <Eyebrow className="anim-fade-up anim-delay-1">Our Capabilities</Eyebrow>
+          <ScrollRevealHeadline
+            as="h2"
+            className="s2-headline"
+            text={HEADLINE_DARK}
+            mutedText={HEADLINE_MUTED}
+          />
         </div>
 
         {/* ── Cards Section ── */}

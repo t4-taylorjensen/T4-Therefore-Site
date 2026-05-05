@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import './HeroStack.css';
 
 import spinnerSrc from '../../ui/brand assets/spinner.svg';
 import { BtnPrimary, BtnIconAccent, IconCornerRightArrow } from '../../ui/Button/Button';
+import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
+import Eyebrow from '../../ui/Eyebrow';
 
 function IconCheck() {
   return (
@@ -170,77 +172,26 @@ function GuideCard() {
   );
 }
 
-/* ─────────────────────────────────────────
-   SCROLL-REVEAL HEADLINE
-───────────────────────────────────────── */
-
 const HEADLINE = 'One platform powering your entire digital ecosystem, content, commerce, and experience unified without compromise.';
-
-function tokenize(text) {
-  return text.split(' ').filter(Boolean).reduce((acc, w) => {
-    if (/^[,\.;:!?]/.test(w) && acc.length > 0) { acc[acc.length - 1] += w; }
-    else acc.push(w);
-    return acc;
-  }, []);
-}
-
-function HeadlineWords({ text }) {
-  return tokenize(text).map((word, i) => (
-    <span key={i} className="hs-word-wrap">
-      <span className="hs-word-ghost" aria-hidden="true">{word}</span>
-      <span className="hs-word-reveal" data-word={i}>{word}</span>
-    </span>
-  ));
-}
 
 /* ─────────────────────────────────────────
    HERO STACK
 ───────────────────────────────────────── */
 
 export default function HeroStack() {
-  const headlineRef = useRef(null);
-
-  useEffect(() => {
-    const el = headlineRef.current;
-    if (!el) return;
-
-    const reveals = Array.from(el.querySelectorAll('.hs-word-reveal'));
-    const n = reveals.length;
-    let rafId;
-
-    function update() {
-      const rect = el.getBoundingClientRect();
-      const vh   = window.innerHeight;
-
-      const progress = Math.min(1, Math.max(0,
-        (0.9 * vh - rect.top) / (0.65 * vh)
-      ));
-
-      reveals.forEach((span, i) => {
-        const start   = i / n;
-        const end     = start + 1 / n;
-        const opacity = Math.min(1, Math.max(0, (progress - start) / (end - start)));
-        span.style.opacity = opacity;
-      });
-
-      rafId = requestAnimationFrame(update);
-    }
-
-    rafId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
   return (
     <section className="hs-section">
       <div className="hs-container">
 
         <div className="hs-large-title">
-          <p className="hs-eyebrow anim-fade-up anim-delay-1">
+          <Eyebrow className="hs-eyebrow anim-fade-up anim-delay-1">
             What is Headless?
-          </p>
-          <h2 className="hs-headline" ref={headlineRef}>
-            <HeadlineWords text={HEADLINE} />
-          </h2>
+          </Eyebrow>
+          <ScrollRevealHeadline
+            as="h2"
+            className="hs-headline"
+            text={HEADLINE}
+          />
         </div>
 
         <div className="hs-split">

@@ -4,7 +4,7 @@ import './FixedVideo.css';
 function IconPlay() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M4.5 2.8L13 8L4.5 13.2V2.8Z" fill="white" />
+      <path d="M4.5 2.8L13 8L4.5 13.2V2.8Z" fill="currentColor" />
     </svg>
   );
 }
@@ -12,7 +12,7 @@ function IconPlay() {
 function IconClose() {
   return (
     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-      <path d="M1 1L9 9M9 1L1 9" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   );
 }

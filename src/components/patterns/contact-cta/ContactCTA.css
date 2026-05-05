@@ -57,17 +57,6 @@
   gap: var(--space-8);
 }
 
-.cta-eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);
-  font-weight: 400;
-  color: var(--color-text-on-dark);
-  letter-spacing: var(--tracking-wider);
-  line-height: 1;
-  text-transform: uppercase;
-  margin: 0;
-}
-
 .cta-title-content {
   display: flex;
   flex-direction: column;
@@ -91,69 +80,6 @@
   flex-wrap: wrap;
 }
 
-.cta-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  height: 34px;
-  padding: 0 10px;
-  background: var(--color-white);
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  flex-shrink: 0;
-  text-decoration: none;
-  transition: background var(--duration-fast) ease;
-}
-
-.cta-btn-primary:hover {
-  background: var(--color-accent);
-}
-
-.cta-btn-primary span {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono-md);
-  font-weight: 400;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  white-space: nowrap;
-  line-height: 1;
-  color: var(--color-ink);
-  transition: color var(--duration-fast) ease;
-}
-
-.cta-btn-primary:hover span {
-  color: var(--color-white);
-}
-
-.cta-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  height: 34px;
-  padding: 0 15px;
-  background: transparent;
-  border: 1px solid var(--color-white);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  flex-shrink: 0;
-  text-decoration: none;
-  transition: background var(--duration-fast) ease;
-}
-
-.cta-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.cta-btn-secondary span {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono-md);
-  font-weight: 400;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  white-space: nowrap;
-  line-height: 1;
-  color: var(--color-white);
-}
-
 /* ── Profile card ── */
 .cta-profile {
   display: flex;
@@ -167,12 +93,7 @@
   border-radius: var(--radius-sm);
   object-fit: cover;
   flex-shrink: 0;
-  box-shadow:
-    0px 1px 1px rgba(85, 136, 229, 0.10),
-    0px 2px 2px rgba(85, 136, 229, 0.15),
-    0px 5px 3px rgba(85, 136, 229, 0.05),
-    0px 10px 4px rgba(85, 136, 229, 0.01),
-    0px 15px 4px rgba(85, 136, 229, 0.00);
+  box-shadow: var(--shadow-blue-soft);
 }
 
 .cta-profile-info {
@@ -273,12 +194,7 @@
 
 .cta-input:focus {
   border-color: var(--color-accent);
-  box-shadow:
-    0px 1px 1px rgba(85, 136, 229, 0.10),
-    0px 2px 2px rgba(85, 136, 229, 0.15),
-    0px 5px 3px rgba(85, 136, 229, 0.05),
-    0px 10px 4px rgba(85, 136, 229, 0.01),
-    0px 15px 4px rgba(85, 136, 229, 0.00);
+  box-shadow: var(--shadow-blue-soft);
 }
 
 .cta-textarea {
@@ -308,12 +224,7 @@
 
 .cta-textarea:focus {
   border-color: var(--color-accent);
-  box-shadow:
-    0px 1px 1px rgba(85, 136, 229, 0.10),
-    0px 2px 2px rgba(85, 136, 229, 0.15),
-    0px 5px 3px rgba(85, 136, 229, 0.05),
-    0px 10px 4px rgba(85, 136, 229, 0.01),
-    0px 15px 4px rgba(85, 136, 229, 0.00);
+  box-shadow: var(--shadow-blue-soft);
 }
 
 .cta-submit {

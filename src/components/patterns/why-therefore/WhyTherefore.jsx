@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import './WhyTherefore.css';
 import { BtnArrow, IconArrowRight, IconArrowLeft } from '../../ui/Button/Button';
+import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
+import Eyebrow from '../../ui/Eyebrow';
 
 const CARDS = [
   {
@@ -37,33 +39,6 @@ function StarIcon() {
       />
     </svg>
   );
-}
-
-
-/* Merge any token that starts with punctuation onto the preceding word */
-function tokenize(text) {
-  return text.split(' ').filter(Boolean).reduce((acc, w) => {
-    if (/^[,\.;:!?]/.test(w) && acc.length > 0) { acc[acc.length - 1] += w; }
-    else acc.push(w);
-    return acc;
-  }, []);
-}
-
-function HeadlineWords({ darkText, mutedText }) {
-  const darkCount  = tokenize(darkText).length;
-  const fullTokens = tokenize(darkText + ' ' + mutedText);
-
-  return fullTokens.map((word, i) => (
-    <span key={i} className="word-wrap">
-      <span className="word-ghost" aria-hidden="true">{word}</span>
-      <span
-        className={`word-reveal${i >= darkCount ? ' word-reveal--muted' : ''}`}
-        data-word={i}
-      >
-        {word}
-      </span>
-    </span>
-  ));
 }
 
 function ServiceCard({ title, desc }) {
@@ -344,43 +319,9 @@ function CardCarousel() {
    ROOT COMPONENT
 ──────────────────────────────────────────────────────────────── */
 function WhyTherefore() {
-  const headlineRef  = useRef(null);
   const sectionRef   = useRef(null);
   const videoRef     = useRef(null);
   const videoStarted = useRef(false);
-
-  /* ── Headline scroll-reveal ── */
-  useEffect(() => {
-    const el = headlineRef.current;
-    if (!el) return;
-
-    const reveals = Array.from(el.querySelectorAll('.word-reveal'));
-    const n       = reveals.length;
-    let rafId;
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      reveals.forEach(s => { s.style.opacity = '1'; });
-      return;
-    }
-
-    function update() {
-      const rect = el.getBoundingClientRect();
-      const vh   = window.innerHeight;
-      const progress = Math.min(1, Math.max(0,
-        (0.9 * vh - rect.top) / (0.65 * vh)
-      ));
-      reveals.forEach((span, i) => {
-        const start   = i / n;
-        const end     = start + 1 / n;
-        const opacity = Math.min(1, Math.max(0, (progress - start) / (end - start)));
-        span.style.opacity = opacity;
-      });
-      rafId = requestAnimationFrame(update);
-    }
-
-    rafId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
 
   /* ── Video: lazy-load + play on first card hover ── */
   useEffect(() => {
@@ -421,7 +362,7 @@ function WhyTherefore() {
   return (
     <section className="wt-section" ref={sectionRef} aria-labelledby="wt-heading">
 
-      {/* Background: video + #4297FF gradient */}
+      {/* Background: video + accent-color gradient */}
       <div className="wt-bg" aria-hidden="true">
         <video ref={videoRef} className="wt-bg-video" muted loop playsInline preload="none" />
         <div className="wt-bg-gradient" />
@@ -429,10 +370,14 @@ function WhyTherefore() {
 
       {/* Constrained text column */}
       <div className="wt-large-title">
-        <p className="wt-eyebrow anim-fade-up anim-delay-1">Why Therefore?</p>
-        <h2 className="wt-headline" id="wt-heading" ref={headlineRef}>
-          <HeadlineWords darkText={DARK_TEXT} mutedText={MUTED_TEXT} />
-        </h2>
+        <Eyebrow className="wt-eyebrow anim-fade-up anim-delay-1">Why Therefore?</Eyebrow>
+        <ScrollRevealHeadline
+          as="h2"
+          id="wt-heading"
+          className="wt-headline"
+          text={DARK_TEXT}
+          mutedText={MUTED_TEXT}
+        />
       </div>
 
       {/* Full-bleed carousel */}

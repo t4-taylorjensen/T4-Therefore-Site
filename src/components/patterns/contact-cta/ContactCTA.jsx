@@ -4,6 +4,7 @@ import './ContactCTA.css';
 import profileImg from '../../ui/brand assets/therefore-int-luke-bowler.jpg';
 import shaderImg  from '../../ui/brand assets/contact-cta-shader.svg';
 import { BtnSecondary, BtnGhost } from '../../ui/Button/Button';
+import Eyebrow from '../../ui/Eyebrow';
 
 /* ─────────────────────────────────────────
    CONTACT CTA
@@ -38,7 +39,7 @@ export default function ContactCTA() {
           {/* ── Left: content ── */}
           <div className="cta-left">
             <div className="cta-title-group">
-              <p className="cta-eyebrow">We're ready when you are</p>
+              <Eyebrow tone="on-dark">We're ready when you are</Eyebrow>
               <div className="cta-title-content">
                 <h2 className="cta-headline">
                   Ready to meet and see what's possible?

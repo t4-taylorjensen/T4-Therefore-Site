@@ -31,19 +31,7 @@
   background: var(--color-bg-page);
 }
 
-.s2-eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);            /* 11px */
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: var(--tracking-wider);  /* 1px */
-  text-transform: uppercase;
-  color: var(--color-ink-subtle);         /* rgba(18,18,18,0.5) */
-  margin: 0;
-}
-
-/* ── Scroll-reveal headline ── */
-
+/* Layout-only overrides — reveal mechanics live in ScrollRevealHeadline.css */
 .s2-headline {
   font-family: var(--font-primary);
   font-size: clamp(30px, 3.8vw, 55px);
@@ -51,34 +39,6 @@
   line-height: 1;                         /* Figma: line-height 1 */
   letter-spacing: var(--tracking-tight);  /* -0.02em */
   max-width: 1112px;                      /* Figma content width */
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 0.28em;
-  align-items: baseline;
-}
-
-.s2-headline .word-wrap {
-  position: relative;
-  display: inline-block;
-}
-
-.s2-headline .word-ghost {
-  display: block;
-  color: #8a8a8a;
-  opacity: 0.35;
-  user-select: none;
-  pointer-events: none;
-  transition: opacity 700ms var(--ease-out-expo);
-}
-
-.s2-headline .word-reveal {
-  position: absolute;
-  inset: 0;
-  color: var(--color-ink);
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity 700ms var(--ease-out-expo);
 }
 
 /* ─────────────────────────────────────────
@@ -183,12 +143,12 @@
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
-  background: #e8e8e8;
+  background: var(--color-gray-100);
 }
 
 .s2-card-media--discovery {
   height: 406px;
-  background: #111111;
+  background: var(--color-ink-deepest);
 }
 
 .s2-card-media--digital {

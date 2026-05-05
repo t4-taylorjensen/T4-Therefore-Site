@@ -4,6 +4,7 @@ import './FAQ.css';
 import iconPlus  from '../../ui/brand assets/icon-plus.svg';
 import iconMinus from '../../ui/brand assets/icon-minus.svg';
 import sidebarImg from '../../ui/brand assets/therefore-int-media-placeholder.jpg';
+import Eyebrow from '../../ui/Eyebrow';
 
 /* ─────────────────────────────────────────
    FAQ DATA
@@ -125,7 +126,7 @@ export default function FAQ() {
 
         {/* Header */}
         <div className="faq-header">
-          <p className="faq-eyebrow">Headless Commerce FAQs</p>
+          <Eyebrow className="faq-eyebrow">Headless Commerce FAQs</Eyebrow>
           <p className="faq-headline">Frequently Asked Questions</p>
         </div>
 

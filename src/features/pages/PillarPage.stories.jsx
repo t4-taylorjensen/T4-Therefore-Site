@@ -1,4 +1,4 @@
-import Nav from '../../components/patterns/nav/Nav';
+import PageLayout from '../../components/layout/PageLayout';
 import Hero from '../../components/patterns/hero/Hero';
 import Stats from '../../components/patterns/stats/Stats';
 import HeroStack from '../../components/patterns/hero-stack/HeroStack';
@@ -9,7 +9,6 @@ import TestimonialsCarousel from '../../components/patterns/testimonials-carouse
 import FeatureStack from '../../components/patterns/feature-stack/FeatureStack';
 import FAQ from '../../components/patterns/faq/FAQ';
 import ContactCTA from '../../components/patterns/contact-cta/ContactCTA';
-import Footer from '../../components/patterns/footer/Footer';
 
 export default {
   title: 'Pages/PillarPage',
@@ -49,8 +48,7 @@ This page is for **preview and documentation purposes only** — it demonstrates
 export const Default = {
   name: 'Pillar Page',
   render: () => (
-    <main>
-      <Nav />
+    <PageLayout>
       <Hero />
       <Stats />
       <HeroStack />
@@ -61,7 +59,6 @@ export const Default = {
       <FeatureStack />
       <FAQ />
       <ContactCTA />
-      <Footer />
-    </main>
+    </PageLayout>
   ),
 };

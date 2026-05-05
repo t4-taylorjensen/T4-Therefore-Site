@@ -4,6 +4,7 @@ import './CaseStudy.css';
 import mediaImg from '../../ui/brand assets/video block.jpg';
 import profileImg from '../../ui/brand assets/therefore-placeholder-woman.jpg';
 import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
+import Eyebrow from '../../ui/Eyebrow';
 
 /* ─────────────────────────────────────────
    CASE STUDY
@@ -94,7 +95,7 @@ export default function CaseStudy() {
 
         {/* ── Title block ── */}
         <div className="cs-title-block">
-          <p ref={labelRef} className="cs-label">Case Study</p>
+          <Eyebrow ref={labelRef} className="cs-label">Case Study</Eyebrow>
           <div className="cs-title-row">
             <h2 className="cs-headline">
               <span className="cs-word-clip">
@@ -128,7 +129,7 @@ export default function CaseStudy() {
 
         {/* Left: client label + description + CTA */}
         <div className="cs-split-left">
-          <p className="cs-split-label">DuVine Cycling</p>
+          <Eyebrow className="cs-split-label">DuVine Cycling</Eyebrow>
 
           <p ref={descRef} className="cs-split-desc cs-reveal">
             Built to replace a legacy monolith with a composable architecture designed for performance and long-term scalability.

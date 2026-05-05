@@ -1,0 +1,47 @@
+/* ─────────────────────────────────────────
+   SCROLL-REVEAL HEADLINE
+   Shared layout for the word-by-word fade-in
+   headline used in WhyTherefore, HeroStack,
+   and FeatureStack. Patterns control font
+   size / max-width / margin via their own
+   className passed to <ScrollRevealHeadline>.
+───────────────────────────────────────── */
+
+.scroll-reveal-headline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.28em;
+  align-items: baseline;
+  margin: 0;
+}
+
+.word-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dim ghost copy — always visible, dictates layout */
+.word-ghost {
+  display: block;
+  color: var(--color-gray-200);
+  opacity: 0.35;
+  user-select: none;
+  pointer-events: none;
+  transition:
+    color   var(--duration-slower) var(--ease-out-expo),
+    opacity var(--duration-slower) var(--ease-out-expo);
+}
+
+/* Reveal copy — overlays the ghost and fades in via JS-driven opacity */
+.word-reveal {
+  position: absolute;
+  inset: 0;
+  color: var(--color-ink);
+  opacity: 0;
+  white-space: nowrap;
+  transition: color var(--duration-slower) var(--ease-out-expo);
+}
+
+.word-reveal--muted {
+  color: var(--color-ink-muted);
+}
