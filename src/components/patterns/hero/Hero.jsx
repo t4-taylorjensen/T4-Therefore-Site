@@ -1,5 +1,5 @@
 import './Hero.css';
-import { BtnPrimary, IconArrowRight } from '../../ui/Button/Button';
+import { BtnPrimary, IconBtnArrow } from '../../ui/Button/Button';
 
 export default function Hero() {
   return (
@@ -24,7 +24,7 @@ export default function Hero() {
             </p>
           </div>
 
-          <BtnPrimary icon={IconArrowRight} nudge="right" className="anim-fade-up anim-delay-4">
+          <BtnPrimary icon={IconBtnArrow} nudge="right" className="anim-fade-up anim-delay-4">
             Start a Project
           </BtnPrimary>
         </div>

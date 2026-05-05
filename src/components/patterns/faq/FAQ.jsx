@@ -1,10 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import './FAQ.css';
 
-import iconPlus  from '../../ui/brand assets/icon-plus.svg';
-import iconMinus from '../../ui/brand assets/icon-minus.svg';
 import sidebarImg from '../../ui/brand assets/therefore-int-media-placeholder.jpg';
 import Eyebrow from '../../ui/Eyebrow';
+
+function PlusIcon() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <rect width="40" height="40" rx="5" fill="white"/>
+      <path d="M19.9998 14.1665V25.8332M14.1665 19.9998H25.8332" stroke="#121212" strokeWidth="1.2" strokeLinecap="square" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function MinusIcon() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <rect width="40" height="40" rx="5" fill="#F2F2F2"/>
+      <path d="M14.1665 20H25.8332" stroke="#121212" strokeWidth="1.2" strokeLinecap="square" strokeLinejoin="round"/>
+    </svg>
+  );
+}
 
 /* ─────────────────────────────────────────
    FAQ DATA
@@ -64,7 +80,7 @@ function FAQItem({ faq, index, isOpen, onToggle }) {
       >
         <p className="faq-question-text">{faq.question}</p>
         <div className="faq-icon" aria-hidden="true">
-          <img src={isOpen ? iconMinus : iconPlus} alt="" draggable="false" />
+          {isOpen ? <MinusIcon /> : <PlusIcon />}
         </div>
       </button>
 

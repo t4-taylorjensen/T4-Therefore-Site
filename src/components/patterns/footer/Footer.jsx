@@ -1,6 +1,7 @@
 import './Footer.css';
 import thereforeLogo from '../../ui/brand assets/therefore-logo.svg';
 import { BtnPrimary, IconCornerRightArrow } from '../../ui/Button/Button';
+import FlipLink from '../../ui/FlipLink';
 
 export default function Footer() {
 
@@ -38,20 +39,20 @@ export default function Footer() {
 
           <nav className="footer-nav" aria-label="Footer navigation">
             <ul className="footer-nav-col">
-              <li><a href="#">Capabilities</a></li>
-              <li><a href="#">Insights</a></li>
-              <li><a href="#">Culture</a></li>
+              <li><FlipLink href="#">Capabilities</FlipLink></li>
+              <li><FlipLink href="#">Insights</FlipLink></li>
+              <li><FlipLink href="#">Culture</FlipLink></li>
             </ul>
             <ul className="footer-nav-col">
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">LinkedIn</a></li>
-              <li><a href="#">Instagram</a></li>
+              <li><FlipLink href="#">Contact</FlipLink></li>
+              <li><FlipLink href="#">LinkedIn</FlipLink></li>
+              <li><FlipLink href="#">Instagram</FlipLink></li>
             </ul>
           </nav>
 
           <div className="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms Conditions</a>
+            <FlipLink href="#">Privacy Policy</FlipLink>
+            <FlipLink href="#">Terms Conditions</FlipLink>
           </div>
 
         </div>

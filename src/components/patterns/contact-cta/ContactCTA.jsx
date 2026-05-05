@@ -68,12 +68,7 @@ export default function ContactCTA() {
 
           {/* ── Right: form ── */}
           <div className="cta-form-panel">
-            {status === 'success' ? (
-              <div className="cta-success">
-                <p className="cta-success-label">Message sent</p>
-                <p className="cta-success-msg">We'll be in touch shortly.</p>
-              </div>
-            ) : (
+            {(
               <form className="cta-form" onSubmit={handleSubmit} noValidate>
                 <div className="cta-fields">
 
@@ -162,10 +157,15 @@ export default function ContactCTA() {
 
                 <button
                   type="submit"
-                  className="cta-submit"
-                  disabled={status === 'submitting'}
+                  className={`cta-submit${status === 'success' ? ' cta-submit--sent' : ''}`}
+                  disabled={status !== 'idle'}
                 >
-                  <span>{status === 'submitting' ? 'Sending…' : 'Send Message'}</span>
+                  <span className="cta-submit-label cta-submit-label--default">
+                    {status === 'submitting' ? 'Sending…' : 'Send Message'}
+                  </span>
+                  <span className="cta-submit-label cta-submit-label--sent">
+                    Your Request is Sent!
+                  </span>
                 </button>
               </form>
             )}
