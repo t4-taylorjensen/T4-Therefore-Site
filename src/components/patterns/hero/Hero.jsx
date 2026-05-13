@@ -1,5 +1,5 @@
 import './Hero.css';
-import { BtnPrimary, IconBtnArrow } from '../../ui/Button/Button';
+import { BtnPrimary, IconCornerDownRight } from '../../ui/Button/Button';
 
 export default function Hero() {
   return (
@@ -24,16 +24,14 @@ export default function Hero() {
             </p>
           </div>
 
-          <BtnPrimary icon={IconBtnArrow} nudge="right" className="anim-fade-up anim-delay-4">
+          <BtnPrimary icon={IconCornerDownRight} nudge="right" className="anim-fade-up anim-delay-4">
             Start a Project
           </BtnPrimary>
         </div>
       </div>
 
       {/* ── Right: media ── */}
-      <div className="hero-media anim-fade-in anim-delay-5">
-        <div className="hero-screen" />
-      </div>
+      <div className="hero-media anim-fade-in anim-delay-5" />
 
     </section>
   );

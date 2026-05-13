@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './ContactCTA.css';
 
 import profileImg from '../../ui/brand assets/therefore-int-luke-bowler.jpg';
-import shaderImg  from '../../ui/brand assets/contact-cta-shader.svg';
 import { BtnSecondary, BtnGhost } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
@@ -31,8 +30,17 @@ export default function ContactCTA() {
     <section className="cta-section">
       <div className="cta-card">
 
-        {/* Shader image */}
-        <img src={shaderImg} className="cta-shader" alt="" draggable="false" />
+        {/* Shader video — autoplay/muted/looping, no controls */}
+        <video
+          src="/cta-video.mp4"
+          className="cta-shader"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        />
 
         <div className="cta-inner">
 
@@ -160,11 +168,12 @@ export default function ContactCTA() {
                   className={`cta-submit${status === 'success' ? ' cta-submit--sent' : ''}`}
                   disabled={status !== 'idle'}
                 >
-                  <span className="cta-submit-label cta-submit-label--default">
-                    {status === 'submitting' ? 'Sending…' : 'Send Message'}
-                  </span>
-                  <span className="cta-submit-label cta-submit-label--sent">
-                    Your Request is Sent!
+                  <span className="cta-submit-label">
+                    {status === 'success'
+                      ? 'Request is Sent'
+                      : status === 'submitting'
+                        ? 'Sending…'
+                        : 'Send Message'}
                   </span>
                 </button>
               </form>

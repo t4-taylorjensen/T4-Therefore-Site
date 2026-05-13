@@ -34,7 +34,8 @@
 
 .stat-number {
   font-family: var(--font-primary);
-  font-size: var(--text-lg);             /* 42px */
+  /* Pure-vw scale: 42/1400 = 3vw · floor 42px (≤1400) · cap 76.8px (@2560). */
+  font-size: clamp(42px, 3vw, 76.8px);
   font-weight: 400;
   line-height: var(--leading-snug);      /* 1.4 */
   color: var(--color-ink);
@@ -49,7 +50,8 @@
 
 .stat-title {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);        /* 20px */
+  /* Pure-vw scale: 20/1400 = 1.429vw · floor 20px · cap 36.57px (@2560). */
+  font-size: clamp(20px, 1.429vw, 36.57px);
   font-weight: 400;
   line-height: var(--leading-normal);    /* 1.6 */
   color: var(--color-ink);
@@ -58,7 +60,8 @@
 
 .stat-subtitle {
   font-family: var(--font-primary);
-  font-size: 12.5px;
+  /* Pure-vw scale: 12.5/1400 = 0.893vw · floor 12.5px · cap 22.86px (@2560). */
+  font-size: clamp(12.5px, 0.893vw, 22.86px);
   font-weight: 400;
   line-height: 23px;
   letter-spacing: var(--tracking-wide);  /* 0.5px */
@@ -102,25 +105,25 @@
     display: none;
   }
 
-  /* Three cards visible simultaneously: (viewport - left pad - 2 gaps) / 3 */
+  /* Each card has a 240px min-width — scroll-snap still works. */
   .stat {
-    flex: 0 0 calc((100vw - 44px) / 3);
+    flex: 0 0 240px;
     scroll-snap-align: start;
     gap: var(--space-3);                 /* 12px */
   }
 
   .stat-number {
-    font-size: 22px;
+    font-size: 42px;
     line-height: 1.3;
   }
 
   .stat-title {
-    font-size: 12px;
+    font-size: 20px;
     line-height: 1.5;
   }
 
   .stat-subtitle {
-    font-size: 10px;
+    font-size: 12.5px;
     line-height: 1.5;
   }
 }

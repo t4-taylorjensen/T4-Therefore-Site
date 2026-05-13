@@ -16,13 +16,19 @@
 /* ── Container ── */
 
 .hs-container {
-  max-width: var(--container-md);        /* 1280px */
-  margin-left: auto;
-  margin-right: auto;
+  /* Fluid: spans the full viewport width — no max-width cap. */
   padding-left: var(--space-6);          /* 30px */
   padding-right: var(--space-6);
   padding-top: clamp(100px, 10vw, 160px);
   padding-bottom: clamp(100px, 10vw, 160px);
+}
+
+/* Desktop — bump the side padding to 90px once the side-by-side layout kicks in. */
+@media (min-width: 1024px) {
+  .hs-container {
+    padding-left: 90px;
+    padding-right: 90px;
+  }
 }
 
 /* ── Large Title ── */
@@ -37,23 +43,32 @@
 /* Override default tracking-wider from .text-eyebrow */
 .hs-eyebrow {
   letter-spacing: var(--tracking-mono);
+  /* Holds at 11px through 1400px, then scales up to ~18.3px at 2560px
+     (same slope as .hs-card-meta — matches the headline's 1.636× growth). */
+  font-size: clamp(11px, calc(0.63vw + 2.18px), 18.3px);
 }
 
 /* Layout-only overrides — reveal mechanics live in ScrollRevealHeadline.css */
 .hs-headline {
   font-family: var(--font-primary);
-  font-size: var(--text-xl);             /* clamp(40px,5vw,55px) */
+  /* Two-segment scale: 36px through 1024px → 55px at 1400px → ~90px at 2560px (capped).
+     min() picks the steeper 1024→1400 segment, then the gentler 1400→2560 segment. */
+  font-size: clamp(36px, min(calc(5.05vw - 15.71px), calc(3.02vw + 12.72px)), 90px);
   font-weight: 400;
   line-height: var(--leading-tight);     /* 1.15 */
   letter-spacing: var(--tracking-tight); /* -0.02em */
-  max-width: 1000px;
+  /* Holds at 1000px through 1400px, then scales up to ~1636px at 2560px
+     (matches the headline's 55→90 growth factor of ~1.636×). */
+  max-width: clamp(1000px, calc(54.83vw + 232.41px), 1636px);
 }
 
 /* ── Split layout ── */
 
 .hs-split {
   display: grid;
-  grid-template-columns: 1fr 368px;
+  /* Card holds at 368px through 1400px (26.29% of viewport),
+     then scales as 26.29vw up to ~673px at 2560px. */
+  grid-template-columns: 1fr clamp(368px, 26.29vw, 673px);
   gap: clamp(40px, 6vw, 100px);
   align-items: end;
 }
@@ -69,20 +84,29 @@
 
 .hs-text-heading {
   font-family: var(--font-primary);
-  font-size: var(--text-md);             /* 30px */
+  /* Holds at 30px through 1400px, then scales up to ~37.3px at 2560px (same slope as hero copy). */
+  font-size: clamp(30px, calc(0.63vw + 21.18px), 37.3px);
   font-weight: 400;
   line-height: var(--leading-snug);      /* 1.4 */
   color: var(--color-ink);
   margin: 0;
+  /* Holds at 710px through 1400px, then scales as 50.71% of viewport
+     (710/1400) up to ~1298px at 2560px. */
+  max-width: clamp(710px, 50.71vw, 1298px);
 }
 
 .hs-text-body {
   font-family: var(--font-primary);
-  font-size: 18px;
+  /* Pure-vw scale so font tracks the column (max-width: 50.71vw above 1400).
+     18/710 = 2.535% of column · 0.02535 × 50.71vw = 1.286vw.
+     Floor 18px (below 1400) · cap 32.92px (at 2560). Keeps line count constant ≥ 1400. */
+  font-size: clamp(18px, 1.286vw, 32.92px);
   font-weight: 400;
   line-height: 1.7;
   color: var(--color-ink);
-  max-width: 620px;
+  /* Holds at 710px through 1400px, then scales as 50.71% of viewport
+     (710/1400) up to ~1298px at 2560px. */
+  max-width: clamp(710px, 50.71vw, 1298px);
 }
 
 .hs-text-body p {
@@ -124,7 +148,8 @@
 
 .hs-beam-svg {
   width: 100%;
-  height: 130px;
+  height: auto;
+  aspect-ratio: 308 / 130;
   display: block;
   overflow: visible;
 }
@@ -177,7 +202,8 @@
 
 .hs-card-title {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);        /* 20px */
+  /* Holds at 20px through 1400px, then scales up to ~27.3px at 2560px. */
+  font-size: clamp(20px, calc(0.63vw + 11.14px), 27.3px);
   font-weight: 400;
   line-height: var(--leading-normal);    /* 1.6 */
   color: var(--color-ink);
@@ -186,7 +212,10 @@
 
 .hs-card-desc {
   font-family: var(--font-primary);
-  font-size: var(--text-body-sm);        /* 15px */
+  /* Pure-vw scale so font tracks the card (.hs-card = 26.29vw above 1400).
+     15/368 = 4.076% of card · 0.04076 × 26.29vw = 1.072vw.
+     Floor 15px (below 1400, where card floors at 368px) · cap 27.43px (at 2560). */
+  font-size: clamp(15px, 1.072vw, 27.43px);
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: var(--tracking-wide);  /* 0.5px */
@@ -204,8 +233,23 @@
 
 .hs-card-btn {
   display: flex;
-  gap: var(--space-2);                   /* 8px */
+  /* Tracks .hs-card (26.29vw above 1400): 8/368 = 0.572vw. */
+  gap: clamp(8px, 0.572vw, 14.64px);
   align-items: center;
+}
+
+/* Scope global .btn / .btn-icon-accent scaling to the card's CTA row.
+   All values track .hs-card width (26.29vw above 1400, floored at 368px). */
+.hs-card-btn .btn {
+  height: clamp(34px, 2.43vw, 62.18px);
+  font-size: clamp(14px, 1vw, 25.6px);
+  padding: 0 clamp(10px, 0.714vw, 18.29px);
+  gap: clamp(12px, 0.857vw, 21.95px);
+}
+
+.hs-card-btn .btn-icon-accent {
+  width: clamp(34px, 2.43vw, 62.18px);
+  height: clamp(34px, 2.43vw, 62.18px);
 }
 
 .hs-card-btn--pressed {
@@ -285,7 +329,8 @@
   flex: 1 0 0;
   min-width: 0;
   font-family: var(--font-primary);
-  font-size: var(--text-body-sm);        /* 15px */
+  /* Holds at 15px through 1400px, then scales up to ~22.3px at 2560px. */
+  font-size: clamp(15px, calc(0.63vw + 6.18px), 22.3px);
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: var(--tracking-wide);
@@ -303,7 +348,8 @@
 .hs-email-success-text {
   flex: 1 0 0;
   font-family: var(--font-primary);
-  font-size: var(--text-body-sm);
+  /* Holds at 15px through 1400px, then scales up to ~22.3px at 2560px. */
+  font-size: clamp(15px, calc(0.63vw + 6.18px), 22.3px);
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: var(--tracking-wide);
@@ -348,7 +394,8 @@
 
 .hs-card-meta {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);           /* 11px */
+  /* Holds at 11px through 1400px, then scales up to ~18.3px at 2560px (same slope as the rest). */
+  font-size: clamp(11px, calc(0.63vw + 2.18px), 18.3px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: var(--tracking-wider); /* 1px */
@@ -370,10 +417,6 @@
     margin-bottom: 60px;
   }
 
-  .hs-headline {
-    font-size: clamp(24px, 7.5vw, 40px);
-  }
-
   .hs-split {
     grid-template-columns: 1fr;
     gap: 0;
@@ -385,9 +428,5 @@
 
   .hs-card {
     width: min(100%, 368px);
-  }
-
-  .hs-text-body {
-    font-size: var(--text-body-md);      /* 16px */
   }
 }
