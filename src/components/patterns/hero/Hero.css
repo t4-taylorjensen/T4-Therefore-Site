@@ -9,9 +9,11 @@
   display: flex;
   gap: var(--space-8);                   /* 60px */
   align-items: stretch;
-  max-width: var(--container-max);
-  margin: 0 auto;
-  min-height: 100vh;
+  width: 100%;
+  /* Fill the viewport below the 65px sticky nav, with svh/dvh fallbacks. */
+  min-height: calc(100vh - 65px);
+  min-height: calc(100svh - 65px);
+  min-height: calc(100dvh - 65px);
   padding: var(--space-6);               /* 30px — replaces body padding from HTML prototype */
   background: var(--color-bg-page);
   overflow-x: clip;
@@ -20,7 +22,7 @@
 /* ── Left column ── */
 
 .hero-content {
-  flex: 1 0 0;
+  flex: 540 1 0;                         /* 540 : 740 ratio (matches 1400px design) */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -30,14 +32,16 @@
 
 .hero-headline {
   font-family: var(--font-display);
-  font-size: var(--text-display);        /* 112px */
+  /* Two-segment scale that hits all design breakpoints:
+     72px at 1024px → 112px at 1400px → 185px at 2560px (capped).
+     The min() picks the steeper segment 1024→1400, then the gentler 1400→2560. */
+  font-size: clamp(72px, min(calc(10.64vw - 36.95px), calc(6.29vw + 23.94px)), 185px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: var(--leading-display);   /* 0.85 */
   color: var(--color-ink);
   margin: 0;
-  max-width: 540px;
   font-kerning: normal;
   font-feature-settings: "kern" 1;
   text-rendering: optimizeLegibility;
@@ -61,14 +65,20 @@
 
 .hero-copy-main {
   font-family: var(--font-primary);
-  font-size: clamp(16px, 1.2vw, 20px);
+  /* Tracks the .hero-content column (42.1875vw − 50.625px above the 1024 breakpoint).
+     20/540 = 3.704% of column · 0.03704 × column = calc(1.5625vw − 1.875px).
+     Floor 20px (below 1400) · cap 38.13px (at 2560). Keeps line count constant ≥ 1400. */
+  font-size: clamp(20px, calc(1.5625vw - 1.875px), 38.13px);
   line-height: var(--leading-normal);    /* 1.6 */
   color: var(--color-ink);
 }
 
 .hero-copy-sub {
   font-family: var(--font-primary);
-  font-size: var(--text-body-sm);        /* 15px */
+  /* Tracks the .hero-content column at 15/540 = 2.778% ratio.
+     0.02778 × column = calc(1.1719vw − 1.406px).
+     Floor 15px (below 1400) · cap 28.59px (at 2560). */
+  font-size: clamp(15px, calc(1.1719vw - 1.406px), 28.59px);
   line-height: 1.7;
   letter-spacing: var(--tracking-wide);  /* 0.5px */
   color: var(--color-ink-faint);         /* rgba(18,18,18,0.7) */
@@ -119,28 +129,22 @@
   animation: nudge-right 0.55s ease-in-out 1;
 }
 
+/* Scope the global .btn font-scaling override to the hero CTA only.
+   Font holds at 14px through 1400px, then scales to ~21px at 2560px.
+   Height holds at 34px through 1400px, then scales to ~51.7px at 2560px (same ratio as font). */
+.hero-body > .btn {
+  font-size: clamp(14px, calc(0.63vw + 5.18px), 21.3px);
+  height: clamp(34px, calc(1.53vw + 12.58px), 51.7px);
+}
+
 /* ── Right column: media ── */
 
 .hero-media {
   background: var(--color-surface-1);   /* #f2f2f2 */
-  width: clamp(300px, 48vw, 740px);
-  flex-shrink: 0;
+  flex: 740 1 0;                         /* 540 : 740 ratio (matches 1400px design) */
+  min-width: 0;
   position: relative;
   overflow: hidden;
-}
-
-.hero-screen {
-  position: absolute;
-  background: var(--color-white);
-  width: min(508px, 70%);
-  height: calc(min(508px, 70%) * 682 / 508);
-  left: min(116px, 16%);
-  top: 12%;
-  border-radius: 20px 20px 0 0;
-  box-shadow:
-    0px 8px 18px rgba(0,0,0,0.08),
-    0px 33px 33px rgba(0,0,0,0.06),
-    0px 74px 45px rgba(0,0,0,0.03);
 }
 
 /* ── Tablet ── */
@@ -148,16 +152,19 @@
   .hero-section {
     flex-direction: column;
     gap: 32px;
+    /* Drop the fill-the-fold min-height once stacked — let content size the section. */
     min-height: 0;
     padding: 20px;
   }
 
   .hero-content {
+    flex: 0 0 auto;                     /* drop the 540/740 ratio when stacked */
     padding: 0;
     gap: var(--space-7);
   }
 
   .hero-media {
+    flex: 0 0 auto;                     /* drop the 540/740 ratio when stacked */
     width: 100%;
     aspect-ratio: 740 / 775;
     height: auto;
@@ -170,8 +177,9 @@
     padding: 16px;
   }
 
-  .hero-headline {
-    font-size: clamp(48px, 18vw, 72px);
+  /* Media panel is decorative — hide on mobile so the empty box doesn't add height. */
+  .hero-media {
+    display: none;
   }
 
   .hero-cta {
