@@ -1,48 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import './TestimonialsCarousel.css';
-import placeholderVideo from './placeholder-video-man-talking.mp4';
-import person1 from './person-1.jpg';
-import person2 from './person-2.jpg';
-import person3 from './person-3.jpg';
 import playHover  from '../../ui/brand assets/Play Hover.svg';
 import pauseHover from '../../ui/brand assets/Pause Hover.svg';
 import { BtnArrow, IconArrowRight, IconArrowLeft } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
-/* ─── Data ──────────────────────────────────────────────────────── */
-const testimonials = [
-  {
-    name:         'Tristan Armstrong',
-    title:        'Chief Executive Officer',
-    company:      'Canyon Spirit',
-    photo:        person1,
-    video:        placeholderVideo,
-    videoAsCover: true,
-    quote:        '"Therefore has been tenacious improving our technological capabilities and guest experience. They have been supportive partners and met the changing needs of the tourism landscape."',
-  },
-  {
-    name:    'Sarah Chen',
-    title:   'Head of Product',
-    company: 'Meridian Labs',
-    photo:   person2,
-    video:   placeholderVideo,
-    quote:   '"Working with this team transformed how we approach digital infrastructure. Their expertise and dedication to our vision made every milestone feel achievable."',
-  },
-  {
-    name:    'Marcus Webb',
-    title:   'Founder & Creative Director',
-    company: 'Northlight Studio',
-    photo:   person3,
-    video:   placeholderVideo,
-    quote:   '"From day one, the collaboration felt effortless. They understood our brand deeply and delivered an experience our customers talk about constantly."',
-  },
-];
-
 /* Stack offsets — first card front and center, others recede left+down */
+/* Static staircase transforms applied to the WRAPPER (no hover dy here).
+   Hover lift lives on the inner .tc-card so the wrapper's hit area never
+   moves — prevents mouseenter/mouseleave stutter near the bottom edge. */
 const STACK_CFG = [
-  { transform: (dy) => `translateX(0px)   translateY(${dy}px)      scale(1.0)`,  z: 30 },
-  { transform: (dy) => `translateX(-40px) translateY(${6  + dy}px) scale(0.94)`, z: 20 },
-  { transform: (dy) => `translateX(-80px) translateY(${12 + dy}px) scale(0.88)`, z: 10 },
+  { transform: 'translateX(0px)   scale(1.0)',  z: 30 },
+  { transform: 'translateX(-30px) scale(0.94)', z: 20 },
+  { transform: 'translateX(-60px) scale(0.88)', z: 10 },
 ];
 
 function CursorIcons({ isPlaying }) {
@@ -90,67 +60,74 @@ function Card({ item, stackPos, isActive, isPlaying, onCardClick, onMouseEnter, 
 
   return (
     <div
-      className={`tc-card${isActive ? ' tc-card--active' : ''}`}
+      className={`tc-card-wrapper${isActive ? ' tc-card-wrapper--active' : ''}`}
       style={{
-        transform: cfg.transform(hoverDy),
+        transform: cfg.transform,
         zIndex:    cfg.z,
-        boxShadow: stackPos === 0 ? 'var(--shadow-card)' : 'none',
       }}
       onClick={onCardClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
     >
-      <img
-        className="tc-card-photo"
-        src={item.photo}
-        alt={item.name}
-        draggable="false"
-        style={{ opacity: videoAsCover ? 0 : (isPlaying ? 0 : 1) }}
-      />
+      <div
+        className={`tc-card${isActive ? ' tc-card--active' : ''}`}
+        style={{
+          transform: hoverDy ? `translateY(${hoverDy}px)` : 'none',
+          boxShadow: stackPos === 0 ? 'var(--shadow-card)' : 'none',
+        }}
+        onMouseMove={handleMouseMove}
+      >
+        <img
+          className="tc-card-photo"
+          src={item.photo}
+          alt={item.name}
+          draggable="false"
+          style={{ opacity: videoAsCover ? 0 : (isPlaying ? 0 : 1) }}
+        />
 
-      <video
-        ref={videoRef}
-        className="tc-card-video"
-        src={item.video}
-        loop playsInline
-        preload="metadata"
-        style={{ opacity: videoAsCover ? (isActive ? 1 : 0) : (isPlaying ? 1 : 0) }}
-      />
+        <video
+          ref={videoRef}
+          className="tc-card-video"
+          src={item.video}
+          loop playsInline
+          preload="metadata"
+          style={{ opacity: videoAsCover ? (isActive ? 1 : 0) : (isPlaying ? 1 : 0) }}
+        />
 
-      <div className="tc-card-gradient" />
+        <div className="tc-card-gradient" />
 
-      <div className="tc-card-overlay">
-        <p
-          className="tc-card-name"
-          style={{ opacity: isActive && !cursorVisible ? 1 : 0 }}
-        >
-          {item.name}
-        </p>
+        <div className="tc-card-overlay">
+          <p
+            className="tc-card-name"
+            style={{ opacity: isActive && !cursorVisible ? 1 : 0 }}
+          >
+            {item.name}
+          </p>
 
-        <div
-          className="tc-card-tag"
-          style={{ opacity: isActive && !cursorVisible ? 1 : 0 }}
-        >
-          <span className="tc-card-tag-label">{item.company}</span>
+          <div
+            className="tc-card-tag"
+            style={{ opacity: isActive && !cursorVisible ? 1 : 0 }}
+          >
+            <span className="tc-card-tag-label">{item.company}</span>
+          </div>
         </div>
+
+        {isActive && (
+          <div
+            ref={playBtnRef}
+            className="tc-card-cursor"
+            style={{ opacity: cursorVisible ? 1 : 0 }}
+          >
+            <CursorIcons isPlaying={isPlaying} />
+          </div>
+        )}
       </div>
-
-      {isActive && (
-        <div
-          ref={playBtnRef}
-          className="tc-card-cursor"
-          style={{ opacity: cursorVisible ? 1 : 0 }}
-        >
-          <CursorIcons isPlaying={isPlaying} />
-        </div>
-      )}
     </div>
   );
 }
 
 /* ─── Main component ─────────────────────────────────────────────── */
-function TestimonialsCarousel() {
+function TestimonialsCarousel({ eyebrow, testimonials = [] }) {
   const [current,    setCurrent]   = useState(0);
   const [isPlaying,  setIsPlaying] = useState(false);
   const [hoveredIdx, setHovered]   = useState(null);
@@ -164,6 +141,8 @@ function TestimonialsCarousel() {
       vid.currentTime = 0;
     });
   }, [current]);
+
+  if (!testimonials.length) return null;
 
   const handleCardClick = (i) => {
     if (i === current) {
@@ -194,7 +173,7 @@ function TestimonialsCarousel() {
   return (
     <section className="tc-section">
 
-      <Eyebrow className="tc-eyebrow">Trusted by industry leaders</Eyebrow>
+      {eyebrow && <Eyebrow className="tc-eyebrow">{eyebrow}</Eyebrow>}
 
       <div className="tc-columns">
 

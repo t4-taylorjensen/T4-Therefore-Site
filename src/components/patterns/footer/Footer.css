@@ -17,7 +17,8 @@
 .footer-frame {
   display: flex;
   align-items: stretch;
-  min-height: 500px;
+  /* 500/1400 = 35.714vw · floor 500 · cap 914.29 @ 2560. */
+  min-height: clamp(500px, 35.714vw, 914.29px);
   border-left:  1px solid var(--color-border-medium);
   border-right: 1px solid var(--color-border-medium);
 }
@@ -27,13 +28,14 @@
 ───────────────────────────────────────── */
 
 .footer-left {
-  width: 798px;
+  /* 798/1400 = 57vw · floor 798 · cap 1459.2 @ 2560. */
+  width: clamp(798px, 57vw, 1459.2px);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: var(--space-6);                             /* 30px */
-  border-right: 1px solid var(--color-border-medium);
+  /* 30/1400 = 2.143vw · floor 30 · cap 54.86 @ 2560. */
+  padding: clamp(30px, 2.143vw, 54.86px);
 }
 
 /* ── About block ── */
@@ -41,17 +43,34 @@
 .footer-about {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);                                 /* 30px */
+  /* 30/1400 = 2.143vw · floor 30 · cap 54.86 @ 2560. */
+  gap: clamp(30px, 2.143vw, 54.86px);
 }
 
 .footer-about-text {
   font-family: var(--font-primary);
-  font-size: var(--text-body-md);                      /* 16px */
+  /* 16/1400 = 1.143vw · floor 16 · cap 29.26 @ 2560. */
+  font-size: clamp(16px, 1.143vw, 29.26px);
   font-weight: 400;
   line-height: 1.8;
   color: var(--color-ink);
-  max-width: 427px;
+  /* 427/1400 = 30.5vw · floor 427 · cap 780.8 @ 2560 (matches column growth). */
+  max-width: clamp(427px, 30.5vw, 780.8px);
   margin: 0;
+}
+
+/* Scope button scaling to the footer CTA only. Pure-vw rates matching the
+   site-wide button pattern (34/14/10/12/16 @ 1400 → 62.18/25.6/18.29/21.95/29.26 @ 2560). */
+.footer-about .btn {
+  height: clamp(34px, 2.429vw, 62.18px);
+  font-size: clamp(14px, 1vw, 25.6px);
+  padding: 0 clamp(10px, 0.714vw, 18.29px);
+  gap: clamp(12px, 0.857vw, 21.95px);
+}
+
+.footer-about .btn svg {
+  width: clamp(16px, 1.143vw, 29.26px);
+  height: clamp(16px, 1.143vw, 29.26px);
 }
 
 /* ── CTA button ── */
@@ -105,7 +124,8 @@
 
 .footer-logo-img {
   display: block;
-  height: 52px;
+  /* 52/1400 = 3.714vw · floor 52 · cap 95.09 @ 2560. */
+  height: clamp(52px, 3.714vw, 95.09px);
   width: auto;
   user-select: none;
 }
@@ -119,8 +139,10 @@
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto;
-  column-gap: 90px;
-  padding: var(--space-6);                             /* 30px */
+  /* 90/1400 = 6.429vw · floor 90 · cap 164.57 @ 2560. */
+  column-gap: clamp(90px, 6.429vw, 164.57px);
+  /* 30/1400 = 2.143vw · floor 30 · cap 54.86 @ 2560. */
+  padding: clamp(30px, 2.143vw, 54.86px);
 }
 
 /* ── Nav ── */
@@ -137,16 +159,20 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);                                 /* 20px */
+  /* 20/1400 = 1.429vw · floor 20 · cap 36.57 @ 2560. */
+  gap: clamp(20px, 1.429vw, 36.57px);
   align-self: start;
   grid-row: 1;
 }
 
 .footer-nav-col li a {
   font-family: var(--font-primary);
-  font-size: var(--text-body-sm);                      /* 15px */
+  /* 15/1400 = 1.071vw · floor 15 · cap 27.43 @ 2560. */
+  font-size: clamp(15px, 1.071vw, 27.43px);
   font-weight: 400;
-  line-height: 1;
+  /* 1.2 (was 1) so the flip-link's overflow:hidden doesn't clip descenders
+     on letters like p/g/y in "Capabilities", "Insights", "Instagram". */
+  line-height: 1.2;
   color: var(--color-ink);
   text-decoration: none;
   transition: color var(--duration-fast) ease;
@@ -160,18 +186,22 @@
 
 /* grid-column: 2 pins these under Contact/LinkedIn/Instagram */
 .footer-legal {
-  grid-column: 2;
+  grid-column: 1 / -1;
   grid-row: 2;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);                                 /* 12px */
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  /* 30/1400 = 2.143vw · floor 30 · cap 54.86 @ 2560. */
+  gap: clamp(30px, 2.143vw, 54.86px);
   align-self: end;
-  padding-top: var(--space-6);                         /* 30px breathing room */
+  padding-top: clamp(30px, 2.143vw, 54.86px);
 }
 
 .footer-legal a {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);                         /* 11px */
+  /* 11/1400 = 0.786vw · floor 11 (readability) · cap 20.12 @ 2560. */
+  font-size: clamp(11px, 0.786vw, 20.12px);
   font-weight: 400;
   letter-spacing: var(--tracking-wider);               /* 1px */
   text-transform: uppercase;
@@ -196,7 +226,6 @@
 
   .footer-left {
     width: auto;
-    border-right: none;
     border-bottom: 1px solid var(--color-border-medium);
   }
 }

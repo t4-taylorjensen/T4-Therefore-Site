@@ -1,5 +1,19 @@
 import LogoCarousel from './LogoCarousel';
 
+import rockyMountaineerSrc from '../../ui/brand assets/log-rockymountaineer.svg';
+import canyonSpiritSrc     from '../../ui/brand assets/logo-canyonspirit.svg';
+import duvineSrc           from '../../ui/brand assets/logo-duvine.svg';
+import jchsSrc             from '../../ui/brand assets/logo-jchs.svg';
+import longosSrc           from '../../ui/brand assets/logo-longos.svg';
+
+const DEFAULT_LOGOS = [
+  { name: 'Rocky Mountaineer', src: rockyMountaineerSrc },
+  { name: 'Canyon Spirit',     src: canyonSpiritSrc     },
+  { name: 'DuVine',            src: duvineSrc           },
+  { name: 'JCHS',              src: jchsSrc             },
+  { name: 'Longos',            src: longosSrc           },
+];
+
 export default {
   title: 'Patterns/LogoCarousel',
   component: LogoCarousel,
@@ -35,4 +49,6 @@ Place LogoCarousel between major content sections — typically after Hero and b
   },
 };
 
-export const Default = {};
+export const Default = {
+  render: () => <LogoCarousel logos={DEFAULT_LOGOS} />,
+};

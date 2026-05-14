@@ -39,6 +39,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0;
+  text-wrap: pretty;
   line-height: var(--leading-display);   /* 0.85 */
   color: var(--color-ink);
   margin: 0;
@@ -135,6 +136,13 @@
 .hero-body > .btn {
   font-size: clamp(14px, calc(0.63vw + 5.18px), 21.3px);
   height: clamp(34px, calc(1.53vw + 12.58px), 51.7px);
+}
+
+/* Icon scales at the same proportional rate (16/14 × font slope) so it grows
+   in lockstep with the button. 16px @ 1400 → 24.35px @ 2560. */
+.hero-body > .btn svg {
+  width: clamp(16px, calc(0.72vw + 5.92px), 24.35px);
+  height: clamp(16px, calc(0.72vw + 5.92px), 24.35px);
 }
 
 /* ── Right column: media ── */

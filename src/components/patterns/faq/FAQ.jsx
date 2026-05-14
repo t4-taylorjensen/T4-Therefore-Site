@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './FAQ.css';
 
-import sidebarImg from '../../ui/brand assets/therefore-int-media-placeholder.jpg';
 import Eyebrow from '../../ui/Eyebrow';
 
 function PlusIcon() {
@@ -21,38 +20,6 @@ function MinusIcon() {
     </svg>
   );
 }
-
-/* ─────────────────────────────────────────
-   FAQ DATA
-───────────────────────────────────────── */
-
-const faqs = [
-  {
-    question: 'What is headless commerce?',
-    answer:
-      'Headless commerce separates the frontend experience from backend systems. This allows enterprises to manage content, commerce, and integrations independently, creating greater flexibility, faster performance, and long-term scalability.',
-  },
-  {
-    question: 'When does headless make sense?',
-    answer:
-      'Headless is most effective for organizations with complex integrations, multi-channel requirements, or growth plans that exceed the limits of all-in-one platforms. It becomes valuable when flexibility and scalability outweigh simplicity.',
-  },
-  {
-    question: 'How long does implementation take?',
-    answer:
-      'Enterprise implementations typically range from 12 to 20 weeks, depending on integration complexity, content modeling, and migration scope. A phased approach can accelerate time to value while long-term architecture evolves.',
-  },
-  {
-    question: 'How does headless connect to existing systems?',
-    answer:
-      'Headless integrates through APIs, allowing CMS, commerce engines, CRM, ERP, PIM, and other platforms to operate as a unified system. The architecture is designed to support existing workflows while improving flexibility and performance.',
-  },
-  {
-    question: 'Is headless right for mid-sized enterprises?',
-    answer:
-      'Headless can be the right choice for mid-sized enterprises with growing complexity, multiple digital channels, or long-term scalability goals. For smaller organizations with simple requirements, a monolithic platform may remain sufficient.',
-  },
-];
 
 /* ─────────────────────────────────────────
    ACCORDION ITEM
@@ -101,24 +68,27 @@ function FAQItem({ faq, index, isOpen, onToggle }) {
    SIDEBAR
 ───────────────────────────────────────── */
 
-function InsightSidebar() {
+function InsightSidebar({ image, imageAlt, category, title, href = '#' }) {
+  if (!image && !title) return null;
   return (
     <aside className="faq-sidebar">
-      <a href="#" className="faq-sidebar-card">
-        <div className="faq-sidebar-image-wrap">
-          <img
-            className="faq-sidebar-image"
-            src={sidebarImg}
-            alt="Agentic Commerce article"
-          />
-        </div>
-        <div className="faq-sidebar-body">
-          <div className="faq-sidebar-category">
-            <span>Insight</span>
+      <a href={href} className="faq-sidebar-card">
+        {image && (
+          <div className="faq-sidebar-image-wrap">
+            <img
+              className="faq-sidebar-image"
+              src={image}
+              alt={imageAlt || ''}
+            />
           </div>
-          <p className="faq-sidebar-title">
-            Agentic Commerce: Preparing for AI-Driven Transactions
-          </p>
+        )}
+        <div className="faq-sidebar-body">
+          {category && (
+            <div className="faq-sidebar-category">
+              <span>{category}</span>
+            </div>
+          )}
+          {title && <p className="faq-sidebar-title">{title}</p>}
         </div>
       </a>
     </aside>
@@ -129,7 +99,12 @@ function InsightSidebar() {
    FAQ
 ───────────────────────────────────────── */
 
-export default function FAQ() {
+export default function FAQ({
+  eyebrow,
+  headline,
+  faqs = [],
+  sidebar,
+}) {
   const [openIndex, setOpenIndex] = useState(null);
 
   function handleToggle(i) {
@@ -142,8 +117,8 @@ export default function FAQ() {
 
         {/* Header */}
         <div className="faq-header">
-          <Eyebrow className="faq-eyebrow">Headless Commerce FAQs</Eyebrow>
-          <p className="faq-headline">Frequently Asked Questions</p>
+          {eyebrow && <Eyebrow className="faq-eyebrow">{eyebrow}</Eyebrow>}
+          {headline && <p className="faq-headline">{headline}</p>}
         </div>
 
         {/* Accordion */}
@@ -161,7 +136,7 @@ export default function FAQ() {
 
       </div>
 
-      <InsightSidebar />
+      {sidebar && <InsightSidebar {...sidebar} />}
     </section>
   );
 }

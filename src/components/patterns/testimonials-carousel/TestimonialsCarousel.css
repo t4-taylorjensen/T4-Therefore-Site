@@ -5,8 +5,10 @@
 ───────────────────────────────────────── */
 
 :root {
-  --tc-card-w: clamp(240px, 27vw, 400px);
-  --tc-card-h: calc(var(--tc-card-w) * 710 / 510);
+  /* 431/1400 = 30.786vw · floored 315.25px (= value @ 1024) · capped 788.12px @ 2560. */
+  --tc-card-w: clamp(315.25px, 30.786vw, 788.12px);
+  /* Height derives from the new 580/431 design ratio so card scales uniformly. */
+  --tc-card-h: calc(var(--tc-card-w) * 580 / 431);
 }
 
 /* ─────────────────────────────────────────
@@ -18,7 +20,8 @@
   flex-direction: column;
   background: var(--color-bg-section);
   margin: var(--space-6);
-  padding: var(--space-6);
+  /* top/bottom 30px · right 90px · left 30px */
+  padding: var(--space-6) 90px var(--space-6) var(--space-6);
 }
 
 /* Override default tracking-wider from .text-eyebrow */
@@ -26,6 +29,8 @@
   letter-spacing: var(--tracking-widest);
   margin: 0 0 var(--space-8);               /* 60px */
   flex-shrink: 0;
+  /* 11/1400 = 0.786vw · floored 11px (readability) · capped 20.12px @ 2560. */
+  font-size: clamp(11px, 0.786vw, 20.12px);
 }
 
 /* ─────────────────────────────────────────
@@ -33,10 +38,13 @@
 ───────────────────────────────────────── */
 .tc-columns {
   display: flex;
-  gap: clamp(32px, 5.5vw, 80px);
+  /* 105/1400 = 7.5vw · floored 76.8px (= value @ 1024) · capped 192px @ 2560. */
+  gap: clamp(76.8px, 7.5vw, 192px);
   flex: 1;
   align-items: center;
-  flex-wrap: wrap;
+  /* No wrapping — explicit @media (max-width: 1024px) is the single source of
+     truth for stacking. Keeps columns side-by-side at every desktop width. */
+  flex-wrap: nowrap;
 }
 
 .tc-left {
@@ -44,16 +52,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Desktop: image column gets its own 30px left padding (on top of the
+     section's 30px) so the stack sits 60px from the section edge. */
+  padding-left: var(--space-6);
 }
 
 .tc-right {
-  flex: 1;
-  min-width: 280px;
+  /* 595/1400 = 42.5vw · floored 435.2px (= value @ 1024) · capped 1088px @ 2560. */
+  flex: 0 0 clamp(435.2px, 42.5vw, 1088px);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: var(--tc-card-h);
-  padding: clamp(16px, 4vw, 50px) clamp(24px, 6vw, 90px) clamp(16px, 4vw, 50px) clamp(16px, 4vw, 60px);
+  padding: 50px 0;
 }
 
 /* ─────────────────────────────────────────
@@ -61,7 +73,6 @@
 ───────────────────────────────────────── */
 .tc-stack-container {
   position: relative;
-  padding: 14px 0;
   margin: 0 auto;
 }
 
@@ -69,23 +80,37 @@
   position: relative;
   width: var(--tc-card-w);
   height: var(--tc-card-h);
-  margin-left: var(--space-9);              /* 80px */
+  /* 60px = deepest stack-card peek (-60), so back cards align with the
+     container's left edge instead of overshooting it. */
+  margin-left: 60px;
+}
+
+/* Wrapper takes the static staircase transform and hover-detection.
+   Its bounding box doesn't move on hover, so mouseleave doesn't fire when
+   the inner .tc-card lifts away near the cursor — no stutter loop. */
+.tc-card-wrapper {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  /* Anchor staircase scale to bottom-left so card bottoms stay aligned. */
+  transform-origin: bottom left;
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+.tc-card-wrapper--active {
+  cursor: none;
 }
 
 .tc-card {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  cursor: pointer;
   transition:
     transform 0.35s ease,
     box-shadow 0.35s ease,
     opacity 0.35s ease;
   will-change: transform;
-}
-
-.tc-card--active {
-  cursor: none;
 }
 
 .tc-card-photo,
@@ -114,7 +139,8 @@
 .tc-card-overlay {
   position: absolute;
   inset: 0;
-  padding: var(--space-5);                  /* 20px */
+  /* 20/1400 = 1.429vw · floored 14.63px (= value @ 1024) · capped 36.57px @ 2560. */
+  padding: clamp(14.63px, 1.429vw, 36.57px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -124,7 +150,8 @@
 .tc-card-name {
   color: var(--color-text-on-dark);
   font-family: var(--font-primary);
-  font-size: var(--text-body-md);           /* 16px */
+  /* 16/1400 = 1.143vw · floored 20px (readability) · capped 29.26px @ 2560. */
+  font-size: clamp(20px, 1.143vw, 29.26px);
   line-height: 1.5;
   font-weight: 400;
   margin: 0;
@@ -133,10 +160,11 @@
 
 .tc-card-tag {
   position: absolute;
-  bottom: var(--space-5);
-  left: var(--space-5);
-  height: 28px;
-  padding: 0 var(--space-3);                /* 12px */
+  bottom: clamp(14.63px, 1.429vw, 36.57px);
+  left: clamp(14.63px, 1.429vw, 36.57px);
+  /* 28/1400 = 2vw · floored 20.48px (= value @ 1024) · capped 51.20px @ 2560. */
+  height: clamp(20.48px, 2vw, 51.20px);
+  padding: 0 clamp(8.77px, 0.857vw, 21.95px);
   display: flex;
   align-items: center;
   background: rgba(255,255,255,0.15);
@@ -148,7 +176,8 @@
 
 .tc-card-tag-label {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);              /* 11px */
+  /* 11/1400 = 0.786vw · floored 11px (readability) · capped 20.12px @ 2560. */
+  font-size: clamp(11px, 0.786vw, 20.12px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-on-dark);
@@ -192,7 +221,8 @@
 
 .tc-quote {
   font-family: var(--font-primary);
-  font-size: clamp(1.4rem, 2vw, 2rem);
+  /* 28/1400 = 2vw · floored 20.48px (= value @ 1024) · capped 51.20px @ 2560. */
+  font-size: clamp(20.48px, 2vw, 51.20px);
   line-height: var(--leading-snug);
   color: var(--color-ink);
   font-style: normal;
@@ -207,7 +237,8 @@
 
 .tc-attr-name {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);           /* 20px - was 1.1rem */
+  /* 20/1400 = 1.429vw · floored 20px (readability) · capped 36.57px @ 2560. */
+  font-size: clamp(20px, 1.429vw, 36.57px);
   font-weight: 400;
   color: var(--color-ink);
   line-height: var(--leading-normal);
@@ -216,7 +247,8 @@
 
 .tc-attr-role {
   font-family: var(--font-primary);
-  font-size: 0.875rem;
+  /* 14/1400 = 1vw · floored 15px (readability) · capped 25.6px @ 2560. */
+  font-size: clamp(15px, 1vw, 25.6px);
   color: var(--color-ink-subtle);
   letter-spacing: var(--tracking-wide);
   line-height: var(--leading-relaxed);
@@ -227,6 +259,18 @@
   display: flex;
   gap: var(--space-2);
   margin-top: var(--space-6);               /* 30px */
+}
+
+/* Scope global .btn-arrow sizing to this section's nav row.
+   44/1400 = 3.143vw · floored 32.19px (= value @ 1024) · capped 80.46px @ 2560. */
+.tc-arrows .btn-arrow {
+  width: clamp(32.19px, 3.143vw, 80.46px);
+  height: clamp(32.19px, 3.143vw, 80.46px);
+}
+
+.tc-arrows .btn-arrow svg {
+  width: clamp(11.70px, 1.143vw, 29.26px);
+  height: clamp(9.51px, 0.929vw, 23.78px);
 }
 
 /* ─────────────────────────────────────────
@@ -241,7 +285,9 @@
 
 @media (max-width: 1024px) {
   :root {
-    --tc-card-w: min(calc(100vw - 180px), 380px);
+    /* 240 = 180 section margins/padding (60 + 30 + 90) + 60 stack-container
+       margin-left (room for the deepest staircase peek of -60). */
+    --tc-card-w: min(calc(100vw - 240px), 380px);
   }
 
   .tc-section {
@@ -264,11 +310,15 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    /* Reset desktop padding-left — stack-container has its own mobile margin. */
+    padding-left: 0;
   }
 
   .tc-stack-container {
     width: var(--tc-card-w);
-    margin: 0 0 0 var(--space-5);
+    /* 60px matches the deepest staircase peek (-60), so back cards fit
+       inside the section instead of bleeding past the left edge. */
+    margin: 0 0 0 60px;
   }
 
   .tc-stack-inner {
@@ -279,8 +329,11 @@
     padding: var(--space-7) 0;              /* 40px 0 */
     min-width: 0;
     justify-content: flex-start;
+    /* Reset desktop flex-basis when stacked. */
+    flex: 0 0 auto;
     width: 100%;
-    flex-shrink: 0;
+    /* Stacked layout doesn't need to match the card height. */
+    min-height: 0;
   }
 
   .tc-arrows {

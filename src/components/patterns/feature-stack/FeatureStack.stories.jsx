@@ -1,5 +1,36 @@
 import FeatureStack from './FeatureStack';
 
+import coverDigitalProducts     from '../../ui/brand assets/cover-digital-products.jpg';
+import coverAiCapabilities      from '../../ui/brand assets/cover-ai-capabilities.svg';
+import coverAiCapabilitiesHover from '../../ui/brand assets/cover-ai-capabilities-hover.svg';
+
+const DEFAULT_CARDS = [
+  {
+    title:       'Discovery',
+    description: 'We help you make informed decisions about your digital future.',
+    media:       <div className="s2-card-media s2-card-media--discovery" />,
+  },
+  {
+    title:       'Digital Products',
+    description: 'We build custom web-based applications bespoke to your needs.',
+    media: (
+      <div className="s2-card-media s2-card-media--digital">
+        <img className="media-fill" src={coverDigitalProducts} alt="" />
+      </div>
+    ),
+  },
+  {
+    title:       'Agentic Capabilities',
+    description: 'We design the system before choosing tools so your solution is cohesive built.',
+    media: (
+      <div className="s2-card-media s2-card-media--agentic">
+        <img className="s2-agentic-default" src={coverAiCapabilities} alt="" />
+        <img className="s2-agentic-hover" src={coverAiCapabilitiesHover} alt="" aria-hidden="true" />
+      </div>
+    ),
+  },
+];
+
 export default {
   title: 'Patterns/FeatureStack',
   component: FeatureStack,
@@ -38,4 +69,25 @@ Use FeatureStack to enumerate your core services, capabilities, or product featu
   },
 };
 
-export const Default = {};
+export const Default = {
+  render: () => (
+    <FeatureStack
+      eyebrow="Our Capabilities"
+      title="What We Do"
+      titleSize="default"
+      ctaLabel="All Capabilities"
+      cards={DEFAULT_CARDS}
+    />
+  ),
+};
+
+export const LargeTitle = {
+  render: () => (
+    <FeatureStack
+      eyebrow="art of the possible"
+      title="We help you ideate, build, and optimise."
+      titleSize="large"
+      cards={DEFAULT_CARDS}
+    />
+  ),
+};

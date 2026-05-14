@@ -1,5 +1,38 @@
 import TestimonialsCarousel from './TestimonialsCarousel';
 
+import placeholderVideo from './placeholder-video-man-talking.mp4';
+import person1 from './person-1.jpg';
+import person2 from './person-2.jpg';
+import person3 from './person-3.jpg';
+
+const DEFAULT_TESTIMONIALS = [
+  {
+    name:         'Tristan Armstrong',
+    title:        'Chief Executive Officer',
+    company:      'Canyon Spirit',
+    photo:        person1,
+    video:        placeholderVideo,
+    videoAsCover: true,
+    quote:        '"Therefore has been tenacious improving our technological capabilities and guest experience. They have been supportive partners and met the changing needs of the tourism landscape."',
+  },
+  {
+    name:    'Sarah Chen',
+    title:   'Head of Product',
+    company: 'Meridian Labs',
+    photo:   person2,
+    video:   placeholderVideo,
+    quote:   '"Working with this team transformed how we approach digital infrastructure. Their expertise and dedication to our vision made every milestone feel achievable."',
+  },
+  {
+    name:    'Marcus Webb',
+    title:   'Founder & Creative Director',
+    company: 'Northlight Studio',
+    photo:   person3,
+    video:   placeholderVideo,
+    quote:   '"From day one, the collaboration felt effortless. They understood our brand deeply and delivered an experience our customers talk about constantly."',
+  },
+];
+
 export default {
   title: 'Patterns/TestimonialsCarousel',
   component: TestimonialsCarousel,
@@ -39,5 +72,10 @@ Place TestimonialsCarousel near the bottom of a marketing page, close to the pri
 };
 
 export const Default = {
-  render: () => <TestimonialsCarousel />,
+  render: () => (
+    <TestimonialsCarousel
+      eyebrow="Trusted by industry leaders"
+      testimonials={DEFAULT_TESTIMONIALS}
+    />
+  ),
 };

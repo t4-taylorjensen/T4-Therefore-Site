@@ -1,30 +1,12 @@
 import { useState, useMemo } from 'react';
 import './LogoCarousel.css';
 
-import rockyMountaineerSrc from '../../ui/brand assets/log-rockymountaineer.svg';
-import canyonSpiritSrc     from '../../ui/brand assets/logo-canyonspirit.svg';
-import duvineSrc           from '../../ui/brand assets/logo-duvine.svg';
-import jchsSrc             from '../../ui/brand assets/logo-jchs.svg';
-import longosSrc           from '../../ui/brand assets/logo-longos.svg';
-
-/* ─────────────────────────────────────────
-   LOGO DATA
-───────────────────────────────────────── */
-
-const LOGOS = [
-  { name: 'Rocky Mountaineer', src: rockyMountaineerSrc },
-  { name: 'Canyon Spirit',     src: canyonSpiritSrc     },
-  { name: 'DuVine',            src: duvineSrc           },
-  { name: 'JCHS',              src: jchsSrc             },
-  { name: 'Longos',            src: longosSrc           },
-];
-
 /* ─────────────────────────────────────────
    LOGO ITEM
 ───────────────────────────────────────── */
 
 function LogoItem({ logo, hidden }) {
-  const slug = logo.name.toLowerCase().replace(/\s+/g, '-');
+  const slug = logo.slug || logo.name.toLowerCase().replace(/\s+/g, '-');
   return (
     <div className="lc-item" aria-hidden={hidden || undefined}>
       <div className="lc-logo-wrap" data-logo={slug}>
@@ -52,7 +34,10 @@ function LogoItem({ logo, hidden }) {
      Scales naturally as logos are added/removed.
 ───────────────────────────────────────── */
 
-export default function LogoCarousel({ logos = LOGOS }) {
+export default function LogoCarousel({
+  logos = [],
+  ariaLabel = 'Partner and client logos',
+}) {
   const [paused, setPaused] = useState(false);
 
   const prefersReducedMotion = useMemo(
@@ -64,7 +49,7 @@ export default function LogoCarousel({ logos = LOGOS }) {
   const duration = Math.max(28, logos.length * 5);
 
   return (
-    <section className="lc-section" aria-label="Partner and client logos">
+    <section className="lc-section" aria-label={ariaLabel}>
       <div
         className="lc-viewport"
         onMouseEnter={() => setPaused(true)}

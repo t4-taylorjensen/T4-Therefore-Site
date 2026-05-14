@@ -19,11 +19,13 @@
 }
 
 /* ─────────────────────────────────────────
-   LARGE TITLE BLOCK
+   CARDS BLOCK
    Figma: pt-160 pl-90 pr-90 pb-120
 ───────────────────────────────────────── */
 
-.s2-large-title {
+.s2-cards-section {
+  /* Top padding inherits the old large-title spacing so the title block
+     still has breathing room from the section above it. */
   padding: clamp(80px, 11vw, 160px) clamp(20px, 6.25vw, 90px) clamp(60px, 8.3vw, 120px);
   display: flex;
   flex-direction: column;
@@ -31,44 +33,50 @@
   background: var(--color-bg-page);
 }
 
-/* Layout-only overrides — reveal mechanics live in ScrollRevealHeadline.css */
-.s2-headline {
-  font-family: var(--font-primary);
-  font-size: clamp(30px, 3.8vw, 55px);
-  font-weight: 400;
-  line-height: 1;                         /* Figma: line-height 1 */
-  letter-spacing: var(--tracking-tight);  /* -0.02em */
-  max-width: 1112px;                      /* Figma content width */
-}
-
-/* ─────────────────────────────────────────
-   CARDS BLOCK
-   Figma: pt-30 pl-90 pr-90 pb-120
-───────────────────────────────────────── */
-
-.s2-cards-section {
-  padding: 30px clamp(20px, 6.25vw, 90px) clamp(60px, 8.3vw, 120px);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);                    /* 30px */
-  background: var(--color-bg-page);
-}
-
-/* ── Cards header row ── */
+/* ── Header row: title group (eyebrow + title) + optional CTA pill ── */
 
 .s2-cards-header {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
+  gap: var(--space-6);
 }
 
-.s2-cards-title {
+/* Title group — eyebrow sits above the title with a scaled 30px gap. */
+.s2-title-group {
+  display: flex;
+  flex-direction: column;
+  /* 30/1400 = 2.143vw · floor 21.94 @ 1024 · cap 54.86 @ 2560 */
+  gap: clamp(21.94px, 2.143vw, 54.86px);
+}
+
+/* Eyebrow inside the title group — 11/1400 = 0.786vw scale (matches site). */
+.s2-title-group .text-eyebrow {
+  font-size: clamp(11px, 0.786vw, 20.12px);
+}
+
+/* ── Title (two sizes) ── */
+
+.s2-title {
   font-family: var(--font-primary);
-  font-size: var(--text-md);              /* 30px */
   font-weight: 400;
-  line-height: var(--leading-snug);       /* 1.4 */
   color: var(--color-ink);
   margin: 0;
+  text-wrap: pretty;
+}
+
+/* Default: 30/1400 = 2.143vw → 30 @ 1400 → 54.86 @ 2560. */
+.s2-title--default {
+  font-size: clamp(30px, 2.143vw, 54.86px);
+  line-height: var(--leading-snug);       /* 1.4 */
+  letter-spacing: 0;
+}
+
+/* Large: 55/1400 = 3.929vw → 55 @ 1400 → 100.6 @ 2560. */
+.s2-title--large {
+  font-size: clamp(55px, 3.929vw, 100.6px);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);  /* -0.02em */
 }
 
 /* ── Small pill button ── */
@@ -76,11 +84,14 @@
 .s2-btn-sm {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);                    /* 12px */
-  height: 34px;
+  /* 12/1400 = 0.857vw · floored 12px · capped 21.95px @ 2560. */
+  gap: clamp(12px, 0.857vw, 21.95px);
+  /* 34/1400 = 2.429vw · floored 34px · capped 62.18px @ 2560. */
+  height: clamp(34px, 2.429vw, 62.18px);
   background: var(--color-surface-1);     /* #f2f2f2 */
   border-radius: var(--radius-sm);
-  padding: 9px 10px 8px;
+  /* Horizontal padding scales with the button; keep the small vertical offset. */
+  padding: 9px clamp(10px, 0.714vw, 18.29px) 8px;
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -94,7 +105,8 @@
 
 .s2-btn-sm-label {
   font-family: var(--font-mono);
-  font-size: var(--text-mono-md);         /* 14px */
+  /* 14/1400 = 1vw · floored 14px · capped 25.6px @ 2560. */
+  font-size: clamp(14px, 1vw, 25.6px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: var(--tracking-wide);   /* 0.5px */
@@ -103,12 +115,18 @@
 }
 
 .s2-btn-sm-icon {
-  width: 16px;
-  height: 16px;
+  /* 16/1400 = 1.143vw · floored 16px · capped 29.26px @ 2560. */
+  width: clamp(16px, 1.143vw, 29.26px);
+  height: clamp(16px, 1.143vw, 29.26px);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.s2-btn-sm-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* ── Cards grid ── */
@@ -146,19 +164,21 @@
   background: var(--color-gray-100);
 }
 
+/* Aspect ratios derived from 1400-design card width (386.67) and original
+   heights — each media scales with the card while preserving its proportion. */
 .s2-card-media--discovery {
-  height: 406px;
+  aspect-ratio: 386.67 / 406;
   background: var(--color-ink-deepest);
 }
 
 .s2-card-media--digital {
-  height: 270px;
+  aspect-ratio: 386.67 / 270;
   padding: 30px;
   overflow: hidden;
 }
 
 .s2-card-media--agentic {
-  height: 480px;
+  aspect-ratio: 386.67 / 480;
 }
 
 .s2-card-media img.media-fill {
@@ -213,7 +233,8 @@
 
 .s2-card-title {
   font-family: var(--font-primary);
-  font-size: var(--text-md);              /* 30px */
+  /* 30/1400 = 2.143vw · floored 30px · capped 54.86px @ 2560. */
+  font-size: clamp(30px, 2.143vw, 54.86px);
   font-weight: 400;
   line-height: var(--leading-snug);       /* 1.4 */
   color: var(--color-ink);
@@ -222,7 +243,8 @@
 
 .s2-card-desc {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);         /* 20px */
+  /* 20/1400 = 1.429vw · floored 20px · capped 36.57px @ 2560. */
+  font-size: clamp(20px, 1.429vw, 36.57px);
   font-weight: 400;
   line-height: var(--leading-normal);     /* 1.6 */
   color: var(--color-ink-faint);          /* rgba(18,18,18,0.7) */
@@ -232,16 +254,16 @@
 /* ── Mobile ── */
 
 @media (max-width: 768px) {
-  .s2-large-title {
-    padding: var(--space-9) 20px;         /* 90px 20px */
-  }
-
   .s2-cards-section {
-    padding: var(--space-6) 20px var(--space-8); /* 30px 20px 60px */
+    padding: var(--space-9) 20px var(--space-8); /* 90px 20px 60px */
   }
 
-  .s2-headline    { font-size: clamp(22px, 7vw, 36px); }
+  /* Tighter mobile sizes for both title variants. */
+  .s2-title--default { font-size: 22px; }
+  .s2-title--large   { font-size: 36px; }
+
   .s2-cards-grid  { flex-direction: column; }
+  .s2-card        { width: 100%; }
 
   .s2-cards-header {
     flex-direction: column;

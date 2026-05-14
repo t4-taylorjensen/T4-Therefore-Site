@@ -46,6 +46,7 @@ function IconBtnArrow() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <path
+        pathLength="1"
         d="M12.9336 9.46772L8.66698 9.46772C6.42677 9.46772 4.40039 9.46772 4.40039 9.46772L4.40039 3.20001M12.9336 9.46772L9.60031 6.13439M12.9336 9.46772L9.60031 12.8011"
         stroke="currentColor"
         strokeWidth="1.25"
@@ -271,10 +272,10 @@ export default function Nav({ activePage = 'Headless CMS' }) {
             <div className="nav-overlay-group">
               <span className="nav-overlay-label nav-overlay-label--social-desktop">Social</span>
               <div className="nav-overlay-social">
-                <a href="#" className="nav-overlay-social-btn" aria-label="Instagram"><IconInstagram /></a>
-                <a href="#" className="nav-overlay-social-btn" aria-label="LinkedIn"><IconLinkedIn /></a>
-                <a href="#" className="nav-overlay-social-btn" aria-label="X / Twitter"><IconTwitterX /></a>
-                <a href="#" className="nav-overlay-social-btn" aria-label="Clutch"><IconClutch /></a>
+                <a href="#" className="nav-overlay-social-btn" aria-label="Instagram"><span className="nav-overlay-social-inner"><IconInstagram /></span></a>
+                <a href="#" className="nav-overlay-social-btn" aria-label="LinkedIn"><span className="nav-overlay-social-inner"><IconLinkedIn /></span></a>
+                <a href="#" className="nav-overlay-social-btn" aria-label="X / Twitter"><span className="nav-overlay-social-inner"><IconTwitterX /></span></a>
+                <a href="#" className="nav-overlay-social-btn" aria-label="Clutch"><span className="nav-overlay-social-inner"><IconClutch /></span></a>
               </div>
             </div>
           </div>
