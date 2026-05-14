@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 import './CaseStudy.css';
 
-import mediaImg from '../../ui/brand assets/video block.jpg';
-import profileImg from '../../ui/brand assets/therefore-placeholder-woman.jpg';
 import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
@@ -10,7 +8,22 @@ import Eyebrow from '../../ui/Eyebrow';
    CASE STUDY
 ───────────────────────────────────────── */
 
-export default function CaseStudy() {
+export default function CaseStudy({
+  eyebrow      = 'Case Study',
+  titleWord1,
+  titleWord2,
+  scrollHint   = '(scroll)',
+  mediaImage,
+  mediaAlt,
+  splitLabel,
+  description,
+  ctaLabel,
+  ctaHref      = '#',
+  quote,
+  profileImage,
+  profileName,
+  profileRole,
+}) {
   const sectionRef = useRef(null);
   const labelRef   = useRef(null);
   const word1Ref   = useRef(null);
@@ -95,32 +108,40 @@ export default function CaseStudy() {
 
         {/* ── Title block ── */}
         <div className="cs-title-block">
-          <Eyebrow ref={labelRef} className="cs-label">Case Study</Eyebrow>
+          <Eyebrow ref={labelRef} className="cs-label">{eyebrow}</Eyebrow>
           <div className="cs-title-row">
             <h2 className="cs-headline">
-              <span className="cs-word-clip">
-                <span ref={word1Ref} className="cs-word">DuVine</span>
-              </span>
-              <span className="cs-word-gap" aria-hidden="true" />
-              <span className="cs-word-clip">
-                <span ref={word2Ref} className="cs-word">Cycling</span>
-              </span>
+              {titleWord1 && (
+                <span className="cs-word-clip">
+                  <span ref={word1Ref} className="cs-word">{titleWord1}</span>
+                </span>
+              )}
+              {titleWord1 && titleWord2 && (
+                <span className="cs-word-gap" aria-hidden="true" />
+              )}
+              {titleWord2 && (
+                <span className="cs-word-clip">
+                  <span ref={word2Ref} className="cs-word">{titleWord2}</span>
+                </span>
+              )}
             </h2>
-            <p className="cs-scroll-hint">(scroll)</p>
+            {scrollHint && <p className="cs-scroll-hint">{scrollHint}</p>}
           </div>
         </div>
 
         {/* ── Media ── */}
-        <div className="cs-media">
-          <div className="cs-media-inner">
-            <img
-              src={mediaImg}
-              alt="DuVine Cycling — checkout experience"
-              className="cs-media-img"
-              draggable="false"
-            />
+        {mediaImage && (
+          <div className="cs-media">
+            <div className="cs-media-inner">
+              <img
+                src={mediaImage}
+                alt={mediaAlt || ''}
+                className="cs-media-img"
+                draggable="false"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
 
@@ -129,41 +150,51 @@ export default function CaseStudy() {
 
         {/* Left: client label + description + CTA */}
         <div className="cs-split-left">
-          <Eyebrow className="cs-split-label">DuVine Cycling</Eyebrow>
+          {splitLabel && <Eyebrow className="cs-split-label">{splitLabel}</Eyebrow>}
 
-          <p ref={descRef} className="cs-split-desc cs-reveal">
-            Built to replace a legacy monolith with a composable architecture designed for performance and long-term scalability.
-          </p>
+          {description && (
+            <p ref={descRef} className="cs-split-desc cs-reveal">
+              {description}
+            </p>
+          )}
 
-          <BtnSecondary
-            ref={btnRef}
-            as="a"
-            href="#"
-            icon={IconCornerDownRight}
-            nudge="right"
-            className="cs-reveal"
-          >
-            Full Case Study
-          </BtnSecondary>
+          {ctaLabel && (
+            <BtnSecondary
+              ref={btnRef}
+              as="a"
+              href={ctaHref}
+              icon={IconCornerDownRight}
+              nudge="right"
+              className="cs-reveal"
+            >
+              {ctaLabel}
+            </BtnSecondary>
+          )}
         </div>
 
         {/* Right: quote + profile */}
         <div className="cs-split-right">
-          <p ref={quoteRef} className="cs-quote cs-reveal">
-            "Therefore has been tenacious improving our technological capabilities and guest experience. They have been supportive partners and met the changing needs of the tourism landscape."
-          </p>
+          {quote && (
+            <p ref={quoteRef} className="cs-quote cs-reveal">
+              {quote}
+            </p>
+          )}
 
-          <div ref={profileRef} className="cs-profile cs-reveal">
-            <img
-              src={profileImg}
-              alt="Jane Smith"
-              className="cs-profile-photo"
-            />
-            <div className="cs-profile-info">
-              <p className="cs-profile-name">Jane Smith</p>
-              <p className="cs-profile-role">Chief Executive Officer</p>
+          {(profileImage || profileName) && (
+            <div ref={profileRef} className="cs-profile cs-reveal">
+              {profileImage && (
+                <img
+                  src={profileImage}
+                  alt={profileName || ''}
+                  className="cs-profile-photo"
+                />
+              )}
+              <div className="cs-profile-info">
+                {profileName && <p className="cs-profile-name">{profileName}</p>}
+                {profileRole && <p className="cs-profile-role">{profileRole}</p>}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
       </div>

@@ -1,34 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import './WhyTherefore.css';
+import './CardCarousel.css';
 import { BtnArrow, IconArrowRight, IconArrowLeft } from '../../ui/Button/Button';
 import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
 import Eyebrow from '../../ui/Eyebrow';
-
-const CARDS = [
-  {
-    title: 'Architecture',
-    desc:  'We design the system before choosing tools so your solution is cohesive, intentional, and built to last.',
-  },
-  {
-    title: 'Composable',
-    desc:  'Mix best-of-breed services without lock-in. Each layer of the stack stays independently replaceable.',
-  },
-  {
-    title: 'Integration',
-    desc:  'We connect your CMS, commerce platform, and data sources into a unified content pipeline.',
-  },
-  {
-    title: 'Performance',
-    desc:  'Decoupled frontends deliver sub-second experiences regardless of backend complexity.',
-  },
-  {
-    title: 'Scalability',
-    desc:  'Infrastructure that grows from startup to enterprise — no rearchitecting at every inflection point.',
-  },
-];
-
-const DARK_TEXT  = 'Headless is not a technology decision. It is a systems decision. We design content models that reflect real workflows';
-const MUTED_TEXT = ', integrate with your ecosystem, and scale as your business evolves.';
 
 function StarIcon() {
   return (
@@ -41,7 +15,7 @@ function StarIcon() {
   );
 }
 
-function ServiceCard({ title, desc }) {
+function CarouselCard({ title, description }) {
   return (
     <div className="wt-card" tabIndex={0} role="listitem">
       <div className="wt-card-inner">
@@ -51,7 +25,7 @@ function ServiceCard({ title, desc }) {
         </div>
         <div className="wt-card-text">
           <p className="wt-card-title">{title}</p>
-          <p className="wt-card-desc">{desc}</p>
+          <p className="wt-card-desc">{description}</p>
         </div>
       </div>
     </div>
@@ -59,9 +33,9 @@ function ServiceCard({ title, desc }) {
 }
 
 /* ────────────────────────────────────────────────────────────────
-   CARD CAROUSEL — inertial drag / wheel / touch / keyboard / snap
+   CAROUSEL TRACK — inertial drag / wheel / touch / keyboard / snap
 ──────────────────────────────────────────────────────────────── */
-function CardCarousel() {
+function CarouselTrack({ title, cards, ariaLabel }) {
   const trackRef    = useRef(null);
   const viewportRef = useRef(null);
   const navRef      = useRef({ prev: () => {}, next: () => {} });
@@ -98,7 +72,9 @@ function CardCarousel() {
     }
 
     function maxX()   { return Math.max(0, tr.scrollWidth - vp.offsetWidth); }
-    function maxIdx() { const s = step(); return s > 0 ? Math.max(0, Math.floor(maxX() / s)) : 0; }
+    // Ceil so the user can reach maxX (last card fully visible) even when
+    // maxX isn't a multiple of step. Floor leaves a partial card cut off.
+    function maxIdx() { const s = step(); return s > 0 ? Math.max(0, Math.ceil(maxX() / s)) : 0; }
 
     function applyTransform(x) { tr.style.transform = `translateX(${-x}px)`; }
 
@@ -118,7 +94,15 @@ function CardCarousel() {
     function snapToNearest() {
       const s = step();
       if (!s) return;
-      snapIndex = clamp(Math.round(currentX / s), 0, maxIdx());
+      const m = maxIdx();
+      let idx = clamp(Math.round(currentX / s), 0, m);
+      // The final index snaps to maxX (which may sit less than a full step
+      // past idx m-1). Math.round would never reach it on its own — if we're
+      // actually closer to maxX, prefer that snap point.
+      if (idx === m - 1 && Math.abs(currentX - maxX()) < Math.abs(currentX - idx * s)) {
+        idx = m;
+      }
+      snapIndex = idx;
       snapToIndex(snapIndex);
       updateArrows();
     }
@@ -279,7 +263,7 @@ function CardCarousel() {
   return (
     <div className="wt-carousel-section anim-fade-up anim-delay-2">
       <div className="wt-carousel-header">
-        <p className="wt-carousel-title">Headless is a systems decision.</p>
+        {title && <p className="wt-carousel-title">{title}</p>}
         <div className="wt-arrows" role="group" aria-label="Carousel navigation">
           <BtnArrow
             icon={IconArrowLeft}
@@ -302,13 +286,17 @@ function CardCarousel() {
         className="wt-carousel-viewport"
         ref={viewportRef}
         role="region"
-        aria-label="Why Therefore cards"
+        aria-label={ariaLabel || 'Carousel cards'}
         tabIndex={0}
       >
         <div className="wt-carousel-track" ref={trackRef} role="list">
-          {CARDS.map((card, i) => (
-            <ServiceCard key={i} {...card} />
+          {cards.map((card, i) => (
+            <CarouselCard key={i} title={card.title} description={card.description} />
           ))}
+          {/* Trailing breathing room so last card isn't flush against the right
+              edge when fully scrolled. As an explicit flex child, this reliably
+              extends scrollWidth (and thus maxX / the snap range). */}
+          <div className="wt-carousel-end-pad" aria-hidden="true" />
         </div>
       </div>
     </div>
@@ -316,9 +304,16 @@ function CardCarousel() {
 }
 
 /* ────────────────────────────────────────────────────────────────
-   ROOT COMPONENT
+   CARD CAROUSEL — eyebrow + scroll-reveal headline + carousel
 ──────────────────────────────────────────────────────────────── */
-function WhyTherefore() {
+function CardCarousel({
+  eyebrow,
+  headline,
+  headlineMuted,
+  carouselTitle,
+  cards = [],
+  ariaLabel,
+}) {
   const sectionRef   = useRef(null);
   const videoRef     = useRef(null);
   const videoStarted = useRef(false);
@@ -346,21 +341,21 @@ function WhyTherefore() {
       if (count === 0) video.pause();
     }
 
-    const cards = section.querySelectorAll('.wt-card-inner');
-    cards.forEach(c => {
+    const cardEls = section.querySelectorAll('.wt-card-inner');
+    cardEls.forEach(c => {
       c.addEventListener('mouseenter', activate);
       c.addEventListener('mouseleave', deactivate);
     });
     return () => {
-      cards.forEach(c => {
+      cardEls.forEach(c => {
         c.removeEventListener('mouseenter', activate);
         c.removeEventListener('mouseleave', deactivate);
       });
     };
-  }, []);
+  }, [cards]);
 
   return (
-    <section className="wt-section" ref={sectionRef} aria-labelledby="wt-heading">
+    <section className="wt-section" ref={sectionRef} aria-labelledby="card-carousel-heading">
 
       {/* Background: video + accent-color gradient */}
       <div className="wt-bg" aria-hidden="true">
@@ -370,21 +365,29 @@ function WhyTherefore() {
 
       {/* Constrained text column */}
       <div className="wt-large-title">
-        <Eyebrow className="wt-eyebrow anim-fade-up anim-delay-1">Why Therefore?</Eyebrow>
-        <ScrollRevealHeadline
-          as="h2"
-          id="wt-heading"
-          className="wt-headline"
-          text={DARK_TEXT}
-          mutedText={MUTED_TEXT}
-        />
+        {eyebrow && (
+          <Eyebrow className="wt-eyebrow anim-fade-up anim-delay-1">{eyebrow}</Eyebrow>
+        )}
+        {headline && (
+          <ScrollRevealHeadline
+            as="h2"
+            id="card-carousel-heading"
+            className="wt-headline"
+            text={headline}
+            mutedText={headlineMuted}
+          />
+        )}
       </div>
 
       {/* Full-bleed carousel */}
-      <CardCarousel />
+      <CarouselTrack
+        title={carouselTitle}
+        cards={cards}
+        ariaLabel={ariaLabel}
+      />
 
     </section>
   );
 }
 
-export default WhyTherefore;
+export default CardCarousel;

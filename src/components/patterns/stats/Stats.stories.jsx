@@ -34,4 +34,13 @@ Place Stats after the Hero or LogoCarousel to anchor the brand with impact metri
   },
 };
 
-export const Default = {};
+const DEFAULT_STATS = [
+  { number: '42+',  title: 'Implementations',   subtitle: 'Enterprise headless builds delivered' },
+  { number: '38%',  title: 'Performance Lift',  subtitle: 'Average post-launch improvement' },
+  { number: '14wk', title: 'Time to Launch',    subtitle: 'Typical composable deployment' },
+  { number: '$2B+', title: 'Commerce Revenue',  subtitle: 'Enabled across client portfolios' },
+];
+
+export const Default = {
+  render: () => <Stats stats={DEFAULT_STATS} />,
+};

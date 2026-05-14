@@ -65,7 +65,8 @@
   z-index: 1;
   padding-left:  var(--padding-x);
   padding-right: var(--padding-x);
-  max-width: 1350px;
+  /* 1112 / 1400 = 79.43vw — element grows proportionally with the window. */
+  max-width: 79.43vw;
   display: flex;
   flex-direction: column;
   gap: var(--space-6);                      /* 30px */
@@ -74,15 +75,19 @@
 /* Color transitions to white when any service card is hovered (see :has rule above) */
 .wt-eyebrow {
   transition: color var(--duration-slower) var(--ease-out-expo);
+  /* 11 / 1400 = 0.786vw · floored 11px · capped 20.12px @ 2560. */
+  font-size: clamp(11px, 0.786vw, 20.12px);
 }
 
 /* Layout-only overrides — reveal mechanics live in ScrollRevealHeadline.css */
 .wt-headline {
   font-family: var(--font-primary);
-  font-size: var(--text-xl);                /* clamp(40px, 5vw, 55px) */
+  /* 55 / 1400 = 3.929vw — tracks the layout. Floored 40px · capped 100.6px @ 2560. */
+  font-size: clamp(40px, 3.929vw, 100.6px);
   font-weight: 400;
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
+  text-wrap: pretty;
 }
 
 /* ─────────────────────────────────────────
@@ -106,7 +111,8 @@
 
 .wt-carousel-title {
   font-family: var(--font-primary);
-  font-size: var(--text-md);                /* 30px */
+  /* 30/1400 = 2.143vw · floored 30px · capped 54.86px @ 2560. */
+  font-size: clamp(30px, 2.143vw, 54.86px);
   font-weight: 400;
   line-height: var(--leading-snug);
   color: var(--color-ink);
@@ -120,6 +126,19 @@
   gap: var(--space-2);
   align-items: center;
   flex-shrink: 0;
+}
+
+/* Scope global .btn-arrow sizing to this section's nav row.
+   44/1400 = 3.143vw · floored 44px · capped 80.46px @ 2560. */
+.wt-arrows .btn-arrow {
+  width: clamp(44px, 3.143vw, 80.46px);
+  height: clamp(44px, 3.143vw, 80.46px);
+}
+
+/* Arrow icons (16×13) scale at the same rate. */
+.wt-arrows .btn-arrow svg {
+  width: clamp(16px, 1.143vw, 29.26px);
+  height: clamp(13px, 0.929vw, 23.78px);
 }
 
 .wt-carousel-viewport {
@@ -139,8 +158,20 @@
 
 .wt-carousel-track {
   display: flex;
-  gap: var(--space-4);                      /* 15px */
+  /* 15/1400 = 1.071vw · floored 15px · capped 27.43px @ 2560. */
+  gap: clamp(15px, 1.071vw, 27.43px);
   will-change: transform;
+}
+
+/* Invisible spacer at the end of the track. Gives the last card breathing
+   room on the right when scrolled to the end — reliably extends scrollWidth
+   (padding-right on the track isn't always picked up by scrollWidth when
+   flex items already overflow).
+   Width = var(--padding-x) minus the gap so the total trailing space
+   (gap + spacer) equals the section's left padding exactly. */
+.wt-carousel-end-pad {
+  flex-shrink: 0;
+  width: calc(var(--padding-x) - clamp(15px, 1.071vw, 27.43px));
 }
 .wt-carousel-track.is-snapping {
   transition: transform 0.55s var(--ease-out-expo);
@@ -150,12 +181,13 @@
    SERVICE CARD — icon + title + desc, hover lift
 ───────────────────────────────────────── */
 .wt-card {
-  width: 380px;
+  /* 380/1400 = 27.143vw · floored 380px · capped 694.86px @ 2560.
+     Padding-y scales at the same rate to keep the 380:492 ratio.
+     Outer wrapper is the hover-detection area — never moves on hover, so
+     mouseleave doesn't fire when the inner card lifts away. */
+  width: clamp(380px, 27.143vw, 694.86px);
   flex-shrink: 0;
-  padding: 10px 0;
-  transform: translateY(0);
-  transition: transform var(--duration-base) var(--ease-out-soft);
-  will-change: transform;
+  padding: clamp(10px, 0.714vw, 18.29px) 0;
   outline: none;
 }
 .wt-card:focus-visible {
@@ -167,11 +199,15 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 220px;
-  padding: var(--space-6);
+  /* Inner gap & padding scale at the 27.143vw card rate so the 380:492 ratio holds. */
+  gap: clamp(220px, 15.714vw, 402.29px);
+  padding: clamp(30px, 2.143vw, 54.86px);
   background: var(--color-bg-card);
   overflow: hidden;
   isolation: isolate;
+  /* Hover lift lives here so the outer .wt-card hit area doesn't move. */
+  transition: transform var(--duration-base) var(--ease-out-soft);
+  will-change: transform;
 }
 
 /* Decorative blue gradient bg, fades in on card hover */
@@ -207,8 +243,9 @@
 .wt-card-icon {
   position: relative;
   z-index: 1;
-  width: 34px;
-  height: 34px;
+  /* 34/1400 = 2.429vw · floored 34px · capped 62.18px @ 2560. */
+  width: clamp(34px, 2.429vw, 62.18px);
+  height: clamp(34px, 2.429vw, 62.18px);
   flex-shrink: 0;
   color: var(--color-ink);
   transform-origin: top left;
@@ -224,15 +261,17 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  padding-right: var(--space-5);
+  /* Inner gap & padding scale with card. */
+  gap: clamp(30px, 2.143vw, 54.86px);
+  padding-right: clamp(20px, 1.429vw, 36.57px);
   transform: translateY(0);
   transition: transform var(--duration-base) var(--ease-out-soft);
 }
 
 .wt-card-title {
   font-family: var(--font-primary);
-  font-size: var(--text-md);                /* 30px */
+  /* 30/1400 = 2.143vw · floored 30px · capped 54.86px @ 2560. */
+  font-size: clamp(30px, 2.143vw, 54.86px);
   font-weight: 400;
   line-height: var(--leading-snug);
   color: var(--color-ink);
@@ -242,7 +281,8 @@
 
 .wt-card-desc {
   font-family: var(--font-primary);
-  font-size: var(--text-body-md);           /* 16px */
+  /* 16/1400 = 1.143vw · floored 16px · capped 29.26px @ 2560. */
+  font-size: clamp(16px, 1.143vw, 29.26px);
   font-weight: 400;
   line-height: var(--leading-relaxed);
   color: var(--color-ink-faint);
@@ -250,7 +290,8 @@
   transition: color var(--duration-base) var(--ease-out-soft);
 }
 
-.wt-card:hover { transform: translateY(-20px); }
+/* Hover detected on outer .wt-card (stable hit area); lift applied to inner. */
+.wt-card:hover .wt-card-inner { transform: translateY(-20px); }
 
 /* ─────────────────────────────────────────
    RESPONSIVE
@@ -276,18 +317,18 @@
   }
   .wt-card { width: 85vw; padding: 8px 0; }
   .wt-card-inner { gap: 120px; }
-  .wt-card:hover { transform: none; }
+  .wt-card:hover .wt-card-inner { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .wt-bg-video, .wt-bg-gradient,
   .wt-eyebrow, .wt-carousel-title,
   .word-ghost, .word-reveal,
-  .wt-card, .wt-card-bg, .wt-card-icon,
+  .wt-card, .wt-card-inner, .wt-card-bg, .wt-card-icon,
   .wt-card-text, .wt-card-title, .wt-card-desc,
   .wt-carousel-track {
     transition: none !important;
     animation:  none !important;
   }
-  .wt-card:hover { transform: none; }
+  .wt-card:hover .wt-card-inner { transform: none; }
 }

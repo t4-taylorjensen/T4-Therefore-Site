@@ -1,14 +1,23 @@
 import { useState } from 'react';
 import './ContactCTA.css';
 
-import profileImg from '../../ui/brand assets/therefore-int-luke-bowler.jpg';
 import { BtnSecondary, BtnGhost } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
 /* ─────────────────────────────────────────
    CONTACT CTA
 ───────────────────────────────────────── */
-export default function ContactCTA() {
+export default function ContactCTA({
+  eyebrow,
+  headline,
+  primaryCta,
+  secondaryCta,
+  profileImage,
+  profileName,
+  profileRole,
+  videoSrc      = '/cta-video.mp4',
+  submitLabels  = { idle: 'Send Message', submitting: 'Sending…', success: 'Request is Sent' },
+}) {
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '', company: '', message: '',
   });
@@ -31,47 +40,59 @@ export default function ContactCTA() {
       <div className="cta-card">
 
         {/* Shader video — autoplay/muted/looping, no controls */}
-        <video
-          src="/cta-video.mp4"
-          className="cta-shader"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-        />
+        {videoSrc && (
+          <video
+            src={videoSrc}
+            className="cta-shader"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          />
+        )}
 
         <div className="cta-inner">
 
           {/* ── Left: content ── */}
           <div className="cta-left">
             <div className="cta-title-group">
-              <Eyebrow tone="on-dark">We're ready when you are</Eyebrow>
+              {eyebrow && <Eyebrow tone="on-dark">{eyebrow}</Eyebrow>}
               <div className="cta-title-content">
-                <h2 className="cta-headline">
-                  Ready to meet and see what's possible?
-                </h2>
-                <div className="cta-btn-list">
-                  <BtnSecondary type="button">Schedule a Call</BtnSecondary>
-                  <BtnGhost type="button">Watch Video</BtnGhost>
-                </div>
+                {headline && (
+                  <h2 className="cta-headline">{headline}</h2>
+                )}
+                {(primaryCta || secondaryCta) && (
+                  <div className="cta-btn-list">
+                    {primaryCta && (
+                      <BtnSecondary type="button">{primaryCta}</BtnSecondary>
+                    )}
+                    {secondaryCta && (
+                      <BtnGhost type="button">{secondaryCta}</BtnGhost>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Profile */}
-            <div className="cta-profile">
-              <img
-                src={profileImg}
-                alt="Luke Bowler"
-                className="cta-profile-photo"
-                draggable="false"
-              />
-              <div className="cta-profile-info">
-                <p className="cta-profile-name">Luke Bowler</p>
-                <p className="cta-profile-role">Head of Client Services &amp; Growth</p>
+            {(profileImage || profileName) && (
+              <div className="cta-profile">
+                {profileImage && (
+                  <img
+                    src={profileImage}
+                    alt={profileName || ''}
+                    className="cta-profile-photo"
+                    draggable="false"
+                  />
+                )}
+                <div className="cta-profile-info">
+                  {profileName && <p className="cta-profile-name">{profileName}</p>}
+                  {profileRole && <p className="cta-profile-role">{profileRole}</p>}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* ── Right: form ── */}
@@ -170,10 +191,10 @@ export default function ContactCTA() {
                 >
                   <span className="cta-submit-label">
                     {status === 'success'
-                      ? 'Request is Sent'
+                      ? submitLabels.success
                       : status === 'submitting'
-                        ? 'Sending…'
-                        : 'Send Message'}
+                        ? submitLabels.submitting
+                        : submitLabels.idle}
                   </span>
                 </button>
               </form>

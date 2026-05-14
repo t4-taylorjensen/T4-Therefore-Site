@@ -1,0 +1,183 @@
+/* ─────────────────────────────────────────
+   TECH STACK — Component Styles
+   Two-column card grid on a grey bleed.
+   All spacing/typography scales with viewport:
+   floors at the 1024 value, baselines at 1400,
+   caps at 2560.
+───────────────────────────────────────── */
+
+/* ── Section ── */
+
+.ts-section {
+  position: relative;
+  background: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  /* 90/1400 = 6.429vw · floor 65.83 @ 1024 · cap 164.57 @ 2560 */
+  padding: clamp(65.83px, 6.429vw, 164.57px);
+  /* Scroll-driven expansion — JS updates margin / border-radius / transform
+     from these initial values to 0 / 0 / scale(1) as the section enters. */
+  margin: 30px;
+  border-radius: var(--radius-md);   /* 16px */
+  transform: scale(0.98);
+  transform-origin: center top;
+  overflow: hidden;
+  transition:
+    margin        0.12s ease-out,
+    border-radius 0.12s ease-out,
+    transform     0.12s ease-out;
+  will-change: transform, margin, border-radius;
+}
+
+/* ── Eyebrow ── */
+
+.ts-eyebrow {
+  /* Override the default ink-subtle from .text-eyebrow. */
+  color: var(--color-ink);
+  /* 11/1400 = 0.786vw · floored 11px (never below) · cap 20.12 @ 2560. */
+  font-size: clamp(11px, 0.786vw, 20.12px);
+  /* 60/1400 = 4.286vw · floor 43.89 @ 1024 · cap 109.71 @ 2560 */
+  margin: 0 0 clamp(43.89px, 4.286vw, 109.71px);
+}
+
+/* ── Headline ── */
+
+.ts-headline {
+  font-family: var(--font-primary);
+  /* 40/1400 = 2.857vw · floor 29.26 @ 1024 · cap 73.14 @ 2560 */
+  font-size: clamp(29.26px, 2.857vw, 73.14px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  text-wrap: pretty;
+  /* 1111/1400 = 79.357vw · floor 812.6 @ 1024 · cap 2031.54 @ 2560 */
+  max-width: clamp(812.6px, 79.357vw, 2031.54px);
+  /* 120/1400 = 8.571vw · floor 87.77 @ 1024 · cap 219.43 @ 2560 */
+  margin: 0 0 clamp(87.77px, 8.571vw, 219.43px);
+}
+
+/* ── Card grid ── */
+
+.ts-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* 30/1400 = 2.143vw · floor 21.94 @ 1024 · cap 54.86 @ 2560 */
+  gap: clamp(21.94px, 2.143vw, 54.86px);
+}
+
+/* ── Single card ── */
+
+/* Outer <a> = hover-detection only. Flex column so the inner card can
+   stretch to fill the grid cell's full height. */
+.ts-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+/* Inner <span> = the visible card. flex: 1 lets it grow to match its
+   sibling's height so both cards stay visually equal regardless of content. */
+.ts-card-inner {
+  flex: 1 1 auto;
+  background: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(21.94px, 2.143vw, 54.86px);
+  transition:
+    transform  var(--duration-base) var(--ease-out-soft),
+    box-shadow var(--duration-base) var(--ease-out-soft);
+  will-change: transform;
+}
+
+.ts-card:hover .ts-card-inner {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+.ts-card-image {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ts-card-logo {
+  /* 45/1400 = 3.214vw · floor 32.91 @ 1024 · cap 82.29 @ 2560 */
+  margin-top: clamp(32.91px, 3.214vw, 82.29px);
+  display: block;
+  /* 48/1400 = 3.429vw · floor 35.13 @ 1024 · cap 87.77 @ 2560.
+     Width auto preserves each logo's intrinsic aspect. */
+  height: clamp(35.13px, 3.429vw, 87.77px);
+  width: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ts-card-desc {
+  /* Explicit 30px gaps above and below stay intact at every viewport.
+     flex:1 lets the paragraph grow to absorb any extra card height, and
+     justify-content:center keeps the text vertically centered within that
+     grown box so the extra space distributes above and below the text. */
+  margin: clamp(21.94px, 2.143vw, 54.86px) 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: var(--font-primary);
+  /* 20/1400 = 1.429vw · floor 14.63 @ 1024 · cap 36.57 @ 2560 */
+  font-size: clamp(14.63px, 1.429vw, 36.57px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+.ts-card-cta {
+  /* No top margin — CTA sits at the bottom of the flex flow; spacing above
+     comes from the description's auto bottom margin. */
+  margin-top: 0;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  background: #f2f2f2;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  font-family: var(--font-mono);
+  /* Matches eyebrow scaling — floored at 11px, scales up to 20.12 @ 2560. */
+  font-size: clamp(11px, 0.786vw, 20.12px);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .ts-section {
+    padding: 60px 20px;
+  }
+
+  .ts-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Restore explicit gaps on mobile — auto margins resolve to 0 in a
+     single-column row, so re-add the 30px design rhythm by hand.
+     Pin description font-size at 20px (overrides the desktop clamp's
+     14.63px floor that would otherwise apply at this viewport). */
+  .ts-card-desc {
+    margin: 30px 0 0;
+    font-size: 20px;
+  }
+  .ts-card-cta {
+    margin-top: 30px;
+  }
+}

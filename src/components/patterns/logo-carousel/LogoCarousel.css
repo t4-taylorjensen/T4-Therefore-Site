@@ -47,9 +47,11 @@
 /* ── Column card ── */
 
 .lc-item {
-  width: 350px;
-  min-width: 350px;
-  height: 320px;
+  /* Linear scale: 196×180 @ 393px → 350×320 @ 1400px → 527.4×481.28 @ 2560px.
+     Width  slope 154/1007 = 15.293vw + 135.9px.
+     Height slope 140/1007 = 13.903vw + 125.36px. */
+  width: clamp(196px, calc(15.293vw + 135.9px), 527.4px);
+  height: clamp(180px, calc(13.903vw + 125.36px), 481.28px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,12 +107,3 @@ svg.lc-logo {
   .lc-track { animation: none !important; }
 }
 
-/* ── Responsive ── */
-
-@media (max-width: 1024px) {
-  .lc-item { width: 260px; min-width: 260px; height: 240px; }
-}
-
-@media (max-width: 640px) {
-  .lc-item { width: 180px; min-width: 180px; height: 180px; }
-}

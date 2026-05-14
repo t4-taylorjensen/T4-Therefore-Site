@@ -130,7 +130,7 @@ function EmailField() {
    GUIDE CARD
 ───────────────────────────────────────── */
 
-function GuideCard() {
+function GuideCard({ title, description, ctaLabel }) {
   const [showEmail,  setShowEmail]  = useState(false);
   const [ctaPressed, setCtaPressed] = useState(false);
 
@@ -144,11 +144,8 @@ function GuideCard() {
       <div className="hs-card-body">
         <AnimatedBeam />
         <div className="hs-card-text">
-          <p className="hs-card-title">AI Content Operations Guide</p>
-          <p className="hs-card-desc">
-            Learn how to architect a modern content supply chain that leverages
-            AI for creation, translation, and personalization.
-          </p>
+          <p className="hs-card-title">{title}</p>
+          <p className="hs-card-desc">{description}</p>
         </div>
         {showEmail ? (
           <EmailField />
@@ -157,7 +154,7 @@ function GuideCard() {
             className={`hs-card-btn${ctaPressed ? ' hs-card-btn--pressed' : ''}`}
             onAnimationEnd={() => setCtaPressed(false)}
           >
-            <BtnPrimary onClick={reveal}>Free download</BtnPrimary>
+            <BtnPrimary onClick={reveal}>{ctaLabel}</BtnPrimary>
             <BtnIconAccent icon={IconCornerRightArrow} label="Download" nudge="down" onClick={reveal} />
           </div>
         )}
@@ -172,40 +169,52 @@ function GuideCard() {
   );
 }
 
-const HEADLINE = 'One platform powering your entire digital ecosystem, content, commerce, and experience unified without compromise.';
-
 /* ─────────────────────────────────────────
    HERO STACK
 ───────────────────────────────────────── */
 
-export default function HeroStack() {
+export default function HeroStack({
+  eyebrow,
+  headline,
+  textHeading,
+  paragraphs = [],
+  cardTitle,
+  cardDesc,
+  cardCtaLabel,
+}) {
   return (
     <section className="hs-section">
       <div className="hs-container">
 
         <div className="hs-large-title">
           <Eyebrow className="hs-eyebrow anim-fade-up anim-delay-1">
-            What is Headless?
+            {eyebrow}
           </Eyebrow>
           <ScrollRevealHeadline
             as="h2"
             className="hs-headline"
-            text={HEADLINE}
+            text={headline}
           />
         </div>
 
         <div className="hs-split">
           <div className="hs-text">
-            <h3 className="hs-text-heading anim-fade-up anim-delay-2">
-              A new way to think about content
-            </h3>
+            {textHeading && (
+              <h3 className="hs-text-heading anim-fade-up anim-delay-2">
+                {textHeading}
+              </h3>
+            )}
             <div className="hs-text-body anim-fade-up anim-delay-3">
-              <p>Traditional CMSs lock your content into rigid templates and single-channel publishing. In a multi-platform world, that's a competitive disadvantage. Headless CMS liberates your content, allowing you to adapt faster and reach audiences wherever they are.</p>
-              <p>We don't just implement Contentful or Sanity—we design content models that reflect your editorial workflow, integrate with your ecosystem, and scale as your needs evolve. Our approach blends content strategy with technical architecture.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque rutrum urna, vitae aliquet nunc vehicula sed.</p>
+              {paragraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
           </div>
-          <GuideCard />
+          <GuideCard
+            title={cardTitle}
+            description={cardDesc}
+            ctaLabel={cardCtaLabel}
+          />
         </div>
 
       </div>

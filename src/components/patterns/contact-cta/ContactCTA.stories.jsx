@@ -1,5 +1,17 @@
 import ContactCTA from './ContactCTA';
 
+import profileImg from '../../ui/brand assets/therefore-int-luke-bowler.jpg';
+
+const DEFAULT_PROPS = {
+  eyebrow:      "We're ready when you are",
+  headline:     "Ready to meet and see what's possible?",
+  primaryCta:   'Schedule a Call',
+  secondaryCta: 'Watch Video',
+  profileImage: profileImg,
+  profileName:  'Luke Bowler',
+  profileRole:  'Head of Client Services & Growth',
+};
+
 export default {
   title: 'Patterns/ContactCTA',
   component: ContactCTA,
@@ -51,4 +63,6 @@ Place ContactCTA as the final section before the footer — after capability or 
   },
 };
 
-export const Default = {};
+export const Default = {
+  render: () => <ContactCTA {...DEFAULT_PROPS} />,
+};

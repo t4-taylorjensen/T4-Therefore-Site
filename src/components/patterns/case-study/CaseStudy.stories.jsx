@@ -1,5 +1,23 @@
 import CaseStudy from './CaseStudy';
 
+import mediaImg from '../../ui/brand assets/video block.jpg';
+import profileImg from '../../ui/brand assets/therefore-placeholder-woman.jpg';
+
+const DEFAULT_PROPS = {
+  eyebrow:      'Case Study',
+  titleWord1:   'DuVine',
+  titleWord2:   'Cycling',
+  mediaImage:   mediaImg,
+  mediaAlt:     'DuVine Cycling — checkout experience',
+  splitLabel:   'DuVine Cycling',
+  description:  'Built to replace a legacy monolith with a composable architecture designed for performance and long-term scalability.',
+  ctaLabel:     'Full Case Study',
+  quote:        '"Therefore has been tenacious improving our technological capabilities and guest experience. They have been supportive partners and met the changing needs of the tourism landscape."',
+  profileImage: profileImg,
+  profileName:  'Jane Smith',
+  profileRole:  'Chief Executive Officer',
+};
+
 export default {
   title: 'Patterns/CaseStudy',
   component: CaseStudy,
@@ -46,4 +64,6 @@ Place CaseStudy after a capabilities or differentiator section (e.g. FeatureStac
   },
 };
 
-export const Default = {};
+export const Default = {
+  render: () => <CaseStudy {...DEFAULT_PROPS} />,
+};

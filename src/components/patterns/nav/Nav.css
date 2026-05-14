@@ -278,14 +278,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 60px 60px 60px;
+  /* 60/1400 = 4.286vw · floor 60 · cap 109.71 @ 2560 */
+  padding: clamp(60px, 4.286vw, 109.71px);
   overflow-y: auto;
 }
 
 /* Shared eyebrow label — reduced 2px from 14 → 12 */
 .nav-overlay-label {
   font-family: var(--font-mono);
-  font-size: 12px;
+  /* 12/1400 = 0.857vw · floor 12 · cap 21.95 @ 2560 */
+  font-size: clamp(12px, 0.857vw, 21.95px);
   font-weight: 400;
   line-height: 1em;
   letter-spacing: 0.035714em;
@@ -296,7 +298,8 @@
 .nav-overlay-group {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  /* 40/1400 = 2.857vw · floor 40 · cap 73.14 @ 2560 */
+  gap: clamp(40px, 2.857vw, 73.14px);
 }
 
 
@@ -307,7 +310,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  gap: clamp(60px, 15vw, 220px);
+  /* 220/1400 = 15.714vw · floor 60 · cap 402.29 @ 2560 (extended). */
+  gap: clamp(60px, 15.714vw, 402.29px);
 }
 
 
@@ -322,7 +326,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  gap: 12px;
+  /* 12/1400 = 0.857vw · floor 12 · cap 21.95 @ 2560 */
+  gap: clamp(12px, 0.857vw, 21.95px);
 }
 
 /* Outer clip — hides the rise entrance animation */
@@ -370,7 +375,8 @@
 .nav-display-link-b {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(52px, 6.8vw, 98px);
+  /* 98/1400 = 7vw · floor 52 (mobile) · cap 179.2 @ 2560 (extended). */
+  font-size: clamp(52px, 7vw, 179.2px);
   font-weight: 900;
   line-height: 0.9;
   text-transform: uppercase;
@@ -414,22 +420,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  /* 20/1400 = 1.429vw · floor 20 · cap 36.57 @ 2560 */
+  width: clamp(20px, 1.429vw, 36.57px);
+  height: clamp(20px, 1.429vw, 36.57px);
   margin-bottom: 10px;
   flex-shrink: 0;
   color: var(--color-accent);
 }
 
-/* Arrow paths animate independently for a draw-retrace effect */
+.nav-overlay-main-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Draw-retrace effect — relies on pathLength="1" on the SVG <path> so the
+   dash math is independent of actual path length (no more clipping issues).
+   dasharray:1 → stroke=1, gap=1 covers the path exactly.
+   Animation 0 → 2 cycles the dash forward: erases at midpoint (dashoffset 1)
+   then redraws fully (dashoffset 2 = same as 0 mod period). */
+@keyframes nav-arrow-draw-retrace {
+  0%   { stroke-dashoffset: 0; }
+  50%  { stroke-dashoffset: 1; }
+  100% { stroke-dashoffset: 2; }
+}
+
 .nav-overlay-main-arrow svg path {
-  stroke-dasharray: 30;
+  stroke-dasharray: 1;
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-overlay-main-link-row:hover .nav-overlay-main-arrow svg path {
-  stroke-dashoffset: -8;
+  animation: nav-arrow-draw-retrace 700ms cubic-bezier(0.16, 1, 0.3, 1) 1;
 }
 
 
@@ -437,7 +458,8 @@
 .nav-overlay-discover {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  /* 40/1400 = 2.857vw · floor 40 · cap 73.14 @ 2560 */
+  gap: clamp(40px, 2.857vw, 73.14px);
   opacity: 0;
 }
 
@@ -448,22 +470,26 @@
 .nav-overlay-discover-cols {
   display: flex;
   flex-direction: row;
-  gap: 40px;
+  /* 40/1400 = 2.857vw · floor 40 · cap 73.14 @ 2560 */
+  gap: clamp(40px, 2.857vw, 73.14px);
 }
 
 .nav-overlay-discover-col {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* 20/1400 = 1.429vw · floor 20 · cap 36.57 @ 2560 */
+  gap: clamp(20px, 1.429vw, 36.57px);
   list-style: none;
   margin: 0;
   padding: 0;
-  min-width: 160px;
+  /* 160/1400 = 11.429vw · floor 160 · cap 292.57 @ 2560 */
+  min-width: clamp(160px, 11.429vw, 292.57px);
 }
 
 .nav-overlay-discover-item {
   font-family: var(--font-primary);
-  font-size: clamp(20px, 2.1vw, 30px);
+  /* 30/1400 = 2.143vw · floor 20 · cap 54.86 @ 2560 (extended) */
+  font-size: clamp(20px, 2.143vw, 54.86px);
   font-weight: 400;
   line-height: 1.4em;
   color: var(--color-ink);
@@ -478,8 +504,10 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 120px;
-  padding-top: 40px;
+  /* 120/1400 = 8.571vw · floor 120 · cap 219.43 @ 2560 */
+  gap: clamp(120px, 8.571vw, 219.43px);
+  /* 40/1400 = 2.857vw · floor 40 · cap 73.14 @ 2560 */
+  padding-top: clamp(40px, 2.857vw, 73.14px);
   border-top: 1px solid var(--color-border-medium);
   opacity: 0;
 }
@@ -491,7 +519,8 @@
 .nav-overlay-contact {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  /* 15/1400 = 1.071vw · floor 15 · cap 27.43 @ 2560 */
+  gap: clamp(15px, 1.071vw, 27.43px);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -499,7 +528,8 @@
 
 .nav-overlay-contact-link {
   font-family: var(--font-primary);
-  font-size: var(--text-body-sm);
+  /* 15/1400 = 1.071vw · floor 15 · cap 27.43 @ 2560 */
+  font-size: clamp(15px, 1.071vw, 27.43px);
   font-weight: 400;
   line-height: 1.7em;
   letter-spacing: 0.0333em;
@@ -511,19 +541,32 @@
 .nav-overlay-social {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  /* 10/1400 = 0.714vw · floor 10 · cap 18.29 @ 2560 */
+  gap: clamp(10px, 0.714vw, 18.29px);
 }
 
+/* Outer <a> = hover-detection only. Same size as the visible box but with
+   no visual styling and no transform — its bounding box stays fixed so
+   the cursor never falls out of the hit area when the inner box lifts. */
 .nav-overlay-social-btn {
-  width: 44px;
-  height: 44px;
+  /* 44/1400 = 3.143vw · floor 44 · cap 80.46 @ 2560 */
+  width: clamp(44px, 3.143vw, 80.46px);
+  height: clamp(44px, 3.143vw, 80.46px);
+  display: flex;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+/* Inner <span> = the visible button. Carries the border, background, and
+   the translateY lift on parent hover. */
+.nav-overlay-social-inner {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   border: 1px solid var(--color-border-medium);
   border-radius: var(--radius-sm);
-  text-decoration: none;
-  color: var(--color-ink);
   background: transparent;
   transition:
     background   220ms var(--ease-out-expo),
@@ -531,11 +574,37 @@
     transform    220ms var(--ease-out-expo);
 }
 
-.nav-overlay-social-btn:hover {
+.nav-overlay-social-btn:hover .nav-overlay-social-inner {
   background:   var(--color-accent);
   border-color: var(--color-accent);
   transform:    translateY(-2px);
-  /* Icon stays black */
+}
+
+/* Icons are ~20×20 inside the 44×44 button (not filling). Scale them at the
+   icon's baseline so they keep their proportional size as the button grows. */
+.nav-overlay-social-btn svg {
+  height: clamp(20px, 1.429vw, 36.57px);
+  width: auto;
+}
+
+
+/* ─────────────────────────────────────────
+   HAMBURGER BREAKPOINT
+   At ≤1082px the desktop nav collapses to a hamburger. The full mobile
+   styling (paddings, overlay condensed layout) still kicks in at ≤768.
+───────────────────────────────────────── */
+@media (max-width: 1082px) {
+  .nav-links  { display: none; }
+  .nav-cta    { display: none; }
+  .nav-burger { display: flex; }
+
+  /* Logo joins the flex flow at the left so the burger lands on the right
+     (top nav and the overlay's matching bar both follow this layout). */
+  .nav-logo,
+  .nav-overlay-bar .nav-logo {
+    position: static;
+    transform: none;
+  }
 }
 
 
@@ -545,25 +614,10 @@
 @media (max-width: 768px) {
   /* Top nav bar */
   .nav { padding: 15px 20px; }
-  .nav-links { display: none; }
-  .nav-cta    { display: none; }
-  .nav-burger { display: flex; }
-
-  /* On mobile the logo is left-aligned (not absolutely centred) */
-  .nav-logo {
-    position: static;
-    transform: none;
-  }
 
   /* Overlay bar — match top nav exactly: 20px padding, logo left, close right */
   .nav-overlay-bar {
     padding: 15px 20px;
-  }
-
-  /* Logo inside overlay stays left-aligned, same size as top nav */
-  .nav-overlay-bar .nav-logo {
-    position: static;
-    transform: none;
   }
 
   /* Body padding 20px sides */

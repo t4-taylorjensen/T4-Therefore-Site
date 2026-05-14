@@ -82,6 +82,7 @@
   line-height: 1;
   color: var(--color-text-on-dark);
   margin: 0;
+  text-wrap: pretty;
 }
 
 /* ── CTA buttons (Schedule a Call / Watch Video) — scale with --cta-scale ── */

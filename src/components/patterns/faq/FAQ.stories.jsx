@@ -1,5 +1,37 @@
 import FAQ from './FAQ';
 
+import sidebarImg from '../../ui/brand assets/therefore-int-media-placeholder.jpg';
+
+const DEFAULT_FAQS = [
+  {
+    question: 'What is headless commerce?',
+    answer:   'Headless commerce separates the frontend experience from backend systems. This allows enterprises to manage content, commerce, and integrations independently, creating greater flexibility, faster performance, and long-term scalability.',
+  },
+  {
+    question: 'When does headless make sense?',
+    answer:   'Headless is most effective for organizations with complex integrations, multi-channel requirements, or growth plans that exceed the limits of all-in-one platforms. It becomes valuable when flexibility and scalability outweigh simplicity.',
+  },
+  {
+    question: 'How long does implementation take?',
+    answer:   'Enterprise implementations typically range from 12 to 20 weeks, depending on integration complexity, content modeling, and migration scope. A phased approach can accelerate time to value while long-term architecture evolves.',
+  },
+  {
+    question: 'How does headless connect to existing systems?',
+    answer:   'Headless integrates through APIs, allowing CMS, commerce engines, CRM, ERP, PIM, and other platforms to operate as a unified system. The architecture is designed to support existing workflows while improving flexibility and performance.',
+  },
+  {
+    question: 'Is headless right for mid-sized enterprises?',
+    answer:   'Headless can be the right choice for mid-sized enterprises with growing complexity, multiple digital channels, or long-term scalability goals. For smaller organizations with simple requirements, a monolithic platform may remain sufficient.',
+  },
+];
+
+const DEFAULT_SIDEBAR = {
+  image:    sidebarImg,
+  imageAlt: 'Agentic Commerce article',
+  category: 'Insight',
+  title:    'Agentic Commerce: Preparing for AI-Driven Transactions',
+};
+
 export default {
   title: 'Patterns/FAQ',
   component: FAQ,
@@ -40,4 +72,13 @@ Place FAQ near the bottom of a marketing page, after core content sections have 
   },
 };
 
-export const Default = {};
+export const Default = {
+  render: () => (
+    <FAQ
+      eyebrow="Headless Commerce FAQs"
+      headline="Frequently Asked Questions"
+      faqs={DEFAULT_FAQS}
+      sidebar={DEFAULT_SIDEBAR}
+    />
+  ),
+};

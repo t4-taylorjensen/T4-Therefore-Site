@@ -57,6 +57,7 @@
   font-weight: 400;
   line-height: var(--leading-tight);     /* 1.15 */
   letter-spacing: var(--tracking-tight); /* -0.02em */
+  text-wrap: pretty;
   /* Holds at 1000px through 1400px, then scales up to ~1636px at 2560px
      (matches the headline's 55→90 growth factor of ~1.636×). */
   max-width: clamp(1000px, calc(54.83vw + 232.41px), 1636px);
@@ -84,8 +85,10 @@
 
 .hs-text-heading {
   font-family: var(--font-primary);
-  /* Holds at 30px through 1400px, then scales up to ~37.3px at 2560px (same slope as hero copy). */
-  font-size: clamp(30px, calc(0.63vw + 21.18px), 37.3px);
+  /* Pure-vw scale so font tracks the column (max-width: 50.71vw above 1400).
+     30/710 = 4.225% of column · 0.04225 × 50.71vw = 2.142vw.
+     Floor 30px (below 1400) · cap 54.84px (@2560). Keeps line count constant ≥ 1400. */
+  font-size: clamp(30px, 2.142vw, 54.84px);
   font-weight: 400;
   line-height: var(--leading-snug);      /* 1.4 */
   color: var(--color-ink);
@@ -250,6 +253,12 @@
 .hs-card-btn .btn-icon-accent {
   width: clamp(34px, 2.43vw, 62.18px);
   height: clamp(34px, 2.43vw, 62.18px);
+}
+
+/* Icon inside the icon-only button — 16/368 = 1.143vw, caps at 29.26px @ 2560. */
+.hs-card-btn .btn-icon-accent svg {
+  width: clamp(16px, 1.143vw, 29.26px);
+  height: clamp(16px, 1.143vw, 29.26px);
 }
 
 .hs-card-btn--pressed {
