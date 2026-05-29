@@ -30,8 +30,8 @@
      BORDER COLORS
   ───────────────────────────────────────── */
   --color-border:        rgba(0,0,0,0.1);
-  --color-border-medium: rgba(0,0,0,0.15);
-  --color-border-light:  #E8E8E8;
+  --color-border-medium: rgba(0,0,0,0.1);
+  --color-border-light:  rgba(0,0,0,0.1);
 
   /* ─────────────────────────────────────────
      TEXT ON DARK
@@ -44,9 +44,11 @@
   /* ─────────────────────────────────────────
      TYPOGRAPHY
   ───────────────────────────────────────── */
-  --font-primary:   'Roobert', sans-serif;
-  --font-mono:      'Roobert Mono', monospace;
-  --font-display:   'ABC Gravity X Compressed', sans-serif;
+  --font-primary:        'Roobert', sans-serif;
+  --font-mono:           'Roobert Mono', monospace;
+  --font-display:        'ABC Gravity X Compressed', sans-serif;
+  --font-display-normal: 'ABC Gravity Normal', sans-serif;
+  --font-display-var:    'ABC Gravity', sans-serif;
 
   /* ─────────────────────────────────────────
      FONT SIZES

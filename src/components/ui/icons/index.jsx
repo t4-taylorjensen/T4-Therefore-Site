@@ -43,6 +43,21 @@ export function IconCornerDownRight(props) {
   );
 }
 
+/** Diagonal arrow ↗ · Nav overlay active link */
+export function IconArrowDiagonal(props) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+      aria-hidden="true" {...props}>
+      <path
+        d="M12.9336 9.46772L8.66698 9.46772C6.42677 9.46772 4.40039 9.46772 4.40039 9.46772L4.40039 3.20001M12.9336 9.46772L9.60031 6.13439M12.9336 9.46772L9.60031 12.8011"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 /** L-corner turning right-down · Footer CTA, download */
 export function IconCornerRightArrow(props) {
   return (
