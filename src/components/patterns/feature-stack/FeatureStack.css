@@ -9,6 +9,18 @@
   animation: nudge-right 0.55s ease-in-out 1;
 }
 
+/* flat 2D orbit */
+@keyframes discovery-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* counter-rotate each card to keep it upright — animationDelay offsets per card */
+@keyframes discovery-ccw {
+  from { transform: translateY(-120px) rotate(0deg); }
+  to   { transform: translateY(-120px) rotate(-360deg); }
+}
+
 /* ── Section ── */
 
 .s2-section {
