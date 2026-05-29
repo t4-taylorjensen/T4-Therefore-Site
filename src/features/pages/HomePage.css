@@ -1,0 +1,343 @@
+/* ─────────────────────────────────────────
+   HOMEPAGE — Section Styles
+   Uses tokens from src/styles/tokens.css
+───────────────────────────────────────── */
+
+/* ─── STACKING PANELS ────────────────────── */
+
+.hp-panels {
+  position: relative;
+}
+
+.hp-panel {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  background: var(--color-bg-page);
+  overflow: hidden;
+}
+
+/* ─── INTRO ─────────────────────────────── */
+
+.hp-intro {
+  background: var(--color-bg-page);
+  padding: 90px;
+  position: relative;
+}
+
+/* Eyebrow — absolutely placed at top-left of content area, aligned with line 1 */
+.hp-intro-eyebrow {
+  position: absolute;
+  top: 90px;
+  left: 90px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  line-height: 1;
+  /* Vertically centre within one line of the body text */
+  padding-top: calc((clamp(28px, 3.82vw, 55px) - 11px) / 2);
+}
+
+/* Body — text-indent pushes line 1 right so eyebrow sits in the gap */
+.hp-intro-body {
+  font-family: var(--font-primary);
+  font-size: clamp(28px, 3.82vw, 55px);
+  line-height: 1;
+  color: var(--color-ink);
+  margin: 0;
+  text-indent: 16%;
+}
+
+/* ─── PROJECT CAROUSEL ───────────────────── */
+
+.hp-carousel {
+  background: var(--color-bg-page);
+  height: clamp(480px, 52vw, 740px);
+  overflow: hidden;
+}
+
+.hp-carousel-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: clamp(14px, 1.8vw, 26px);
+  animation: hp-marquee 60s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+@keyframes hp-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Cards: height is set inline as % of container, width driven by aspect-ratio */
+.hp-carousel-card {
+  flex-shrink: 0;
+}
+
+.hp-carousel-card-img {
+  display: block;
+  height: clamp(120px, 18vw, 260px);
+  width: auto;
+}
+
+.hp-carousel-card--small .hp-carousel-card-img {
+  height: clamp(84px, 12.6vw, 182px);
+}
+
+/* ─── PARALLAX CARDS ──────────────────────────────────────── */
+
+/* 500vh total = 400vh scrollable range across 4 phases of 100vh each */
+.pc-section {
+  position: relative;
+  height: 500vh;
+}
+
+/* Sticky viewport — locks to screen while section scrolls behind it */
+.pc-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+
+/* White panel that dissolves away as the user scrolls in */
+.pc-cover {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-page);
+  z-index: 10;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ── Each card: absolute, full-bleed, stacked ── */
+.pc-card {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: clamp(32px, 5.5vw, 88px);
+  will-change: transform;
+  overflow: hidden;
+}
+
+.pc-card--stat {
+  background: radial-gradient(ellipse at 22% 68%, #1e1e1e 0%, #0d0d0d 55%);
+}
+.pc-card--manifesto {
+  background: radial-gradient(ellipse at 50% 42%, #1a1a1a 0%, #0b0b0b 65%);
+}
+.pc-card--list {
+  background: radial-gradient(ellipse at 18% 88%, #1c1c1c 0%, #0d0d0d 60%);
+}
+
+/* ── Meta row: index + eyebrow ── */
+.pc-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pc-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+.pc-mono--muted {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Card body: fills remaining row ── */
+.pc-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── STAT layout ── */
+.pc-card--stat .pc-card-body {
+  justify-content: center;
+  gap: clamp(10px, 1.5vh, 20px);
+}
+
+.pc-stat-number {
+  font-family: 'ABC Gravity Normal', sans-serif;
+  font-size: clamp(160px, 30vw, 440px);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: #fff;
+  margin: 0;
+}
+
+.pc-stat-rule {
+  width: clamp(44px, 5.5vw, 80px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.pc-stat-label {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3.4vw, 48px);
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* ── MANIFESTO layout ── */
+.pc-card--manifesto .pc-card-body {
+  justify-content: center;
+  align-items: center;
+}
+
+.pc-headline {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 12vh, 160px);
+  font-weight: 900;
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0;
+  white-space: pre-line;
+  text-align: center;
+}
+
+/* ── LIST layout ── */
+.pc-card--list .pc-card-body {
+  justify-content: flex-end;
+}
+
+.pc-list-item {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(14px, 2.2vw, 36px);
+  padding: clamp(14px, 2vh, 28px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.pc-list-item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pc-list-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  color: rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+}
+
+.pc-list-name {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 7.5vw, 108px);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* ── Progress dots — right edge ── */
+.pc-progress {
+  position: absolute;
+  right: clamp(24px, 3.5vw, 52px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.pc-progress-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: transform, opacity;
+}
+
+/* ─── CASE STUDY FEATURE ─────────────────── */
+
+.hp-case {
+  background: var(--color-bg-page);
+  padding: 160px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hp-case-frame {
+  width: 700px;
+  max-width: 100%;
+  height: 440px;
+  background: var(--color-surface-1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.07);
+}
+
+.hp-case-chrome {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #f0ede8 0%, #e0dcd6 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.hp-case-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hp-case-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border-medium);
+}
+
+.hp-case-screen-main {
+  flex: 1;
+  background: var(--color-white);
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+.hp-case-screen-bar {
+  height: 80px;
+  background: var(--color-white);
+  border-radius: 3px;
+  opacity: 0.4;
+}
+
+.hp-case-label {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  background: var(--color-white);
+  padding: 4px 8px;
+}

@@ -35,4 +35,6 @@ Place Hero as the **first section** on any marketing or landing page. It should 
   },
 };
 
-export const Default = {};
+export const Default = {
+  render: () => <Hero mediaSlot={<></>} />,
+};

@@ -1,3 +1,27 @@
+/* ── ABC Gravity Variable (covers all widths via font-variation-settings) ── */
+@font-face {
+  font-family: 'ABC Gravity';
+  src: url('./ABCGravityUprightVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── ABC Gravity static weights (fallbacks / named references) ── */
+@font-face {
+  font-family: 'ABC Gravity XXX Compressed';
+  src: url('./ABCGravity-XXXCompressed.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity XX Compressed';
+  src: url('./ABCGravity-XXCompressed.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 @font-face {
   font-family: 'ABC Gravity X Compressed';
   src: url('./ABCGravity-XCompressed.woff2') format('woff2');
@@ -5,7 +29,64 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'ABC Gravity Compressed';
+  src: url('./ABCGravity-Compressed.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Extra Condensed';
+  src: url('./ABCGravity-ExtraCondensed.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Condensed';
+  src: url('./ABCGravity-Condensed.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Semi Condensed';
+  src: url('./ABCGravity-SemiCondensed.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Normal';
+  src: url('./ABCGravity-Normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Extended';
+  src: url('./ABCGravity-Extended.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Expanded';
+  src: url('./ABCGravity-Expanded.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Gravity Wide';
+  src: url('./ABCGravity-Wide.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
+/* ── Roobert ── */
 @font-face {
   font-family: 'Roobert';
   src: url('./Roobert-Regular.woff2') format('woff2');
@@ -14,6 +95,7 @@
   font-display: swap;
 }
 
+/* ── Roobert Mono ── */
 @font-face {
   font-family: 'Roobert Mono';
   src: url('./RoobertMono-Regular.woff2') format('woff2');

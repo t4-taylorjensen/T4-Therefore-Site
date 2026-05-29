@@ -24,10 +24,15 @@
 ───────────────────────────────────────── */
 
 .s2-large-title {
-  padding: clamp(80px, 11vw, 160px) clamp(20px, 6.25vw, 90px) clamp(60px, 8.3vw, 120px);
+  max-width: var(--container-md);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: clamp(80px, 11vw, 160px) var(--space-6) clamp(60px, 8.3vw, 120px);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);                    /* 30px */
+  gap: var(--space-6);
   background: var(--color-bg-page);
 }
 
@@ -47,11 +52,20 @@
 ───────────────────────────────────────── */
 
 .s2-cards-section {
-  padding: 30px clamp(20px, 6.25vw, 90px) clamp(60px, 8.3vw, 120px);
+  max-width: var(--container-md);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px var(--space-6) clamp(60px, 8.3vw, 120px);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);                    /* 30px */
+  gap: var(--space-6);
   background: var(--color-bg-page);
+}
+
+.s2-section--no-title .s2-cards-section {
+  padding-top: clamp(60px, 8.3vw, 120px);
 }
 
 /* ── Cards header row ── */
@@ -213,7 +227,7 @@
 
 .s2-card-title {
   font-family: var(--font-primary);
-  font-size: var(--text-md);              /* 30px */
+  font-size: 26px;
   font-weight: 400;
   line-height: var(--leading-snug);       /* 1.4 */
   color: var(--color-ink);
@@ -222,7 +236,7 @@
 
 .s2-card-desc {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);         /* 20px */
+  font-size: var(--text-body-md);          /* 16px */
   font-weight: 400;
   line-height: var(--leading-normal);     /* 1.6 */
   color: var(--color-ink-faint);          /* rgba(18,18,18,0.7) */

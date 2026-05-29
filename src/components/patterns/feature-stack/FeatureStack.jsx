@@ -11,33 +11,74 @@ import Eyebrow from '../../ui/Eyebrow';
 const HEADLINE_DARK  = 'We design content models that reflect real workflows';
 const HEADLINE_MUTED = ', integrate with your ecosystem, and scale as your business evolves.';
 
+const DEFAULT_CARDS = [
+  {
+    title: 'Discovery',
+    desc: 'We help you make informed decisions about your digital future.',
+    media: <div className="s2-card-media s2-card-media--discovery" />,
+    link: true,
+    delay: 'anim-delay-2',
+  },
+  {
+    title: 'Digital Products',
+    desc: 'We build custom web-based applications bespoke to your needs.',
+    media: (
+      <div className="s2-card-media s2-card-media--digital">
+        <img className="media-fill" src={coverDigitalProducts} alt="New American Paintings — digital product preview" />
+      </div>
+    ),
+    delay: 'anim-delay-3',
+  },
+  {
+    title: 'Agentic Capabilities',
+    desc: 'We design the system before choosing tools so your solution is cohesive built.',
+    media: (
+      <div className="s2-card-media s2-card-media--agentic">
+        <img className="s2-agentic-default" src={coverAiCapabilities} alt="Agentic system architecture" />
+        <img className="s2-agentic-hover" src={coverAiCapabilitiesHover} alt="" aria-hidden="true" />
+      </div>
+    ),
+    delay: 'anim-delay-4',
+  },
+];
+
 /* ─────────────────────────────────────────
    STACK 2
 ───────────────────────────────────────── */
 
-export default function FeatureStack() {
+export default function FeatureStack({
+  eyebrow = 'Our Capabilities',
+  headlineDark = HEADLINE_DARK,
+  headlineMuted = HEADLINE_MUTED,
+  headerTitle = 'What We Do',
+  cards = DEFAULT_CARDS,
+  showTitle = true,
+  cardMediaHeight = null,
+}) {
   const [iconNudge, setIconNudge] = useState(false);
 
   return (
-    <section className="s2-section">
+    <section className={`s2-section${showTitle ? '' : ' s2-section--no-title'}`}>
 
         {/* ── Large Title ── */}
-        <div className="s2-large-title">
-          <Eyebrow className="anim-fade-up anim-delay-1">Our Capabilities</Eyebrow>
-          <ScrollRevealHeadline
-            as="h2"
-            className="s2-headline"
-            text={HEADLINE_DARK}
-            mutedText={HEADLINE_MUTED}
-          />
-        </div>
+        {showTitle && (
+          <div className="s2-large-title">
+            <Eyebrow className="anim-fade-up anim-delay-1">{eyebrow}</Eyebrow>
+            <ScrollRevealHeadline
+              as="h2"
+              className="s2-headline"
+              text={headlineDark}
+              mutedText={headlineMuted}
+            />
+          </div>
+        )}
 
         {/* ── Cards Section ── */}
         <div className="s2-cards-section">
 
           {/* Header row */}
           <div className="s2-cards-header anim-fade-up anim-delay-2">
-            <p className="s2-cards-title">What We Do</p>
+            <p className="s2-cards-title">{headerTitle}</p>
             <a
               href="#"
               className="s2-btn-sm"
@@ -56,52 +97,20 @@ export default function FeatureStack() {
 
           {/* Cards grid */}
           <div className="s2-cards-grid">
-
-            {/* Card 1: Discovery */}
-            <a href="#" className="s2-card anim-fade-up anim-delay-2">
-              <div className="s2-card-media s2-card-media--discovery" />
-              <div className="s2-card-text">
-                <p className="s2-card-title">Discovery</p>
-                <p className="s2-card-desc">We help you make informed decisions about your digital future.</p>
-              </div>
-            </a>
-
-            {/* Card 2: Digital Products */}
-            <div className="s2-card anim-fade-up anim-delay-3">
-              <div className="s2-card-media s2-card-media--digital">
-                <img
-                  className="media-fill"
-                  src={coverDigitalProducts}
-                  alt="New American Paintings — digital product preview"
-                />
-              </div>
-              <div className="s2-card-text">
-                <p className="s2-card-title">Digital Products</p>
-                <p className="s2-card-desc">We build custom web-based applications bespoke to your needs.</p>
-              </div>
-            </div>
-
-            {/* Card 3: Agentic Capabilities */}
-            <div className="s2-card anim-fade-up anim-delay-4">
-              <div className="s2-card-media s2-card-media--agentic">
-                <img
-                  className="s2-agentic-default"
-                  src={coverAiCapabilities}
-                  alt="Agentic system architecture"
-                />
-                <img
-                  className="s2-agentic-hover"
-                  src={coverAiCapabilitiesHover}
-                  alt=""
-                  aria-hidden="true"
-                />
-              </div>
-              <div className="s2-card-text">
-                <p className="s2-card-title">Agentic Capabilities</p>
-                <p className="s2-card-desc">We design the system before choosing tools so your solution is cohesive built.</p>
-              </div>
-            </div>
-
+            {cards.map((card, i) => {
+              const Wrapper = card.link ? 'a' : 'div';
+              return (
+                <Wrapper key={i} href={card.link ? '#' : undefined} className={`s2-card anim-fade-up ${card.delay ?? 'anim-delay-2'}`}>
+                  {cardMediaHeight
+                ? <div style={{ height: cardMediaHeight, position: 'relative', overflow: 'hidden', flexShrink: 0 }}>{card.media}</div>
+                : card.media}
+                  <div className="s2-card-text">
+                    <p className="s2-card-title">{card.title}</p>
+                    <p className="s2-card-desc">{card.desc}</p>
+                  </div>
+                </Wrapper>
+              );
+            })}
           </div>
         </div>
 

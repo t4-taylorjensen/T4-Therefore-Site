@@ -1,0 +1,359 @@
+/* ============================================================
+   HERO MEDIA EXPLORATIONS
+   Shared design tokens, keyframes, and base utilities.
+   Each exploration component imports this file.
+   ============================================================ */
+
+:root {
+
+  /* ── Media backgrounds ── */
+  --hm-bg:               #0d0d0d;
+  --hm-bg-alt:           #111111;
+  --hm-bg-warm:          #0e0d0b;
+  --hm-bg-cool:          #0b0d11;
+
+  /* ── On-brand blue gradient ── */
+  --hm-bg-blue:          #070d1c;
+  --hm-gradient-blue:    linear-gradient(158deg, #060c1a 0%, #0d1f3c 52%, #060e1e 100%);
+  --hm-blue-glow:        radial-gradient(ellipse 65% 55% at 50% 42%, rgba(66,151,255,0.13) 0%, transparent 70%);
+
+  /* ── Layered surfaces (light on dark) ── */
+  --hm-surface-1:        rgba(255, 255, 255, 0.03);
+  --hm-surface-2:        rgba(255, 255, 255, 0.055);
+  --hm-surface-3:        rgba(255, 255, 255, 0.09);
+  --hm-surface-4:        rgba(255, 255, 255, 0.15);
+
+  /* ── Borders ── */
+  --hm-border:           rgba(255, 255, 255, 0.07);
+  --hm-border-mid:       rgba(255, 255, 255, 0.12);
+  --hm-border-bright:    rgba(255, 255, 255, 0.22);
+
+  /* ── Text on dark ── */
+  --hm-text:             rgba(255, 255, 255, 0.90);
+  --hm-text-muted:       rgba(255, 255, 255, 0.45);
+  --hm-text-subtle:      rgba(255, 255, 255, 0.22);
+  --hm-text-faint:       rgba(255, 255, 255, 0.09);
+
+  /* ── Extended accent palette ── */
+  --hm-blue:             #4297FF;   /* system / infrastructure */
+  --hm-amber:            #C8A96E;   /* editorial / travel warmth */
+  --hm-teal:             #3BBFB0;   /* AI / intelligence */
+  --hm-sage:             #7FA98E;   /* organic / destination */
+
+  --hm-blue-faint:       rgba(66, 151, 255, 0.12);
+  --hm-amber-faint:      rgba(200, 169, 110, 0.12);
+  --hm-teal-faint:       rgba(59, 191, 176, 0.10);
+  --hm-sage-faint:       rgba(127, 169, 142, 0.10);
+
+  /* ── Cinematic durations ── */
+  --hm-dur-ambient:      4s;
+  --hm-dur-drift:        12s;
+  --hm-dur-slow:         18s;
+  --hm-dur-cinematic:    28s;
+  --hm-dur-rail:         22s;
+
+  /* ── Ambient easing (loops) ── */
+  --hm-ease-ambient:     cubic-bezier(0.45, 0, 0.55, 1);
+  --hm-ease-drift:       cubic-bezier(0.37, 0, 0.63, 1);
+}
+
+/* ── Base wrapper: fills the hero-media container ── */
+.hm-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ── Grain overlay ── */
+.hm-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.038'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 220px 220px;
+  mix-blend-mode: overlay;
+}
+
+/* ── Edge vignette ── */
+.hm-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 18;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 38%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* ── Bottom fade ── */
+.hm-fade-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 19;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+}
+
+/* ── Monospace label utility ── */
+.hm-label {
+  font-family: 'Roobert Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hm-text-subtle);
+  line-height: 1;
+}
+
+.hm-label--bright {
+  color: var(--hm-text-muted);
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+/* Drift: up/down */
+@keyframes hm-drift-y {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
+}
+
+/* Drift: left/right */
+@keyframes hm-drift-x {
+  0%, 100% { transform: translateX(0px); }
+  50%       { transform: translateX(12px); }
+}
+
+/* Drift: diagonal wander */
+@keyframes hm-drift-xy {
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(9px, -12px); }
+  50%  { transform: translate(-6px, -20px); }
+  75%  { transform: translate(-12px, -5px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+/* Drift: slow large arc */
+@keyframes hm-drift-arc {
+  0%   { transform: translate(0px, 0px) rotate(0deg); }
+  33%  { transform: translate(14px, -10px) rotate(0.5deg); }
+  66%  { transform: translate(-8px, -18px) rotate(-0.4deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+/* Pulse: opacity breathe */
+@keyframes hm-breathe {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.80; }
+}
+
+/* Pulse: subtle glow */
+@keyframes hm-glow {
+  0%, 100% { opacity: 0.10; transform: scale(1); }
+  50%       { opacity: 0.22; transform: scale(1.06); }
+}
+
+/* Pulse: dot ping */
+@keyframes hm-ping {
+  0%   { transform: scale(0.9); opacity: 0.9; }
+  60%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(0.9); opacity: 0; }
+}
+
+/* Flow: scroll rail left */
+@keyframes hm-scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes hm-scroll-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Flow: text column upward */
+@keyframes hm-flow-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes hm-flow-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+/* Signal: point traveling along a line */
+@keyframes hm-signal-travel {
+  0%   { stroke-dashoffset: 1; opacity: 0; }
+  8%   { opacity: 0.9; }
+  92%  { opacity: 0.9; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* Draw: SVG path reveal */
+@keyframes hm-draw-in {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Node: appear with scale */
+@keyframes hm-node-appear {
+  0%   { transform: scale(0.5); opacity: 0; }
+  65%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Rotate: very slow */
+@keyframes hm-rotate-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes hm-rotate-reverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* Fade in */
+@keyframes hm-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scan line sweep */
+@keyframes hm-scan-sweep {
+  0%   { transform: translateY(-2%); opacity: 0; }
+  3%   { opacity: 0.5; }
+  97%  { opacity: 0.5; }
+  100% { transform: translateY(102%); opacity: 0; }
+}
+
+/* Horizon shimmer */
+@keyframes hm-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Orb drifts — large, slow, organic paths for blurred gradient orbs */
+@keyframes hm-orb-a {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  20%  { transform: translate(28px, -22px) scale(1.04); }
+  45%  { transform: translate(-14px, -40px) scale(0.97); }
+  70%  { transform: translate(-32px, -10px) scale(1.02); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes hm-orb-b {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(-22px, 18px) scale(1.06); }
+  55%  { transform: translate(16px, 34px) scale(0.96); }
+  80%  { transform: translate(30px, -8px) scale(1.03); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes hm-orb-c {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  30%  { transform: translate(18px, -28px) scale(1.05); }
+  60%  { transform: translate(-24px, -16px) scale(0.98); }
+  85%  { transform: translate(-10px, 22px) scale(1.02); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* Card carousel — vertical flip transitions */
+@keyframes hm-card-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 28px)) rotateX(16deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotateX(0deg);
+  }
+}
+
+@keyframes hm-card-exit {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotateX(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 28px)) rotateX(-16deg);
+  }
+}
+
+/* +1 float — used for live segment increment indicators */
+@keyframes hm-float-up {
+  0%   { transform: translateY(0px);   opacity: 0.80; }
+  100% { transform: translateY(-18px); opacity: 0;    }
+}
+
+/* Cursor blink */
+@keyframes hm-cursor { 0%,49% { opacity:1 } 50%,100% { opacity:0 } }
+
+/* Organic float paths — each a slow sinusoidal drift in a unique direction */
+@keyframes hm-float-a { 0%,100% { transform: translate(0px,   0px)  } 50% { transform: translate(10px, -16px) } }
+@keyframes hm-float-b { 0%,100% { transform: translate(0px,   0px)  } 50% { transform: translate(-12px, 14px) } }
+@keyframes hm-float-c { 0%,100% { transform: translate(0px,   0px)  } 50% { transform: translate(14px,  12px) } }
+@keyframes hm-float-d { 0%,100% { transform: translate(0px,   0px)  } 50% { transform: translate(-8px, -18px) } }
+@keyframes hm-float-e { 0%,100% { transform: translate(0px,   0px)  } 50% { transform: translate(8px,   18px) } }
+
+/* Sharp geometric slide paths — clean, no organic waviness */
+@keyframes hm-slide-a {
+  0%   { transform: translate(   0px,   0px); }
+  25%  { transform: translate(  80px,   0px); }
+  50%  { transform: translate(  80px,  60px); }
+  75%  { transform: translate(   0px,  60px); }
+  100% { transform: translate(   0px,   0px); }
+}
+@keyframes hm-slide-b {
+  0%   { transform: translate(   0px,   0px); }
+  25%  { transform: translate( -70px,   0px); }
+  50%  { transform: translate( -70px, -50px); }
+  75%  { transform: translate(   0px, -50px); }
+  100% { transform: translate(   0px,   0px); }
+}
+@keyframes hm-slide-c {
+  0%   { transform: translate(   0px,   0px); }
+  33%  { transform: translate(  90px,  50px); }
+  66%  { transform: translate(  30px,  90px); }
+  100% { transform: translate(   0px,   0px); }
+}
+@keyframes hm-slide-d {
+  0%   { transform: translate(   0px,   0px); }
+  33%  { transform: translate( -80px,  40px); }
+  66%  { transform: translate( -40px, -60px); }
+  100% { transform: translate(   0px,   0px); }
+}
+@keyframes hm-slide-e {
+  0%   { transform: translate(   0px,   0px); }
+  25%  { transform: translate(   0px, -70px); }
+  50%  { transform: translate(  70px, -70px); }
+  75%  { transform: translate(  70px,   0px); }
+  100% { transform: translate(   0px,   0px); }
+}
+
+/* Grid-reveal — wipe in from top, hold, wipe out upward, pause, loop */
+@keyframes hm-grid-wipe {
+  0%   { clip-path: inset(0 0 100% 0); }  /* hidden */
+  18%  { clip-path: inset(0 0 0%   0); }  /* fully visible */
+  58%  { clip-path: inset(0 0 0%   0); }  /* hold */
+  76%  { clip-path: inset(100% 0 0 0); }  /* wipe out upward */
+  77%  { clip-path: inset(0 0 100% 0); }  /* instant invisible reset */
+  100% { clip-path: inset(0 0 100% 0); }  /* pause before next cycle */
+}
+
+/* ── Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  .hm-root * {
+    animation-play-state: paused !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes hm-spin { to { transform: rotate(360deg); } }
+@keyframes hm-drift-subtle { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-4px); } }

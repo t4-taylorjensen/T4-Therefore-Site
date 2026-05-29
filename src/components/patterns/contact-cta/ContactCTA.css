@@ -13,9 +13,6 @@
 
 /* ── Section ── */
 .cta-section {
-  /* Linear scale: 36px @ 375 → 55px @ 1400 → 76.51px @ 2560.
-     Drives the headline directly; other sizes use calc(BASELINE / 55 * var(--cta-scale)). */
-  --cta-scale: clamp(36px, 1.854vw + 29.05px, 76.51px);
   background: var(--color-bg-page);
   padding: var(--space-10) var(--space-6);
 }
@@ -30,8 +27,7 @@
 .cta-shader {
   display: block;
   width: 100%;
-  height: 100px;
-  object-fit: cover;
+  height: auto;
 }
 
 /* ── Card inner ── */
@@ -46,25 +42,19 @@
    LEFT PANEL
 ───────────────────────────────────────── */
 .cta-left {
-  /* 460 / 1400 = 32.857vw — scales proportionally with viewport */
-  width: 32.857vw;
+  width: 459px;
   flex-shrink: 0;
   align-self: stretch;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 var(--space-6);
+  padding: var(--space-6);
 }
 
 .cta-title-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
-}
-
-/* Eyebrow above the headline — scales with --cta-scale, floored at 11px */
-.cta-title-group .text-eyebrow {
-  font-size: max(11px, calc(var(--cta-scale) * 11 / 55));
 }
 
 .cta-title-content {
@@ -75,21 +65,11 @@
 
 .cta-headline {
   font-family: var(--font-primary);
-  /* Pure-vw scale so font tracks .cta-left (32.857vw) — line count stays constant.
-     55 / 1400 = 3.929vw · floored at 36px (mobile) · capped at 100.57px (2560). */
-  font-size: clamp(36px, 3.929vw, 100.57px);
+  font-size: 55px;
   font-weight: 400;
   line-height: 1;
   color: var(--color-text-on-dark);
   margin: 0;
-}
-
-/* ── CTA buttons (Schedule a Call / Watch Video) — scale with --cta-scale ── */
-.cta-btn-list .btn {
-  height: calc(var(--cta-scale) * 34 / 55);
-  padding: 0 calc(var(--cta-scale) * 10 / 55);
-  gap: calc(var(--cta-scale) * 12 / 55);
-  font-size: max(14px, calc(var(--cta-scale) * 14 / 55));
 }
 
 /* ── Buttons ── */
@@ -108,8 +88,8 @@
 }
 
 .cta-profile-photo {
-  width: max(62px, calc(var(--cta-scale) * 62 / 55));
-  height: max(62px, calc(var(--cta-scale) * 62 / 55));
+  width: 62px;
+  height: 62px;
   border-radius: var(--radius-sm);
   object-fit: cover;
   flex-shrink: 0;
@@ -126,7 +106,7 @@
 
 .cta-profile-name {
   font-family: var(--font-primary);
-  font-size: max(20px, calc(var(--cta-scale) * 20 / 55));
+  font-size: var(--text-body-lg);
   font-weight: 400;
   color: var(--color-text-on-dark);
   line-height: var(--leading-normal);
@@ -135,7 +115,7 @@
 
 .cta-profile-role {
   font-family: var(--font-mono);
-  font-size: max(11px, calc(var(--cta-scale) * 11 / 55));
+  font-size: var(--text-mono);
   font-weight: 400;
   color: var(--color-text-on-dark);
   letter-spacing: var(--tracking-wider);
@@ -148,8 +128,7 @@
    RIGHT PANEL — form
 ───────────────────────────────────────── */
 .cta-form-panel {
-  /* 740 / 1400 = 52.857vw — scales proportionally with viewport */
-  flex: 0 1 52.857vw;
+  flex: 0 1 740px;
   background: var(--color-white);
   padding: var(--space-8);
 }
@@ -182,7 +161,7 @@
 
 .cta-field-label {
   font-family: var(--font-mono);
-  font-size: max(11px, calc(var(--cta-scale) * 11 / 55));
+  font-size: var(--text-mono);
   font-weight: 400;
   color: var(--color-ink);
   letter-spacing: var(--tracking-wider);
@@ -192,13 +171,13 @@
 }
 
 .cta-input {
-  height: calc(var(--cta-scale) * 60 / 55);
-  padding: 0 calc(var(--cta-scale) * 20 / 55);
+  height: 60px;
+  padding: 0 20px;
   background: var(--color-white);
   border: 1px solid var(--color-border-medium);
   border-radius: var(--radius-sm);
   font-family: var(--font-primary);
-  font-size: max(15px, calc(var(--cta-scale) * 15 / 55));
+  font-size: var(--text-body-sm);
   font-weight: 400;
   letter-spacing: var(--tracking-wide);
   color: var(--color-ink);
@@ -221,22 +200,19 @@
 .cta-textarea {
   display: block;
   width: 100%;
-  padding:
-    calc(var(--cta-scale) * 20 / 55)
-    calc(var(--cta-scale) * 20 / 55)
-    calc(var(--cta-scale) * 60 / 55);
+  padding: 20px 20px 60px;
   background: var(--color-white);
   border: 1px solid var(--color-border-medium);
   border-radius: var(--radius-sm);
   font-family: var(--font-primary);
-  font-size: max(15px, calc(var(--cta-scale) * 15 / 55));
+  font-size: var(--text-body-sm);
   font-weight: 400;
   letter-spacing: var(--tracking-wide);
   color: var(--color-ink);
   line-height: 1.45;
   outline: none;
   resize: none;
-  min-height: calc(var(--cta-scale) * 111 / 55);
+  min-height: 111px;
   transition:
     border-color 0.15s ease,
     box-shadow   0.15s ease;
@@ -252,7 +228,7 @@
 }
 
 .cta-submit {
-  height: calc(var(--cta-scale) * 71 / 55);
+  height: 71px;
   width: 100%;
   background: var(--color-ink);
   border: none;
@@ -275,7 +251,7 @@
 
 .cta-submit span {
   font-family: var(--font-mono);
-  font-size: max(14px, calc(var(--cta-scale) * 14 / 55));
+  font-size: var(--text-mono-md);
   font-weight: 400;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
@@ -316,7 +292,7 @@
 @media (max-width: 1024px) {
   .cta-inner {
     flex-direction: column;
-    gap: var(--space-8);
+    gap: 0;
   }
 
   .cta-left {
@@ -342,6 +318,10 @@
 
   .cta-left {
     padding: var(--space-5);
+  }
+
+  .cta-headline {
+    font-size: clamp(32px, 7vw, 55px);
   }
 
   .cta-form-panel {
