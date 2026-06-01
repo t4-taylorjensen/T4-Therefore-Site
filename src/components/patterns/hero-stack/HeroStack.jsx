@@ -172,37 +172,47 @@ function GuideCard() {
   );
 }
 
-const HEADLINE = 'One platform powering your entire digital ecosystem, content, commerce, and experience unified without compromise.';
+const DEFAULT_EYEBROW  = 'What is Headless?';
+const DEFAULT_HEADLINE = 'One platform powering your entire digital ecosystem, content, commerce, and experience unified without compromise.';
+const DEFAULT_SUBHEAD  = 'A new way to think about content';
+const DEFAULT_BODY     = [
+  'Traditional CMSs lock your content into rigid templates and single-channel publishing. In a multi-platform world, that\'s a competitive disadvantage. Headless CMS liberates your content, allowing you to adapt faster and reach audiences wherever they are.',
+  'We don\'t just implement Contentful or Sanity—we design content models that reflect your editorial workflow, integrate with your ecosystem, and scale as your needs evolve. Our approach blends content strategy with technical architecture.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque rutrum urna, vitae aliquet nunc vehicula sed.',
+];
 
 /* ─────────────────────────────────────────
    HERO STACK
 ───────────────────────────────────────── */
 
-export default function HeroStack() {
+export default function HeroStack({
+  eyebrow  = DEFAULT_EYEBROW,
+  headline = DEFAULT_HEADLINE,
+  subhead  = DEFAULT_SUBHEAD,
+  body     = DEFAULT_BODY,
+}) {
   return (
     <section className="hs-section">
       <div className="hs-container">
 
         <div className="hs-large-title">
           <Eyebrow className="hs-eyebrow anim-fade-up anim-delay-1">
-            What is Headless?
+            {eyebrow}
           </Eyebrow>
           <ScrollRevealHeadline
             as="h2"
             className="hs-headline"
-            text={HEADLINE}
+            text={headline}
           />
         </div>
 
         <div className="hs-split">
           <div className="hs-text">
             <h3 className="hs-text-heading anim-fade-up anim-delay-2">
-              A new way to think about content
+              {subhead}
             </h3>
             <div className="hs-text-body anim-fade-up anim-delay-3">
-              <p>Traditional CMSs lock your content into rigid templates and single-channel publishing. In a multi-platform world, that's a competitive disadvantage. Headless CMS liberates your content, allowing you to adapt faster and reach audiences wherever they are.</p>
-              <p>We don't just implement Contentful or Sanity—we design content models that reflect your editorial workflow, integrate with your ecosystem, and scale as your needs evolve. Our approach blends content strategy with technical architecture.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque rutrum urna, vitae aliquet nunc vehicula sed.</p>
+              {body.map((p, i) => <p key={i}>{p}</p>)}
             </div>
           </div>
           <GuideCard />
