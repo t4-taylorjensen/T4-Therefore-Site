@@ -26,7 +26,9 @@ function MinusIcon() {
    FAQ DATA
 ───────────────────────────────────────── */
 
-const faqs = [
+const DEFAULT_EYEBROW = 'Headless Commerce FAQs';
+
+const DEFAULT_FAQS = [
   {
     question: 'What is headless commerce?',
     answer:
@@ -129,7 +131,7 @@ function InsightSidebar() {
    FAQ
 ───────────────────────────────────────── */
 
-export default function FAQ() {
+export default function FAQ({ faqs = DEFAULT_FAQS, eyebrow = DEFAULT_EYEBROW }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   function handleToggle(i) {
@@ -142,7 +144,7 @@ export default function FAQ() {
 
         {/* Header */}
         <div className="faq-header">
-          <Eyebrow className="faq-eyebrow">Headless Commerce FAQs</Eyebrow>
+          <Eyebrow className="faq-eyebrow">{eyebrow}</Eyebrow>
           <p className="faq-headline">Frequently Asked Questions</p>
         </div>
 

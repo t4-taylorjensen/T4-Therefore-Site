@@ -9,6 +9,40 @@
   animation: nudge-right 0.55s ease-in-out 1;
 }
 
+/* flat 2D orbit */
+@keyframes discovery-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* counter-rotate each card to keep it upright — animationDelay offsets per card */
+@keyframes discovery-ccw {
+  from { transform: translateY(-120px) rotate(0deg); }
+  to   { transform: translateY(-120px) rotate(-360deg); }
+}
+
+/* pause orbit on Discovery card hover */
+.s2-card:hover .discovery-ring,
+.s2-card:hover .discovery-ccw {
+  animation-play-state: paused;
+}
+
+/* Digital Products — ken burns */
+@keyframes ken-burns {
+  0%   { transform: scale(1)      translate(0%, 0%); }
+  100% { transform: scale(1.06)   translate(-1.5%, -1%); }
+}
+
+.media-fill--kenburns {
+  transform-origin: center center;
+  transition: none;
+  animation: none;
+}
+
+.s2-card:hover .media-fill--kenburns {
+  animation: ken-burns 6s ease-out forwards;
+}
+
 /* ── Section ── */
 
 .s2-section {
@@ -24,10 +58,15 @@
 ───────────────────────────────────────── */
 
 .s2-large-title {
-  padding: clamp(80px, 11vw, 160px) clamp(20px, 6.25vw, 90px) clamp(60px, 8.3vw, 120px);
+  max-width: var(--container-md);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: clamp(80px, 11vw, 160px) var(--space-6) clamp(60px, 8.3vw, 120px);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);                    /* 30px */
+  gap: var(--space-6);
   background: var(--color-bg-page);
 }
 
@@ -47,11 +86,20 @@
 ───────────────────────────────────────── */
 
 .s2-cards-section {
-  padding: 30px clamp(20px, 6.25vw, 90px) clamp(60px, 8.3vw, 120px);
+  max-width: var(--container-md);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px var(--space-6) clamp(60px, 8.3vw, 120px);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);                    /* 30px */
+  gap: var(--space-6);
   background: var(--color-bg-page);
+}
+
+.s2-section--no-title .s2-cards-section {
+  padding-top: clamp(60px, 8.3vw, 120px);
 }
 
 /* ── Cards header row ── */
@@ -153,7 +201,6 @@
 
 .s2-card-media--digital {
   height: 270px;
-  padding: 30px;
   overflow: hidden;
 }
 
@@ -213,7 +260,7 @@
 
 .s2-card-title {
   font-family: var(--font-primary);
-  font-size: var(--text-md);              /* 30px */
+  font-size: 26px;
   font-weight: 400;
   line-height: var(--leading-snug);       /* 1.4 */
   color: var(--color-ink);
@@ -222,7 +269,7 @@
 
 .s2-card-desc {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);         /* 20px */
+  font-size: var(--text-body-md);          /* 16px */
   font-weight: 400;
   line-height: var(--leading-normal);     /* 1.6 */
   color: var(--color-ink-faint);          /* rgba(18,18,18,0.7) */

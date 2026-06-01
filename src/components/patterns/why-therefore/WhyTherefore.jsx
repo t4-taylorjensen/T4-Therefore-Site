@@ -4,7 +4,7 @@ import { BtnArrow, IconArrowRight, IconArrowLeft } from '../../ui/Button/Button'
 import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
 import Eyebrow from '../../ui/Eyebrow';
 
-const CARDS = [
+const DEFAULT_CARDS = [
   {
     title: 'Architecture',
     desc:  'We design the system before choosing tools so your solution is cohesive, intentional, and built to last.',
@@ -23,12 +23,13 @@ const CARDS = [
   },
   {
     title: 'Scalability',
-    desc:  'Infrastructure that grows from startup to enterprise — no rearchitecting at every inflection point.',
+    desc:  'Infrastructure that grows from startup to enterprise. No rearchitecting at every inflection point.',
   },
 ];
 
-const DARK_TEXT  = 'Headless is not a technology decision. It is a systems decision. We design content models that reflect real workflows';
-const MUTED_TEXT = ', integrate with your ecosystem, and scale as your business evolves.';
+const DEFAULT_DARK_TEXT     = 'Headless is not a technology decision. It is a systems decision. We design content models that reflect real workflows';
+const DEFAULT_MUTED_TEXT    = ', integrate with your ecosystem, and scale as your business evolves.';
+const DEFAULT_CAROUSEL_TITLE = 'Headless is a systems decision.';
 
 function StarIcon() {
   return (
@@ -61,7 +62,7 @@ function ServiceCard({ title, desc }) {
 /* ────────────────────────────────────────────────────────────────
    CARD CAROUSEL — inertial drag / wheel / touch / keyboard / snap
 ──────────────────────────────────────────────────────────────── */
-function CardCarousel() {
+function CardCarousel({ cards = DEFAULT_CARDS, carouselTitle = DEFAULT_CAROUSEL_TITLE }) {
   const trackRef    = useRef(null);
   const viewportRef = useRef(null);
   const navRef      = useRef({ prev: () => {}, next: () => {} });
@@ -279,7 +280,7 @@ function CardCarousel() {
   return (
     <div className="wt-carousel-section anim-fade-up anim-delay-2">
       <div className="wt-carousel-header">
-        <p className="wt-carousel-title">Headless is a systems decision.</p>
+        <p className="wt-carousel-title">{carouselTitle}</p>
         <div className="wt-arrows" role="group" aria-label="Carousel navigation">
           <BtnArrow
             icon={IconArrowLeft}
@@ -306,7 +307,7 @@ function CardCarousel() {
         tabIndex={0}
       >
         <div className="wt-carousel-track" ref={trackRef} role="list">
-          {CARDS.map((card, i) => (
+          {cards.map((card, i) => (
             <ServiceCard key={i} {...card} />
           ))}
         </div>
@@ -318,7 +319,13 @@ function CardCarousel() {
 /* ────────────────────────────────────────────────────────────────
    ROOT COMPONENT
 ──────────────────────────────────────────────────────────────── */
-function WhyTherefore() {
+function WhyTherefore({
+  eyebrow      = 'Why Therefore?',
+  darkText     = DEFAULT_DARK_TEXT,
+  mutedText    = DEFAULT_MUTED_TEXT,
+  cards        = DEFAULT_CARDS,
+  carouselTitle = DEFAULT_CAROUSEL_TITLE,
+}) {
   const sectionRef   = useRef(null);
   const videoRef     = useRef(null);
   const videoStarted = useRef(false);
@@ -370,18 +377,18 @@ function WhyTherefore() {
 
       {/* Constrained text column */}
       <div className="wt-large-title">
-        <Eyebrow className="wt-eyebrow anim-fade-up anim-delay-1">Why Therefore?</Eyebrow>
+        <Eyebrow className="wt-eyebrow anim-fade-up anim-delay-1">{eyebrow}</Eyebrow>
         <ScrollRevealHeadline
           as="h2"
           id="wt-heading"
           className="wt-headline"
-          text={DARK_TEXT}
-          mutedText={MUTED_TEXT}
+          text={darkText}
+          mutedText={mutedText}
         />
       </div>
 
       {/* Full-bleed carousel */}
-      <CardCarousel />
+      <CardCarousel cards={cards} carouselTitle={carouselTitle} />
 
     </section>
   );
