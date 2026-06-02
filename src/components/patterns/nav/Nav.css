@@ -25,8 +25,6 @@
 .nav-col--left {
   flex: 1;
   justify-content: flex-start;
-  min-width: 0;
-  overflow: hidden;
 }
 
 .nav-col--center {
@@ -564,9 +562,9 @@
 
 
 /* ─────────────────────────────────────────
-   COMPACT — links collapse to burger at 12px min gap (~900px)
+   COMPACT — links collapse to burger at 1100px (before gap starts shrinking)
 ───────────────────────────────────────── */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .nav-col--left   { display: none; }
   .nav-col--center { flex: 1; justify-content: flex-start; padding: 0; }
   .nav-col--right  { flex: 0 0 auto; }
