@@ -25,6 +25,8 @@
 .nav-col--left {
   flex: 1;
   justify-content: flex-start;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .nav-col--center {
@@ -70,6 +72,7 @@
   background: none;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
   transition: color var(--duration-base) var(--ease-out-expo);
 }
 

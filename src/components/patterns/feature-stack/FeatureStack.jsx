@@ -75,7 +75,7 @@ function DiscoveryOrbit() {
   );
 }
 
-const HEADLINE_DARK  = 'We design content models that reflect real workflows';
+const HEADLINE_DARK  = 'As technology becomes easier to access, competitive advantage belongs to those who use it wisely. Our expertise helps you move faster, create better guest experiences, and bring bigger ideas to life.';
 const HEADLINE_MUTED = '';
 
 export const DEFAULT_CARDS = [
@@ -118,7 +118,7 @@ export default function FeatureStack({
   eyebrow = 'Our Capabilities',
   headlineDark = HEADLINE_DARK,
   headlineMuted = HEADLINE_MUTED,
-  headerTitle = 'What We Do',
+  headerTitle = 'Who our work benefits',
   cards = DEFAULT_CARDS,
   showTitle = true,
   cardMediaHeight = null,
