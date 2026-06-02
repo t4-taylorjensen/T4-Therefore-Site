@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import './HeroStack.css';
 
 import spinnerSrc from '../../ui/brand assets/spinner.svg';
-import coverDigitalPlatforms from '../../ui/brand assets/cover-digital-platforms.jpg';
 import { BtnPrimary, BtnIconAccent, IconCornerRightArrow } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
@@ -142,11 +141,12 @@ function GuideCard() {
   return (
     <aside className={`hs-card anim-fade-up anim-delay-4${showEmail ? ' hs-card--email' : ''}`}>
       <div className="hs-card-body">
-        <img src={coverDigitalPlatforms} alt="" className="hs-card-cover" />
+        <AnimatedBeam />
         <div className="hs-card-text">
-          <p className="hs-card-title">What should we feature here?</p>
+          <p className="hs-card-title">AI Content Operations Guide</p>
           <p className="hs-card-desc">
-            That's going to make someone stop and engage in the topic of web apps for travel??
+            Learn how to architect a modern content supply chain that leverages
+            AI for creation, translation, and personalization.
           </p>
         </div>
         {showEmail ? (
@@ -156,14 +156,15 @@ function GuideCard() {
             className={`hs-card-btn${ctaPressed ? ' hs-card-btn--pressed' : ''}`}
             onAnimationEnd={() => setCtaPressed(false)}
           >
-            <BtnPrimary onClick={reveal}>Get the Guide</BtnPrimary>
+            <BtnPrimary onClick={reveal}>Free download</BtnPrimary>
             <BtnIconAccent icon={IconCornerRightArrow} label="Download" nudge="down" onClick={reveal} />
           </div>
         )}
       </div>
       <div className="hs-card-footer">
         <p className="hs-card-meta">
-          <span className="hs-card-meta-dark">Instant Access</span>
+          <span className="hs-card-meta-dark">Instant access</span>
+          <span className="hs-card-meta-muted"> • PDF • 4.2 MB</span>
         </p>
       </div>
     </aside>
@@ -188,6 +189,7 @@ export default function HeroStack({
   headline = DEFAULT_HEADLINE,
   subhead  = DEFAULT_SUBHEAD,
   body     = DEFAULT_BODY,
+  cardSlot,
 }) {
   return (
     <section className="hs-section">
@@ -209,7 +211,7 @@ export default function HeroStack({
               {body.map((p, i) => <p key={i}>{p}</p>)}
             </div>
           </div>
-          <GuideCard />
+          {cardSlot ?? <GuideCard />}
         </div>
 
       </div>

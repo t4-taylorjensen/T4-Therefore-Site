@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PageLayout from '../../components/layout/PageLayout';
 import Hero from '../../components/patterns/hero/Hero';
 import Stats from '../../components/patterns/stats/Stats';
@@ -28,9 +29,36 @@ import aiToolsImg             from '../../../Case Studies/DuVine/therefore-suite
 import wavesImg               from '../../../Case Studies/therefore-suite-5-waves 1.jpg';
 import duvine09 from '../../../Case Studies/DuVine/therefore-custom-cms-commerce-website-duvine-09.jpg';
 import coverDigitalProducts from '../../components/ui/brand assets/cover-digital-products.jpg';
+import coverDigitalPlatforms from '../../components/ui/brand assets/cover-digital-platforms.jpg';
 import cmsBgPhoto  from '../../components/features/pages/hero-media/assets/cms-bg-pexels.jpg';
 import cmsHeroImg  from '../../components/features/pages/hero-media/assets/cms-hero-canyon.png';
 import CrosshairHover from '../../components/ui/CrosshairHover/CrosshairHover';
+import { BtnPrimary, BtnIconAccent, IconCornerRightArrow } from '../../components/ui/Button/Button';
+
+function DigitalProductsCard() {
+  const [showEmail, setShowEmail] = useState(false);
+  const [ctaPressed, setCtaPressed] = useState(false);
+  function reveal() { setCtaPressed(true); setTimeout(() => setShowEmail(true), 280); }
+
+  return (
+    <aside className={`hs-card${showEmail ? ' hs-card--email' : ''}`}>
+      <div className="hs-card-body">
+        <img src={coverDigitalPlatforms} alt="" className="hs-card-cover" />
+        <div className="hs-card-text">
+          <p className="hs-card-title">What should we feature here?</p>
+          <p className="hs-card-desc">That's going to make someone stop and engage in the topic of web apps for travel??</p>
+        </div>
+        <div className={`hs-card-btn${ctaPressed ? ' hs-card-btn--pressed' : ''}`} onAnimationEnd={() => setCtaPressed(false)}>
+          <BtnPrimary onClick={reveal}>Get the Guide</BtnPrimary>
+          <BtnIconAccent icon={IconCornerRightArrow} label="Download" nudge="down" onClick={reveal} />
+        </div>
+      </div>
+      <div className="hs-card-footer">
+        <p className="hs-card-meta"><span className="hs-card-meta-dark">Instant Access</span></p>
+      </div>
+    </aside>
+  );
+}
 
 function CMSCardMedia() {
   return (
@@ -157,6 +185,7 @@ export const DigitalProducts = {
           'Our team spans the full spectrum of product development. Researchers, product managers, architects, designers and developers, all of whom take the time to learn how you operate, then create systems that are foundational to how you do business.',
           'If you\'re ready to create an unfair advantage, we\'re ready to build it.',
         ],
+        cardSlot: <DigitalProductsCard />,
       }}
       whyThereforeProps={{
         eyebrow:       'Art of The Possible',

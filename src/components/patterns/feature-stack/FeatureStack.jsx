@@ -5,6 +5,7 @@ import coverAiCapabilities     from '../../ui/brand assets/cover-ai-capabilities
 import coverAiCapabilitiesHover from '../../ui/brand assets/cover-ai-capabilities-hover.svg';
 import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
+import CrosshairHover from '../../ui/CrosshairHover/CrosshairHover';
 
 import screen1  from '../../patterns/case-study/assets/therefore-custom-cms-commerce-website-duvine-01.jpg';
 import screen2  from '../../patterns/case-study/assets/therefore-custom-cms-commerce-website-duvine-02.jpg';
@@ -93,6 +94,7 @@ export const DEFAULT_CARDS = [
         <img className="media-fill media-fill--kenburns" src={coverDigitalProducts} alt="New American Paintings — digital product preview" />
       </div>
     ),
+    crosshair: true,
     delay: 'anim-delay-3',
   },
   {
@@ -145,11 +147,14 @@ export default function FeatureStack({
           <div className="s2-cards-grid">
             {cards.map((card, i) => {
               const Wrapper = card.link ? 'a' : 'div';
+              const media = card.crosshair
+                ? <CrosshairHover style={{ display: 'block' }}>{card.media}</CrosshairHover>
+                : card.media;
               return (
                 <Wrapper key={i} href={card.link ? '#' : undefined} className={`s2-card anim-fade-up ${card.delay ?? 'anim-delay-2'}`}>
                   {cardMediaHeight
-                ? <div style={{ height: cardMediaHeight, position: 'relative', overflow: 'hidden', flexShrink: 0 }}>{card.media}</div>
-                : card.media}
+                ? <div style={{ height: cardMediaHeight, position: 'relative', overflow: 'hidden', flexShrink: 0 }}>{media}</div>
+                : media}
                   <div className="s2-card-text">
                     <p className="s2-card-title">{card.title}</p>
                     <p className="s2-card-desc">{card.desc}</p>
