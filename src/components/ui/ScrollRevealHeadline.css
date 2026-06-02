@@ -20,26 +20,21 @@
   display: inline-block;
 }
 
-/* Dim ghost copy — always visible, dictates layout */
+/* Ghost copy is hidden — reveal copy handles layout and color */
 .word-ghost {
   display: block;
-  color: var(--color-gray-200);
-  opacity: 0.35;
+  visibility: hidden;
   user-select: none;
   pointer-events: none;
-  transition:
-    color   var(--duration-slower) var(--ease-out-expo),
-    opacity var(--duration-slower) var(--ease-out-expo);
 }
 
-/* Reveal copy — overlays the ghost and fades in via JS-driven opacity */
+/* Reveal copy sits on top, always fully visible */
 .word-reveal {
   position: absolute;
   inset: 0;
   color: var(--color-ink);
-  opacity: 0;
+  opacity: 1;
   white-space: nowrap;
-  transition: color var(--duration-slower) var(--ease-out-expo);
 }
 
 .word-reveal--muted {

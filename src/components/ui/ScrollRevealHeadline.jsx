@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import './ScrollRevealHeadline.css';
 
 /**
@@ -43,50 +42,11 @@ export default function ScrollRevealHeadline({
   className = '',
   ...rest
 }) {
-  const ref = useRef(null);
-
   const darkCount  = tokenize(text).length;
   const fullTokens = tokenize(mutedText ? `${text} ${mutedText}` : text);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const reveals = Array.from(el.querySelectorAll('.word-reveal'));
-    const n = reveals.length;
-    if (n === 0) return;
-
-    // Reduced motion: show every word fully and skip the rAF loop.
-    if (typeof window !== 'undefined'
-        && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      reveals.forEach(s => { s.style.opacity = '1'; });
-      return;
-    }
-
-    let rafId;
-    const update = () => {
-      const rect = el.getBoundingClientRect();
-      const vh   = window.innerHeight;
-      // Map "section top entering 90% of viewport" → "section top at 25%"
-      // onto a 0..1 progress value, then divide that across n words.
-      const progress = Math.min(1, Math.max(0,
-        (0.9 * vh - rect.top) / (0.65 * vh)
-      ));
-      reveals.forEach((span, i) => {
-        const start = i / n;
-        const end   = start + 1 / n;
-        const opacity = Math.min(1, Math.max(0, (progress - start) / (end - start)));
-        span.style.opacity = opacity;
-      });
-      rafId = requestAnimationFrame(update);
-    };
-
-    rafId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafId);
-  }, [text, mutedText]);
-
   return (
-    <Tag ref={ref} className={`scroll-reveal-headline ${className}`.trim()} {...rest}>
+    <Tag className={`scroll-reveal-headline ${className}`.trim()} {...rest}>
       {fullTokens.map((word, i) => (
         <span key={i} className="word-wrap">
           <span className="word-ghost" aria-hidden="true">{word}</span>
