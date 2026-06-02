@@ -87,7 +87,7 @@ export const DEFAULT_CARDS = [
     delay: 'anim-delay-2',
   },
   {
-    title: 'Digital Products',
+    title: 'Digital Platforms',
     desc: 'We build custom web-based applications bespoke to your needs.',
     media: (
       <div className="s2-card-media s2-card-media--digital">

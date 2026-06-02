@@ -131,7 +131,7 @@ export const CMSCommerce = {
 };
 
 export const DigitalProducts = {
-  name: '02 — Digital Products',
+  name: '02 — Digital Platforms',
   render: () => (
     <PillarPage
       showTestimonials={false}

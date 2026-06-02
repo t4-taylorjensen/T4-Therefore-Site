@@ -4,10 +4,10 @@ import thereforeLogo from '../../ui/brand assets/therefore-logo.svg';
 import FlipLink      from '../../ui/FlipLink';
 import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
 
-const NAV_LINKS = ['Headless CMS', 'Digital Products', 'AI'];
+const NAV_LINKS = ['CMS & Commerce', 'Digital Platforms', 'AI'];
 
 const MENU = {
-  main: ['Headless CMS', 'Digital Products', 'AI Solutions'],
+  main: ['CMS & Commerce', 'Digital Platforms', 'AI Solutions'],
   discover: [
     ['Work', 'Insights', 'About'],
     ['Culture', 'Insights', 'Contact'],
@@ -119,7 +119,7 @@ function NavCta() {
 
 // ─── Nav ─────────────────────────────────────────────────────
 
-export default function Nav({ activePage = 'Headless CMS' }) {
+export default function Nav({ activePage = 'CMS & Commerce' }) {
   const [phase, setPhase]   = useState('closed');
   const closeTimerRef       = useRef(null);
 

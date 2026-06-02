@@ -15,7 +15,7 @@ Place Nav as the first element of every page (or compose it via \`PageLayout\`).
 
 ## Anatomy
 - **Logo** (centered, absolute) — links back to home
-- **Primary links** (\`Headless CMS\`, \`Digital Products\`, \`AI\`) — left-justified
+- **Primary links** (\`CMS & Commerce\`, \`Digital Platforms\`, \`AI\`) — left-justified
 - **More button** — opens the overlay menu (also opened by the burger on mobile)
 - **CTA** \`Start a Project\` — right-justified
 - **Mobile burger** — replaces the link list and CTA below \`768px\`
@@ -29,7 +29,7 @@ Triggered by either *More* (desktop) or the burger (mobile). Composed of:
 - A bottom strip with contact and social links
 
 ## Props
-- \`activePage\` — string label that matches one of the main display links to highlight it (defaults to \`'Headless CMS'\`)
+- \`activePage\` — string label that matches one of the main display links to highlight it (defaults to \`'CMS & Commerce'\`)
 
 ## Accessibility
 - The burger and More button both expose \`aria-expanded\` and \`aria-controls\`
@@ -47,9 +47,9 @@ export const Default = {
 };
 
 export const ActiveOnDigitalProducts = {
-  name: 'Active page: Digital Products',
+  name: 'Active page: Digital Platforms',
   args: {
-    activePage: 'Digital Products',
+    activePage: 'Digital Platforms',
   },
 };
 
