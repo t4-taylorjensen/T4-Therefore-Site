@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 30px;
+  gap: clamp(12px, 2.5vw, 30px);
 }
 
 .nav-link {
@@ -541,13 +541,19 @@
 
 
 /* ─────────────────────────────────────────
+   COMPACT — links collapse to burger before hitting 12px min gap
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+}
+
+/* ─────────────────────────────────────────
    MOBILE
 ───────────────────────────────────────── */
 @media (max-width: 768px) {
   /* Top nav bar */
   .nav { padding: 15px 20px; border-bottom: none; }
-  .nav-links { display: none; }
-  .nav-burger { display: flex; }
 
   /* Show CTA on mobile at smaller size, 30px from burger */
   .nav > .btn {

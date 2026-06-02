@@ -134,6 +134,7 @@ export const DigitalProducts = {
   name: '02 — Digital Platforms',
   render: () => (
     <PillarPage
+      showStats={false}
       showTestimonials={false}
       showLogos={false}
       bottomFeatureStack={false}
