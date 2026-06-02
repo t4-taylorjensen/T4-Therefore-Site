@@ -120,6 +120,16 @@
   padding: var(--space-6);
 }
 
+/* ── Card cover image ── */
+
+.hs-card-cover {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+
 /* ── Animated Beam ── */
 
 .hs-beam-svg {

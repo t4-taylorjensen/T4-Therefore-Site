@@ -1,6 +1,6 @@
 import './Footer.css';
 import thereforeLogo from '../../ui/brand assets/therefore-logo.svg';
-import { BtnPrimary, IconCornerRightArrow } from '../../ui/Button/Button';
+import { BtnPrimary, IconCornerDownRight } from '../../ui/Button/Button';
 import FlipLink from '../../ui/FlipLink';
 
 export default function Footer() {
@@ -14,11 +14,9 @@ export default function Footer() {
 
           <div className="footer-about">
             <p className="footer-about-text">
-              Therefore is a digital product studio lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Aliquam feugiat tortor pellentesque
-              orci condimentum tristique.
+              Therefore is a digital product studio creating thoughtful experiences, powerful brands, and technology that moves businesses forward.
             </p>
-            <BtnPrimary as="a" href="#" icon={IconCornerRightArrow} nudge="down">
+            <BtnPrimary as="a" href="#" icon={IconCornerDownRight} nudge="right">
               Start a Project
             </BtnPrimary>
           </div>

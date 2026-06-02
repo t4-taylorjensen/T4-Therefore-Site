@@ -223,6 +223,11 @@
     grid-template-columns: 1fr;
   }
 
+  .mw-card-img-wrap {
+    aspect-ratio: unset;
+    height: 160px;
+  }
+
   .mw-grid--3 .mw-card:last-child,
   .mw-grid--2 .mw-card:last-child {
     border-right: none;

@@ -2,8 +2,8 @@ import { useState, useRef } from 'react';
 import './HeroStack.css';
 
 import spinnerSrc from '../../ui/brand assets/spinner.svg';
+import coverDigitalPlatforms from '../../ui/brand assets/cover-digital-platforms.jpg';
 import { BtnPrimary, BtnIconAccent, IconCornerRightArrow } from '../../ui/Button/Button';
-import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
 import Eyebrow from '../../ui/Eyebrow';
 
 function IconCheck() {
@@ -142,12 +142,11 @@ function GuideCard() {
   return (
     <aside className={`hs-card anim-fade-up anim-delay-4${showEmail ? ' hs-card--email' : ''}`}>
       <div className="hs-card-body">
-        <AnimatedBeam />
+        <img src={coverDigitalPlatforms} alt="" className="hs-card-cover" />
         <div className="hs-card-text">
-          <p className="hs-card-title">AI Content Operations Guide</p>
+          <p className="hs-card-title">What should we feature here?</p>
           <p className="hs-card-desc">
-            Learn how to architect a modern content supply chain that leverages
-            AI for creation, translation, and personalization.
+            That's going to make someone stop and engage in the topic of web apps for travel??
           </p>
         </div>
         {showEmail ? (
@@ -157,15 +156,14 @@ function GuideCard() {
             className={`hs-card-btn${ctaPressed ? ' hs-card-btn--pressed' : ''}`}
             onAnimationEnd={() => setCtaPressed(false)}
           >
-            <BtnPrimary onClick={reveal}>Free download</BtnPrimary>
+            <BtnPrimary onClick={reveal}>Get the Guide</BtnPrimary>
             <BtnIconAccent icon={IconCornerRightArrow} label="Download" nudge="down" onClick={reveal} />
           </div>
         )}
       </div>
       <div className="hs-card-footer">
         <p className="hs-card-meta">
-          <span className="hs-card-meta-dark">Instant access</span>
-          <span className="hs-card-meta-muted"> • PDF • 4.2 MB</span>
+          <span className="hs-card-meta-dark">Instant Access</span>
         </p>
       </div>
     </aside>
@@ -199,11 +197,7 @@ export default function HeroStack({
           <Eyebrow className="hs-eyebrow anim-fade-up anim-delay-1">
             {eyebrow}
           </Eyebrow>
-          <ScrollRevealHeadline
-            as="h2"
-            className="hs-headline"
-            text={headline}
-          />
+          <h2 className="hs-headline">{headline}</h2>
         </div>
 
         <div className="hs-split">

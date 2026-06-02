@@ -56,26 +56,34 @@
 .nav-link:hover { color: var(--color-ink); }
 .nav-more       { padding: 6px 8px; }
 
-.nav-cta {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono-md);
-  font-weight: 400;
-  line-height: 1em;
-  letter-spacing: 0.035714em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-  text-decoration: none;
-  background: var(--color-surface-1);
-  border-radius: var(--radius-sm);
-  padding: 10px 10px 9px;
-  height: 34px;
-  box-sizing: border-box;
-  display: inline-flex;
+.nav-cta-text {
+  position: relative;
+  overflow: hidden;
+  height: 1em;
+  display: flex;
   align-items: center;
-  white-space: nowrap;
-  transition: background var(--duration-base) var(--ease-out-expo);
+  justify-content: center;
 }
-.nav-cta:hover { background: var(--color-gray-100); }
+.nav-cta-default,
+.nav-cta-hover {
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+.nav-cta-hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(100%);
+}
+.nav-cta-btn:hover .nav-cta-default { transform: translateY(-100%); }
+.nav-cta-btn:hover .nav-cta-hover   { transform: translateY(0); }
+
+/* Desktop shows long label, hides short */
+.nav-cta-mobile  { display: none; }
+.nav-cta-desktop { display: block; }
 
 .nav-burger {
   display: none;
@@ -421,15 +429,8 @@
   color: var(--color-accent);
 }
 
-/* Arrow paths animate independently for a draw-retrace effect */
-.nav-overlay-main-arrow svg path {
-  stroke-dasharray: 30;
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nav-overlay-main-link-row:hover .nav-overlay-main-arrow svg path {
-  stroke-dashoffset: -8;
+.nav-overlay-main-link-row:hover .nav-overlay-main-arrow .icon-nudge--right svg {
+  animation: arrow-shoot-right 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
 }
 
 
@@ -544,10 +545,20 @@
 ───────────────────────────────────────── */
 @media (max-width: 768px) {
   /* Top nav bar */
-  .nav { padding: 15px 20px; }
+  .nav { padding: 15px 20px; border-bottom: none; }
   .nav-links { display: none; }
-  .nav-cta    { display: none; }
   .nav-burger { display: flex; }
+
+  /* Show CTA on mobile at smaller size, 30px from burger */
+  .nav > .btn {
+    display: inline-flex;
+    height: 28px;
+    font-size: 10px;
+    padding: 0 8px;
+    margin-right: 30px;
+  }
+  .nav-cta-mobile  { display: block; }
+  .nav-cta-desktop { display: none; }
 
   /* On mobile the logo is left-aligned (not absolutely centred) */
   .nav-logo {
@@ -558,6 +569,7 @@
   /* Overlay bar — match top nav exactly: 20px padding, logo left, close right */
   .nav-overlay-bar {
     padding: 15px 20px;
+    border-bottom: none;
   }
 
   /* Logo inside overlay stays left-aligned, same size as top nav */
@@ -578,9 +590,18 @@
     gap: 48px;
   }
 
-  /* Large link rows — 4px more gap between items */
+  /* Large link rows — tighter + smaller on mobile */
   .nav-overlay-main-links {
-    gap: 8px;
+    gap: 4px;
+  }
+  .nav-display-link-a,
+  .nav-display-link-b {
+    font-size: clamp(36px, 10vw, 52px);
+  }
+
+  /* Discover items smaller on mobile */
+  .nav-overlay-discover-item {
+    font-size: clamp(16px, 4.5vw, 22px);
   }
 
   /* Discover columns stack tighter */
@@ -595,6 +616,7 @@
     margin-right: -20px;
     padding-left: 20px;
     padding-right: 20px;
+    border-top: none;
   }
 
   /* Eyebrow labels 2px smaller on mobile */

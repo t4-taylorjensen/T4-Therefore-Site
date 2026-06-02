@@ -63,7 +63,7 @@
   margin-right: auto;
   width: 100%;
   box-sizing: border-box;
-  padding: clamp(80px, 11vw, 160px) var(--space-6) clamp(60px, 8.3vw, 120px);
+  padding: clamp(40px, 5.5vw, 80px) var(--space-6) clamp(60px, 8.3vw, 120px);
   display: flex;
   flex-direction: column;
   gap: var(--space-6);

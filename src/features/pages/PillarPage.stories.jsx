@@ -6,7 +6,7 @@ import CaseStudy from '../../components/patterns/case-study/CaseStudy';
 import LogoCarousel from '../../components/patterns/logo-carousel/LogoCarousel';
 import WhyTherefore from '../../components/patterns/why-therefore/WhyTherefore';
 import TestimonialsCarousel from '../../components/patterns/testimonials-carousel/TestimonialsCarousel';
-import FeatureStack from '../../components/patterns/feature-stack/FeatureStack';
+import FeatureStack, { DEFAULT_CARDS as FEATURE_CARDS } from '../../components/patterns/feature-stack/FeatureStack';
 import FAQ from '../../components/patterns/faq/FAQ';
 import ContactCTA from '../../components/patterns/contact-cta/ContactCTA';
 
@@ -27,6 +27,20 @@ import AIAgenticCommerce      from '../../components/features/pages/hero-media/a
 import aiToolsImg             from '../../../Case Studies/DuVine/therefore-suite-ai-tools.jpg';
 import wavesImg               from '../../../Case Studies/therefore-suite-5-waves 1.jpg';
 import duvine09 from '../../../Case Studies/DuVine/therefore-custom-cms-commerce-website-duvine-09.jpg';
+import coverDigitalProducts from '../../components/ui/brand assets/cover-digital-products.jpg';
+import cmsBgPhoto  from '../../components/features/pages/hero-media/assets/cms-bg-pexels.jpg';
+import cmsHeroImg  from '../../components/features/pages/hero-media/assets/cms-hero-canyon.png';
+import CrosshairHover from '../../components/ui/CrosshairHover/CrosshairHover';
+
+function CMSCardMedia() {
+  return (
+    <CrosshairHover className="s2-card-media s2-card-media--digital">
+      <img src={cmsBgPhoto} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.38)' }} />
+      <img src={cmsHeroImg} alt="Canyon Spirit website" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', display: 'block', borderRadius: 0, boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }} />
+    </CrosshairHover>
+  );
+}
 
 const MORE_WORK_PROJECTS = [
   { img: img_cs1a, client: 'Canyon Spirit',          tag: 'CMS & Commerce',  stat: '+340%', statLabel: 'booking conversion' },
@@ -53,8 +67,8 @@ function PillarPage({ heroProps, caseStudySlot, moreWorkSlot, platformsSlot, sho
       {showLogos && <LogoCarousel />}
       {showWhyTherefore && <WhyTherefore {...(whyThereforeProps ?? {})} />}
       {showTestimonials && <TestimonialsCarousel />}
-      {bottomFeatureStack && <FeatureStack />}
       <FAQ {...(faqProps ?? {})} />
+      {bottomFeatureStack && <FeatureStack />}
       <ContactCTA />
       {postContactSlot}
     </PageLayout>
@@ -92,6 +106,14 @@ export const DigitalProducts = {
   name: '02 — Digital Products',
   render: () => (
     <PillarPage
+      showTestimonials={false}
+      showLogos={false}
+      bottomFeatureStack={false}
+      postContactSlot={<FeatureStack showTitle={false} cards={[
+        FEATURE_CARDS[0],
+        { ...FEATURE_CARDS[1], title: 'CMS & Commerce', desc: 'Content and commerce platforms built for performance, editorial control, and scale.', media: <CMSCardMedia /> },
+        FEATURE_CARDS[2],
+      ]} />}
       faqProps={{
         eyebrow: 'Web Application FAQ',
         faqs: [
@@ -121,7 +143,7 @@ export const DigitalProducts = {
       heroProps={{
         headline: <><span>What We Build,</span><br /><span>Your Competitors</span><br /><span>Can't Buy.</span></>,
         bodyCopy: 'We build systems that become your competitive advantage. Mission critical web applications, bespoke to your business.',
-        bodySubCopy: '',
+        bodySubCopy: 'Tailor-made for luxury travel companies',
         ctaLabel: 'Speak to an Expert',
         mediaSlot: <DigitalConciergeApp animated />,
       }}

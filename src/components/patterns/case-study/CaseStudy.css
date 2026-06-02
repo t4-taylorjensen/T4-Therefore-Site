@@ -362,10 +362,10 @@
 
 .cs-quote {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);       /* 20px */
+  font-size: 18px;
   font-weight: 400;
   color: var(--color-text-on-dark-muted);  /* rgba(255,255,255,0.8) */
-  line-height: var(--leading-normal);   /* 1.6 */
+  line-height: 1.45;
 }
 
 /* ── Profile card ── */
@@ -388,14 +388,14 @@
 .cs-profile-info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 2px;
   justify-content: center;
   align-self: stretch;
 }
 
 .cs-profile-name {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);       /* 20px */
+  font-size: 18px;
   font-weight: 400;
   color: var(--color-white);
   line-height: var(--leading-normal);
@@ -403,7 +403,7 @@
 
 .cs-profile-role {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);          /* 11px */
+  font-size: 9px;
   font-weight: 400;
   color: var(--color-white);
   letter-spacing: var(--tracking-wider);

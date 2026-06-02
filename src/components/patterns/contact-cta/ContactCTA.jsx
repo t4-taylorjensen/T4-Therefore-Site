@@ -3,7 +3,7 @@ import './ContactCTA.css';
 
 import profileImg from '../../ui/brand assets/therefore-int-luke-bowler.jpg';
 import shaderImg  from '../../ui/brand assets/contact-cta-shader.svg';
-import { BtnSecondary, BtnGhost } from '../../ui/Button/Button';
+import { BtnSecondary, BtnOutline } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
 /* ─────────────────────────────────────────
@@ -46,7 +46,7 @@ export default function ContactCTA() {
                 </h2>
                 <div className="cta-btn-list">
                   <BtnSecondary type="button">Schedule a Call</BtnSecondary>
-                  <BtnGhost type="button">Watch Video</BtnGhost>
+                  <BtnOutline type="button" className="btn-outline--ghost">Watch Video</BtnOutline>
                 </div>
               </div>
             </div>

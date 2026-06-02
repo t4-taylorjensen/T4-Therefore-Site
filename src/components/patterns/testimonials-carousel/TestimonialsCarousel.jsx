@@ -6,7 +6,7 @@ import person2 from './person-2.jpg';
 import person3 from './person-3.jpg';
 import playHover  from '../../ui/brand assets/Play Hover.svg';
 import pauseHover from '../../ui/brand assets/Pause Hover.svg';
-import { BtnArrow, IconArrowRight, IconArrowLeft } from '../../ui/Button/Button';
+import { BtnArrow, IconCornerDownRight } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
 /* ─── Data ──────────────────────────────────────────────────────── */
@@ -232,8 +232,8 @@ function TestimonialsCarousel() {
           </div>
 
           <div className="tc-arrows">
-            <BtnArrow icon={IconArrowLeft}  label="Previous testimonial" nudge="left"  onClick={() => navigate(-1)} />
-            <BtnArrow icon={IconArrowRight} label="Next testimonial"     nudge="right" onClick={() => navigate(1)} />
+            <BtnArrow icon={IconCornerDownRight}  label="Previous testimonial" nudge="left"  onClick={() => navigate(-1)} />
+            <BtnArrow icon={IconCornerDownRight} label="Next testimonial"     nudge="right" onClick={() => navigate(1)} />
           </div>
         </div>
       </div>

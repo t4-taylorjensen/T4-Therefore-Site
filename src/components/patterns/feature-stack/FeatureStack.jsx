@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import './FeatureStack.css';
 
 import coverDigitalProducts    from '../../ui/brand assets/cover-digital-products.jpg';
 import coverAiCapabilities     from '../../ui/brand assets/cover-ai-capabilities.svg';
 import coverAiCapabilitiesHover from '../../ui/brand assets/cover-ai-capabilities-hover.svg';
-import { IconCornerDownRight } from '../../ui/Button/Button';
-import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
+import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
 import screen1  from '../../patterns/case-study/assets/therefore-custom-cms-commerce-website-duvine-01.jpg';
@@ -77,9 +75,9 @@ function DiscoveryOrbit() {
 }
 
 const HEADLINE_DARK  = 'We design content models that reflect real workflows';
-const HEADLINE_MUTED = ', integrate with your ecosystem, and scale as your business evolves.';
+const HEADLINE_MUTED = '';
 
-const DEFAULT_CARDS = [
+export const DEFAULT_CARDS = [
   {
     title: 'Discovery',
     desc: 'We help you make informed decisions about your digital future.',
@@ -123,8 +121,6 @@ export default function FeatureStack({
   showTitle = true,
   cardMediaHeight = null,
 }) {
-  const [iconNudge, setIconNudge] = useState(false);
-
   return (
     <section className={`s2-section${showTitle ? '' : ' s2-section--no-title'}`}>
 
@@ -132,12 +128,7 @@ export default function FeatureStack({
         {showTitle && (
           <div className="s2-large-title">
             <Eyebrow className="anim-fade-up anim-delay-1">{eyebrow}</Eyebrow>
-            <ScrollRevealHeadline
-              as="h2"
-              className="s2-headline"
-              text={headlineDark}
-              mutedText={headlineMuted}
-            />
+            <h2 className="s2-headline">{headlineDark}</h2>
           </div>
         )}
 
@@ -147,20 +138,7 @@ export default function FeatureStack({
           {/* Header row */}
           <div className="s2-cards-header anim-fade-up anim-delay-2">
             <p className="s2-cards-title">{headerTitle}</p>
-            <a
-              href="#"
-              className="s2-btn-sm"
-              onMouseEnter={() => setIconNudge(true)}
-            >
-              <span className="s2-btn-sm-label">All Capabilities</span>
-              <span
-                className="s2-btn-sm-icon"
-                style={{ animation: iconNudge ? 'nudge-right 0.55s ease-in-out 1' : 'none' }}
-                onAnimationEnd={() => setIconNudge(false)}
-              >
-                <IconCornerDownRight />
-              </span>
-            </a>
+            <BtnSecondary as="a" href="#" icon={IconCornerDownRight} nudge="right">All Capabilities</BtnSecondary>
           </div>
 
           {/* Cards grid */}

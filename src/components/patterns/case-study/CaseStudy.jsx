@@ -270,11 +270,7 @@ export default function CaseStudy({ screenVariant = 'fade', wipeInterval = 5200,
           <div className="cs-title-row">
             <h2 className="cs-headline">
               <span className="cs-word-clip">
-                <span className="cs-word">DuVine</span>
-              </span>
-              <span className="cs-word-gap" aria-hidden="true" />
-              <span className="cs-word-clip">
-                <span className="cs-word">Cycling</span>
+                <span className="cs-word">Agent Portal</span>
               </span>
             </h2>
             <p className="cs-scroll-hint">(scroll)</p>
@@ -308,10 +304,10 @@ export default function CaseStudy({ screenVariant = 'fade', wipeInterval = 5200,
       <div className="cs-split">
 
         <div className="cs-split-left">
-          <Eyebrow className="cs-split-label">DuVine Cycling</Eyebrow>
+          <Eyebrow className="cs-split-label">Rocky Mountaineer</Eyebrow>
 
           <p className="cs-split-desc">
-            Built to replace a legacy monolith with a composable architecture designed for performance and long-term scalability.
+            A new Salesforce-powered portal boosted agent bookings 200% year over year.
           </p>
 
           <BtnSecondary
@@ -326,18 +322,18 @@ export default function CaseStudy({ screenVariant = 'fade', wipeInterval = 5200,
 
         <div className="cs-split-right">
           <p className="cs-quote">
-            "Therefore has been tenacious improving our technological capabilities and guest experience. They have been supportive partners and met the changing needs of the tourism landscape."
+            "Therefore has been consistent and tenacious in seeking ways to improve our technological capabilities and elevate our guest experience, and they've been supportive partners at overcoming technical hurdles and meeting the changing needs of the tourism landscape."
           </p>
 
           <div className="cs-profile">
             <img
               src={profileImg}
-              alt="Jane Smith"
+              alt="Tristan Armstrong"
               className="cs-profile-photo"
             />
             <div className="cs-profile-info">
-              <p className="cs-profile-name">Jane Smith</p>
-              <p className="cs-profile-role">Chief Executive Officer</p>
+              <p className="cs-profile-name">Tristan Armstrong</p>
+              <p className="cs-profile-role">CEO</p>
             </div>
           </div>
         </div>

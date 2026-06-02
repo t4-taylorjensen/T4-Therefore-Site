@@ -64,55 +64,72 @@ a {
   align-self: flex-start;
   flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: var(--text-mono-md);
+  font-size: 12.5px;
   font-weight: 400;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   white-space: nowrap;
   line-height: 1;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  background-size: 200% 100%;
+  background-position: right center;
   transition:
-    background var(--duration-fast) ease,
-    color var(--duration-fast) ease;
+    background-position 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .btn-primary {
-  background: var(--color-ink);
+  background-image: linear-gradient(to right, var(--color-accent) 50%, var(--color-ink) 50%);
   color: var(--color-white);
 }
 .btn-primary:hover {
-  background: var(--color-accent);
+  background-position: left center;
   color: var(--color-ink);
 }
 
 .btn-secondary {
-  background: var(--color-white);
+  background-image: linear-gradient(to right, var(--color-accent) 50%, var(--color-surface-1) 50%);
   color: var(--color-ink);
 }
 .btn-secondary:hover {
-  background: var(--color-accent);
-  color: var(--color-white);
+  background-position: left center;
+  color: var(--color-ink);
 }
 
 .btn-outline {
-  background: transparent;
+  background-image: linear-gradient(to right, var(--color-ink) 50%, rgba(0,0,0,0) 50%);
+  background-color: transparent;
   color: var(--color-ink);
-  border: 1px solid var(--color-border-medium);
+  border: 1px solid var(--color-ink);
 }
 .btn-outline:hover {
-  background: var(--color-ink);
+  background-position: left center;
   color: var(--color-white);
-  border-color: var(--color-ink);
+}
+
+/* Outline on dark bg — white border/text, slides to white fill with dark text on hover */
+.btn-outline--ghost {
+  background-image: linear-gradient(to right, var(--color-white) 50%, rgba(0,0,0,0) 50%);
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid var(--color-white);
+}
+.btn-outline--ghost:hover {
+  background-position: left center;
+  color: var(--color-ink);
 }
 
 /* Ghost — transparent + white border, white text · use on dark backgrounds */
 .btn-ghost {
-  background: transparent;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.15) 50%, transparent 50%);
   color: var(--color-white);
   border: 1px solid var(--color-white);
 }
 .btn-ghost:hover {
-  background: rgba(255,255,255,0.1);
+  background-position: left center;
 }
 
 /* Arrow / icon button — 44×44 square */
@@ -123,15 +140,19 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-white);
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background var(--duration-fast) ease;
+  overflow: hidden;
+  background-image: linear-gradient(to right, var(--color-accent) 50%, var(--color-white) 50%);
+  background-size: 200% 100%;
+  background-position: right center;
+  transition: background-position 0.38s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s ease;
 }
 .btn-arrow:hover:not(:disabled) {
-  background: var(--color-accent);
+  background-position: left center;
+  color: var(--color-ink);
 }
 .btn-arrow:disabled {
   opacity: 0.3;
@@ -154,6 +175,40 @@ a {
   color: var(--color-ink);
 }
 
+/* Link text button — no bg, no border · use on dark backgrounds */
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.btn-link:hover {
+  color: rgba(255,255,255,0.95);
+}
+.btn-link--light {
+  color: var(--color-ink);
+}
+.btn-link--light:hover {
+  color: var(--color-ink);
+}
+.btn-link:hover .icon-nudge--right svg {
+  animation: arrow-shoot-right 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
+}
+.btn-link:hover .icon-nudge--down svg {
+  animation: arrow-shoot-down 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
+}
+
 /* ─────────────────────────────────────────
    ICON NUDGE
    Tiny attention animation that plays when a
@@ -166,21 +221,22 @@ a {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
-.btn:hover .icon-nudge--right,
-.btn-arrow:hover:not(:disabled) .icon-nudge--right,
-.btn-icon-accent:hover .icon-nudge--right {
-  animation: nudge-right 0.55s ease-in-out 1;
+.btn:hover .icon-nudge--right svg,
+.btn-arrow:hover:not(:disabled) .icon-nudge--right svg,
+.btn-icon-accent:hover .icon-nudge--right svg {
+  animation: arrow-shoot-right 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
 }
-.btn:hover .icon-nudge--left,
-.btn-arrow:hover:not(:disabled) .icon-nudge--left,
-.btn-icon-accent:hover .icon-nudge--left {
-  animation: nudge-left 0.55s ease-in-out 1;
+.btn:hover .icon-nudge--left svg,
+.btn-arrow:hover:not(:disabled) .icon-nudge--left svg,
+.btn-icon-accent:hover .icon-nudge--left svg {
+  animation: arrow-shoot-left 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
 }
-.btn:hover .icon-nudge--down,
-.btn-arrow:hover:not(:disabled) .icon-nudge--down,
-.btn-icon-accent:hover .icon-nudge--down {
-  animation: nudge-down 0.55s ease-in-out 1;
+.btn:hover .icon-nudge--down svg,
+.btn-arrow:hover:not(:disabled) .icon-nudge--down svg,
+.btn-icon-accent:hover .icon-nudge--down svg {
+  animation: arrow-shoot-down 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
 }
 
 /* ─────────────────────────────────────────

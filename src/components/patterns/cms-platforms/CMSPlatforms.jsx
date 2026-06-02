@@ -4,9 +4,8 @@ import sanityPhoto from '../../../../Case Studies/therefore-post-feature-05.jpg'
 import drupalPhoto from '../../../../Case Studies/therefore-suite-5-waves 2.jpg';
 import logoSanity  from './logo-sanity.svg';
 import logoDrupal  from './logo-drupal.svg';
-import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
 import Eyebrow from '../../ui/Eyebrow';
-import { IconArrowDiagonal } from '../../ui/icons';
+import { BtnLink, IconCornerDownRight } from '../../ui/Button/Button';
 
 const PLATFORMS = [
   {
@@ -87,10 +86,7 @@ function PlatformRow({ logo, logoAlt, logoClass, headline, photo, photoAlt, desc
           <h3 className="cmsplat-row-headline">{headline}</h3>
           <p className="cmsplat-desc">{desc}</p>
         </div>
-        <a href="#" className="cmsplat-cta">
-          <span className="cmsplat-cta-label">{cta}</span>
-          <IconArrowDiagonal />
-        </a>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">{cta}</BtnLink>
       </div>
     </div>
   );
@@ -101,11 +97,7 @@ export default function CMSPlatforms() {
     <section className="cmsplat-section">
       <div className="cmsplat-title-block">
         <Eyebrow className="anim-fade-up anim-delay-1">Our go-to technology stack</Eyebrow>
-        <ScrollRevealHeadline
-          as="h2"
-          className="cmsplat-headline"
-          text="The right platform changes what your team can build, and how fast they can build it."
-        />
+        <h2 className="cmsplat-headline">The right platform changes what your team can build, and how fast they can build it.</h2>
       </div>
 
       <div className="cmsplat-rows">

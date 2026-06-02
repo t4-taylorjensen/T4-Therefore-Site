@@ -99,14 +99,14 @@
 .cta-profile-info {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 2px;
   justify-content: center;
   align-self: stretch;
 }
 
 .cta-profile-name {
   font-family: var(--font-primary);
-  font-size: var(--text-body-lg);
+  font-size: 18px;
   font-weight: 400;
   color: var(--color-text-on-dark);
   line-height: var(--leading-normal);
@@ -115,7 +115,7 @@
 
 .cta-profile-role {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);
+  font-size: 9px;
   font-weight: 400;
   color: var(--color-text-on-dark);
   letter-spacing: var(--tracking-wider);

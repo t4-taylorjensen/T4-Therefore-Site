@@ -1,8 +1,8 @@
 import '../styles/global.css';
 
 import {
-  BtnPrimary, BtnSecondary, BtnOutline, BtnArrow, BtnIconAccent,
-  IconArrowRight, IconArrowLeft, IconCornerDownRight, IconCornerRightArrow,
+  BtnPrimary, BtnSecondary, BtnOutline, BtnArrow, BtnIconAccent, BtnLink,
+  IconCornerDownRight, IconCornerRightArrow,
 } from '../components/ui/Button/Button';
 
 import playHoverSrc  from '../components/ui/brand assets/Play Hover.svg';
@@ -64,19 +64,10 @@ function Meta({ children }) {
 ───────────────────────────────────────── */
 const iconDefs = [
   {
-    name:        'corner-right-down',
-    file:        'corner-right-down.svg',
-    desc:        'Straight right arrow →',
-    usage:       'Hero CTA · Nav prev/next',
-    component:   <IconArrowRight />,
-    flipped:     <IconArrowLeft />,
-    hasFlip:     true,
-  },
-  {
     name:        'corner-down-right',
     file:        'corner-down-right.svg',
     desc:        'L-corner, turns right at bottom',
-    usage:       'Case Study CTA',
+    usage:       'All CTAs · Nav prev/next',
     component:   <IconCornerDownRight />,
     hasFlip:     false,
   },
@@ -101,29 +92,32 @@ export const Default = {
       <span style={sectionLabel}>CTA Buttons — Primary</span>
       <hr style={divider} />
       <div style={row}>
-        <BtnPrimary icon={IconArrowRight}      nudge="right">Start a Project</BtnPrimary>
+        <BtnPrimary icon={IconCornerDownRight} nudge="right">Start a Project</BtnPrimary>
         <BtnPrimary icon={IconCornerDownRight} nudge="right">View Case Study</BtnPrimary>
         <BtnPrimary icon={IconCornerRightArrow} nudge="down">Learn More</BtnPrimary>
+        <BtnPrimary>Start a Project</BtnPrimary>
       </div>
-      <Meta>bg #121212 → hover #4297FF (black text + icon) · nudge-right/down on icon · height 34px · border-radius 5px</Meta>
+      <Meta>bg #121212 → hover #4297FF (black text) · height 34px · icon optional</Meta>
 
       <span style={sectionLabel}>CTA Buttons — Secondary</span>
       <hr style={divider} />
       <div style={row}>
-        <BtnSecondary icon={IconArrowRight}      nudge="right">Start a Project</BtnSecondary>
+        <BtnSecondary icon={IconCornerDownRight} nudge="right">Start a Project</BtnSecondary>
         <BtnSecondary icon={IconCornerDownRight} nudge="right">Full Case Study</BtnSecondary>
         <BtnSecondary icon={IconCornerRightArrow} nudge="down">Learn More</BtnSecondary>
+        <BtnSecondary>Start a Project</BtnSecondary>
       </div>
-      <Meta>bg #ffffff → hover #4297FF (black text + icon always) · used on dark section backgrounds</Meta>
+      <Meta>bg #f2f2f2 → hover #4297FF (black text) · icon optional · used on dark section backgrounds + nav</Meta>
 
       <span style={sectionLabel}>CTA Buttons — Outline</span>
       <hr style={divider} />
       <div style={row}>
-        <BtnOutline icon={IconArrowRight}      nudge="right">Start a Project</BtnOutline>
+        <BtnOutline icon={IconCornerDownRight} nudge="right">Start a Project</BtnOutline>
         <BtnOutline icon={IconCornerDownRight} nudge="right">Full Case Study</BtnOutline>
         <BtnOutline icon={IconCornerRightArrow} nudge="down">Learn More</BtnOutline>
+        <BtnOutline>Start a Project</BtnOutline>
       </div>
-      <Meta>transparent + 1px border → hover fills #121212 (white text + icon)</Meta>
+      <Meta>transparent + 1px black border → hover fills #121212 (white text) · icon optional</Meta>
 
       {/* ── Compound CTA ── */}
       <span style={sectionLabel}>Compound CTA — Text + Icon</span>
@@ -135,7 +129,7 @@ export const Default = {
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <BtnPrimary nudge="right">Start a Project</BtnPrimary>
-          <BtnIconAccent icon={IconArrowRight} label="Go" nudge="right" />
+          <BtnIconAccent icon={IconCornerDownRight} label="Go" nudge="right" />
         </div>
       </div>
       <Meta>Text btn (black) + icon btn (blue #4297FF, black icon) · used in Stack guide card · icon nudges on hover</Meta>
@@ -144,22 +138,41 @@ export const Default = {
       <span style={sectionLabel}>Arrow Buttons — Navigation</span>
       <hr style={divider} />
       <div style={row}>
-        <BtnArrow icon={IconArrowLeft}  label="Previous"          nudge="left" />
-        <BtnArrow icon={IconArrowRight} label="Next"              nudge="right" />
+        <BtnArrow icon={IconCornerDownRight}  label="Previous"          nudge="left" />
+        <BtnArrow icon={IconCornerDownRight} label="Next"              nudge="right" />
         <span style={{ width: 1, height: 32, background: 'rgba(0,0,0,0.1)', margin: '0 4px' }} />
-        <BtnArrow icon={IconArrowLeft}  label="Previous (disabled)" nudge="left"  disabled />
-        <BtnArrow icon={IconArrowRight} label="Next (disabled)"     nudge="right" disabled />
+        <BtnArrow icon={IconCornerDownRight}  label="Previous (disabled)" nudge="left"  disabled />
+        <BtnArrow icon={IconCornerDownRight} label="Next (disabled)"     nudge="right" disabled />
       </div>
       <Meta>44×44px · bg #ffffff → hover #4297FF (icon stays black) · nudge-left/right · disabled: opacity 0.3</Meta>
+
+      {/* ── Link Text Button ── */}
+      <span style={sectionLabel}>Link Text Button — Dark</span>
+      <hr style={divider} />
+      <div style={{ ...row, background: '#121212', padding: 24, borderRadius: 8, marginBottom: 8 }}>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right">All Case Studies</BtnLink>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right">View Case Study</BtnLink>
+        <BtnLink href="#" icon={IconCornerRightArrow} nudge="down">Learn More</BtnLink>
+      </div>
+      <Meta>No bg · no border · mono 11px uppercase · muted white → bright white on hover · used on dark backgrounds</Meta>
+
+      <span style={sectionLabel}>Link Text Button — Light</span>
+      <hr style={divider} />
+      <div style={{ ...row, padding: '24px 0', marginBottom: 8 }}>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">All Case Studies</BtnLink>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">View Case Study</BtnLink>
+        <BtnLink href="#" icon={IconCornerRightArrow} nudge="down" className="btn-link--light">Learn More</BtnLink>
+      </div>
+      <Meta>Same structure · muted ink → full ink on hover · use on light section backgrounds</Meta>
 
       {/* ── On dark ── */}
       <span style={sectionLabel}>On Dark Background</span>
       <hr style={divider} />
       <div style={{ ...row, background: '#121212', padding: 24, borderRadius: 8, marginBottom: 8 }}>
-        <BtnSecondary icon={IconArrowRight}      nudge="right">Start a Project</BtnSecondary>
+        <BtnSecondary icon={IconCornerDownRight}      nudge="right">Start a Project</BtnSecondary>
         <BtnSecondary icon={IconCornerDownRight} nudge="right">Full Case Study</BtnSecondary>
-        <BtnArrow icon={IconArrowLeft}  label="Previous" nudge="left" />
-        <BtnArrow icon={IconArrowRight} label="Next"     nudge="right" />
+        <BtnArrow icon={IconCornerDownRight}  label="Previous" nudge="left" />
+        <BtnArrow icon={IconCornerDownRight} label="Next"     nudge="right" />
       </div>
       <Meta>Secondary + arrow buttons as used inside dark sections (CaseStudy, TestimonialsCarousel)</Meta>
 

@@ -59,6 +59,29 @@ export const BtnOutline   = CtaBase('btn-outline');
 /** Ghost — transparent + white border, white text · use on dark backgrounds */
 export const BtnGhost     = CtaBase('btn-ghost');
 
+/** Link text button — no bg/border, muted white · use on dark backgrounds */
+export const BtnLink = forwardRef(function BtnLink(
+  { children, icon: Icon, nudge = 'right', className = '', as: Tag = 'a', href, onClick, ...rest },
+  ref
+) {
+  return (
+    <Tag
+      ref={ref}
+      href={href}
+      onClick={onClick}
+      className={`btn-link ${className}`.trim()}
+      {...rest}
+    >
+      {children}
+      {Icon && (
+        <span className={`icon-nudge icon-nudge--${nudge}`}>
+          <Icon />
+        </span>
+      )}
+    </Tag>
+  );
+});
+
 /* ─────────────────────────────────────────
    ICON-ONLY BUTTONS
 ───────────────────────────────────────── */
@@ -106,8 +129,6 @@ export const BtnIconAccent = forwardRef(function BtnIconAccent(
 
 /* Re-export icons from their canonical home so existing imports keep working */
 export {
-  IconArrowRight,
-  IconArrowLeft,
   IconCornerDownRight,
   IconCornerRightArrow,
 } from '../icons';

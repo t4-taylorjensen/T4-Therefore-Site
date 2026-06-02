@@ -21,24 +21,25 @@
 }
 
 /* Used in: Hero, CaseStudy, Stack-2, WhyTherefore, TestimonialsCarousel — next arrow */
-@keyframes nudge-right {
-  0%,100% { transform: translateX(0); }
-  40%     { transform: translateX(5px); }
-  70%     { transform: translateX(2px); }
+@keyframes arrow-shoot-right {
+  0%   { transform: translateX(0);     opacity: 1; }
+  38%  { transform: translateX(18px);  opacity: 0; }
+  39%  { transform: translateX(-18px); opacity: 0; }
+  100% { transform: translateX(0);     opacity: 1; }
 }
 
-/* Used in: WhyTherefore, TestimonialsCarousel — prev arrow */
-@keyframes nudge-left {
-  0%,100% { transform: translateX(0); }
-  40%     { transform: translateX(-5px); }
-  70%     { transform: translateX(-2px); }
+@keyframes arrow-shoot-left {
+  0%   { transform: translateX(0);     opacity: 1; }
+  38%  { transform: translateX(-18px); opacity: 0; }
+  39%  { transform: translateX(18px);  opacity: 0; }
+  100% { transform: translateX(0);     opacity: 1; }
 }
 
-/* Used in: Stack — download icon */
-@keyframes nudge-down {
-  0%,100% { transform: translateY(0); }
-  40%     { transform: translateY(4px); }
-  70%     { transform: translateY(2px); }
+@keyframes arrow-shoot-down {
+  0%   { transform: translateY(0);     opacity: 1; }
+  38%  { transform: translateY(18px);  opacity: 0; }
+  39%  { transform: translateY(-18px); opacity: 0; }
+  100% { transform: translateY(0);     opacity: 1; }
 }
 
 /* Used in: Stack — loading spinner */

@@ -1,0 +1,39 @@
+.crosshair-hover {
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+.crosshair-line {
+  position: absolute;
+  pointer-events: none;
+}
+
+.crosshair-line--h {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.crosshair-line--v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.crosshair-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.crosshair-label {
+  position: absolute;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}

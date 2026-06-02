@@ -115,7 +115,7 @@
   letter-spacing: var(--tracking-tight);
   color: var(--color-ink);
   margin: 0;
-  max-width: 480px;
+  max-width: 600px;
 }
 
 .cmsplat-desc {
@@ -125,7 +125,7 @@
   color: var(--color-ink);
   opacity: 0.55;
   margin: 0;
-  max-width: 480px;
+  max-width: 600px;
 }
 
 /* ── CTA ── */
@@ -171,7 +171,8 @@
   }
 
   .cmsplat-row-photo {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: unset;
+    height: 180px;
   }
 
   .cmsplat-row-body {

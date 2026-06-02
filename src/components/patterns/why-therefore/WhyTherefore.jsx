@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './WhyTherefore.css';
-import { BtnArrow, IconArrowRight, IconArrowLeft } from '../../ui/Button/Button';
-import ScrollRevealHeadline from '../../ui/ScrollRevealHeadline';
+import { BtnArrow, IconCornerDownRight } from '../../ui/Button/Button';
 import Eyebrow from '../../ui/Eyebrow';
 
 const DEFAULT_CARDS = [
@@ -283,14 +282,14 @@ function CardCarousel({ cards = DEFAULT_CARDS, carouselTitle = DEFAULT_CAROUSEL_
         <p className="wt-carousel-title">{carouselTitle}</p>
         <div className="wt-arrows" role="group" aria-label="Carousel navigation">
           <BtnArrow
-            icon={IconArrowLeft}
+            icon={IconCornerDownRight}
             label="Previous"
             nudge="left"
             onClick={() => navRef.current.prev()}
             disabled={!arrows.prev}
           />
           <BtnArrow
-            icon={IconArrowRight}
+            icon={IconCornerDownRight}
             label="Next"
             nudge="right"
             onClick={() => navRef.current.next()}
@@ -378,13 +377,7 @@ function WhyTherefore({
       {/* Constrained text column */}
       <div className="wt-large-title">
         <Eyebrow className="wt-eyebrow anim-fade-up anim-delay-1">{eyebrow}</Eyebrow>
-        <ScrollRevealHeadline
-          as="h2"
-          id="wt-heading"
-          className="wt-headline"
-          text={darkText}
-          mutedText={mutedText}
-        />
+        <h2 id="wt-heading" className="wt-headline">{darkText}</h2>
       </div>
 
       {/* Full-bleed carousel */}

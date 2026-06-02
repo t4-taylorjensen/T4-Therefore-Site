@@ -93,7 +93,7 @@
 
 .faq-question-text {
   font-family: var(--font-primary);
-  font-size: clamp(16px, 1.5vw + 9px, 30px);
+  font-size: clamp(12px, 1.5vw + 5px, 26px);
   font-weight: 400;
   line-height: var(--leading-snug);
   letter-spacing: 0;

@@ -1,6 +1,7 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './MoreWork.css';
-import { BtnGhost, IconCornerDownRight } from '../../ui/Button/Button';
+import { BtnGhost, BtnLink, IconCornerDownRight } from '../../ui/Button/Button';
+import CrosshairHover from '../../ui/CrosshairHover/CrosshairHover';
 
 /* ─────────────────────────────────────
    MORE WORK — Stat Cards
@@ -25,59 +26,28 @@ function useWindowWidth() {
 }
 
 function CursorCard({ p, i, hov, setHov }) {
-  const rafRef  = useRef(null);
-  const posRef  = useRef({ x: 0, y: 0 });
-  const rendRef = useRef({ x: 0, y: 0 });
-  const [pos, setPos] = useState({ x: 0, y: 0, visible: false });
-
-  const onMouseMove = useCallback((e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    posRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    if (!rafRef.current) {
-      const tick = () => {
-        rendRef.current.x += (posRef.current.x - rendRef.current.x) * 0.12;
-        rendRef.current.y += (posRef.current.y - rendRef.current.y) * 0.12;
-        setPos({ x: rendRef.current.x, y: rendRef.current.y, visible: true });
-        const dx = Math.abs(posRef.current.x - rendRef.current.x);
-        const dy = Math.abs(posRef.current.y - rendRef.current.y);
-        rafRef.current = (dx > 0.3 || dy > 0.3) ? requestAnimationFrame(tick) : null;
-      };
-      rafRef.current = requestAnimationFrame(tick);
-    }
-  }, []);
-
-  const onMouseEnter = useCallback((e) => {
-    setHov(i);
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left, y = e.clientY - rect.top;
-    posRef.current = { x, y }; rendRef.current = { x, y };
-    setPos({ x, y, visible: true });
-  }, [i, setHov]);
-
-  const onMouseLeave = useCallback(() => {
-    setHov(null);
-    if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
-    setPos(p => ({ ...p, visible: false }));
-  }, [setHov]);
-
   const active = hov === i;
+
+  const label = (
+    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: W(0.7), display: 'flex', alignItems: 'center', gap: 5 }}>
+      View <IconCornerDownRight style={{ width: 9, height: 9 }} />
+    </span>
+  );
 
   return (
     <a
       href="#"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onMouseMove={onMouseMove}
+      onMouseEnter={() => setHov(i)}
+      onMouseLeave={() => setHov(null)}
       style={{
         textDecoration: 'none', color: 'inherit',
         display: 'flex', flexDirection: 'column',
         marginTop: OFFSETS[i],
         transform: active ? 'translateY(-10px)' : 'translateY(0)',
         transition: 'transform 0.55s cubic-bezier(0.4,0,0.2,1)',
-        cursor: 'none',
       }}
     >
-      <div style={{ height: HEIGHTS[i], overflow: 'hidden', position: 'relative' }}>
+      <CrosshairHover label={label} style={{ height: HEIGHTS[i] }}>
         <img
           src={p.img}
           alt={p.client}
@@ -88,19 +58,7 @@ function CursorCard({ p, i, hov, setHov }) {
             transition: 'transform 1.1s cubic-bezier(0.4,0,0.2,1), filter 0.5s ease',
           }}
         />
-        {/* horizontal line */}
-        <div style={{ position: 'absolute', left: 0, right: 0, top: pos.y, height: 1, background: W(active ? 0.28 : 0), transition: active ? 'none' : 'background 0.4s ease', pointerEvents: 'none' }} />
-        {/* vertical line */}
-        <div style={{ position: 'absolute', top: 0, bottom: 0, left: pos.x, width: 1, background: W(active ? 0.28 : 0), transition: active ? 'none' : 'background 0.4s ease', pointerEvents: 'none' }} />
-        {/* dot at intersection */}
-        <div style={{ position: 'absolute', left: pos.x, top: pos.y, width: 5, height: 5, borderRadius: '50%', background: W(0.9), transform: 'translate(-50%,-50%)', opacity: active ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
-        {/* "View" label offset from crosshair */}
-        <div style={{ position: 'absolute', left: pos.x + 12, top: pos.y - 28, pointerEvents: 'none', opacity: active && pos.visible ? 1 : 0, transform: active ? 'translateY(0)' : 'translateY(4px)', transition: 'opacity 0.3s ease, transform 0.4s ease' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: W(0.7), display: 'flex', alignItems: 'center', gap: 5 }}>
-            View <IconCornerDownRight style={{ width: 9, height: 9 }} />
-          </span>
-        </div>
-      </div>
+      </CrosshairHover>
 
       <p style={{
         fontFamily: 'var(--font-primary)',
@@ -209,12 +167,7 @@ function StaggeredCards({ projects }) {
       {/* header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `clamp(32px,5vw,64px) ${pad} 0` }}>
         <p style={{ fontFamily: 'var(--font-primary)', fontSize: 'clamp(18px,1.8vw,24px)', fontWeight: 400, color: W(0.88), letterSpacing: '-0.02em', margin: 0 }}>More Work</p>
-        <a href="#" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: W(0.5), textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 7, transition: 'color 0.2s ease' }}
-          onMouseEnter={e => e.currentTarget.style.color = W(0.9)}
-          onMouseLeave={e => e.currentTarget.style.color = W(0.5)}
-        >
-          All Case Studies <IconCornerDownRight style={{ width: 11, height: 11 }} />
-        </a>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right">All Case Studies</BtnLink>
       </div>
 
       {/* mobile — 2-col split, first two cards only */}
@@ -274,10 +227,7 @@ export default function MoreWork({ projects = [], columns = 3, layout = 'grid' }
 
       <div className="mw-header">
         <p className="mw-header-title">More Work</p>
-        <a href="#" className="mw-header-link">
-          All Case Studies
-          <IconCornerDownRight style={{ width: 11, height: 11 }} />
-        </a>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right">All Case Studies</BtnLink>
       </div>
 
       <div className={`mw-grid mw-grid--${cols}`}>
@@ -301,9 +251,7 @@ export default function MoreWork({ projects = [], columns = 3, layout = 'grid' }
             </div>
 
             {cols === 2 && (
-              <a href="#" className="mw-card-cta">
-                View Case Study <IconCornerDownRight style={{ width: 12, height: 12 }} />
-              </a>
+              <BtnLink href="#" icon={IconCornerDownRight} nudge="right">View Case Study</BtnLink>
             )}
 
           </a>

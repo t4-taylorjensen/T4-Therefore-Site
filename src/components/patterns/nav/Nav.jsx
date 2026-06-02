@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './Nav.css';
 import thereforeLogo from '../../ui/brand assets/therefore-logo.svg';
 import FlipLink      from '../../ui/FlipLink';
+import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
 
 const NAV_LINKS = ['Headless CMS', 'Digital Products', 'AI'];
 
@@ -42,18 +43,6 @@ function IconBurger({ open }) {
   );
 }
 
-function IconBtnArrow() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M12.9336 9.46772L8.66698 9.46772C6.42677 9.46772 4.40039 9.46772 4.40039 9.46772L4.40039 3.20001M12.9336 9.46772L9.60031 6.13439M12.9336 9.46772L9.60031 12.8011"
-        stroke="currentColor"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 function IconInstagram() {
   return (
@@ -116,6 +105,18 @@ function DisplayLink({ children, active, dimmed, delay, onClick }) {
   );
 }
 
+function NavCta() {
+  return (
+    <BtnSecondary as="a" href="#" className="nav-cta-btn" aria-label="Start a Project">
+      <span className="nav-cta-text">
+        <span className="nav-cta-default nav-cta-desktop">Start a Project</span>
+        <span className="nav-cta-default nav-cta-mobile">Start Project</span>
+        <span className="nav-cta-hover">Let's Chat</span>
+      </span>
+    </BtnSecondary>
+  );
+}
+
 // ─── Nav ─────────────────────────────────────────────────────
 
 export default function Nav({ activePage = 'Headless CMS' }) {
@@ -174,7 +175,7 @@ export default function Nav({ activePage = 'Headless CMS' }) {
           </button>
         </nav>
 
-        <a href="#" className="nav-cta">Start a Project</a>
+        <NavCta />
 
         <button
           className="nav-burger"
@@ -200,7 +201,7 @@ export default function Nav({ activePage = 'Headless CMS' }) {
             <IconClose />
           </button>
           <img src={thereforeLogo} alt="Therefore" className="nav-logo" draggable="false" />
-          <a href="#" className="nav-cta">Start a Project</a>
+          <NavCta />
         </div>
 
         {/* Body */}
@@ -228,7 +229,9 @@ export default function Nav({ activePage = 'Headless CMS' }) {
                   </div>
                   {label === activePage && (
                     <span className="nav-overlay-main-arrow">
-                      <IconBtnArrow />
+                      <span className="icon-nudge icon-nudge--right">
+                        <IconCornerDownRight />
+                      </span>
                     </span>
                   )}
                 </div>
