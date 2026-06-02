@@ -159,6 +159,16 @@ export default function Nav({ activePage = 'CMS & Commerce' }) {
     <>
       <header className="nav">
         <div className="nav-col nav-col--left">
+          <button
+            className="nav-burger"
+            type="button"
+            aria-expanded={phase !== 'closed'}
+            aria-controls="nav-overlay"
+            aria-label="Open menu"
+            onClick={handleOpen}
+          >
+            <IconBurger open={phase !== 'closed'} />
+          </button>
           <nav className="nav-links" aria-label="Primary navigation">
             {NAV_LINKS.map((label) => (
               <a key={label} href="#" className="nav-link">{label}</a>
@@ -181,16 +191,6 @@ export default function Nav({ activePage = 'CMS & Commerce' }) {
 
         <div className="nav-col nav-col--right">
           <NavCta />
-          <button
-          className="nav-burger"
-          type="button"
-          aria-expanded={phase !== 'closed'}
-          aria-controls="nav-overlay"
-          aria-label="Open menu"
-          onClick={handleOpen}
-        >
-          <IconBurger open={phase !== 'closed'} />
-        </button>
         </div>
       </header>
 
