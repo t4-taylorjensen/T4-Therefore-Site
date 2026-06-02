@@ -17,14 +17,34 @@
   box-sizing: border-box;
 }
 
+.nav-col {
+  display: flex;
+  align-items: center;
+}
+
+.nav-col--left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.nav-col--center {
+  flex: 0 0 auto;
+  justify-content: center;
+  padding: 0 var(--space-6);
+}
+
+.nav-col--right {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 .nav-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   height: 13.46px;
   width: auto;
   pointer-events: none;
   user-select: none;
+  display: block;
 }
 
 .nav-links {
@@ -556,21 +576,19 @@
   .nav { padding: 15px 20px; border-bottom: none; }
 
   /* Show CTA on mobile at smaller size, 30px from burger */
-  .nav > .btn {
+  .nav-col--right > .btn {
     display: inline-flex;
     height: 28px;
     font-size: 10px;
     padding: 0 8px;
-    margin-right: 30px;
   }
   .nav-cta-mobile  { display: block; }
   .nav-cta-desktop { display: none; }
 
-  /* On mobile the logo is left-aligned (not absolutely centred) */
-  .nav-logo {
-    position: static;
-    transform: none;
-  }
+  /* On mobile collapse left col, logo stays centred via flex column */
+  .nav-col--left { flex: 0 0 auto; }
+  .nav-col--center { flex: 1; }
+  .nav-col--right { flex: 0 0 auto; }
 
   /* Overlay bar — match top nav exactly: 20px padding, logo left, close right */
   .nav-overlay-bar {

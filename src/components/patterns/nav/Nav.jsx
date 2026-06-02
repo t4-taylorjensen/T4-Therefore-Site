@@ -158,26 +158,30 @@ export default function Nav({ activePage = 'CMS & Commerce' }) {
   return (
     <>
       <header className="nav">
-        <img src={thereforeLogo} alt="Therefore" className="nav-logo" draggable="false" />
+        <div className="nav-col nav-col--left">
+          <nav className="nav-links" aria-label="Primary navigation">
+            {NAV_LINKS.map((label) => (
+              <a key={label} href="#" className="nav-link">{label}</a>
+            ))}
+            <button
+              className="nav-link nav-more"
+              type="button"
+              aria-expanded={phase !== 'closed'}
+              aria-controls="nav-overlay"
+              onClick={handleOpen}
+            >
+              More <IconChevron />
+            </button>
+          </nav>
+        </div>
 
-        <nav className="nav-links" aria-label="Primary navigation">
-          {NAV_LINKS.map((label) => (
-            <a key={label} href="#" className="nav-link">{label}</a>
-          ))}
+        <div className="nav-col nav-col--center">
+          <img src={thereforeLogo} alt="Therefore" className="nav-logo" draggable="false" />
+        </div>
+
+        <div className="nav-col nav-col--right">
+          <NavCta />
           <button
-            className="nav-link nav-more"
-            type="button"
-            aria-expanded={phase !== 'closed'}
-            aria-controls="nav-overlay"
-            onClick={handleOpen}
-          >
-            More <IconChevron />
-          </button>
-        </nav>
-
-        <NavCta />
-
-        <button
           className="nav-burger"
           type="button"
           aria-expanded={phase !== 'closed'}
@@ -187,6 +191,7 @@ export default function Nav({ activePage = 'CMS & Commerce' }) {
         >
           <IconBurger open={phase !== 'closed'} />
         </button>
+        </div>
       </header>
 
       {/* ── Full-height overlay menu ── */}
