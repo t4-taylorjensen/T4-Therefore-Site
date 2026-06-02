@@ -53,7 +53,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: clamp(12px, 2.5vw, 30px);
+  gap: clamp(12px, calc(-69px + 9vw), 30px);
 }
 
 .nav-link {
@@ -564,11 +564,13 @@
 
 
 /* ─────────────────────────────────────────
-   COMPACT — links collapse to burger before hitting 12px min gap
+   COMPACT — links collapse to burger at 12px min gap (~900px)
 ───────────────────────────────────────── */
 @media (max-width: 900px) {
-  .nav-links { display: none; }
-  .nav-burger { display: flex; }
+  .nav-col--left   { display: none; }
+  .nav-col--center { flex: 1; justify-content: flex-start; padding: 0; }
+  .nav-col--right  { flex: 0 0 auto; }
+  .nav-burger      { display: flex; }
 }
 
 /* ─────────────────────────────────────────
@@ -588,10 +590,7 @@
   .nav-cta-mobile  { display: block; }
   .nav-cta-desktop { display: none; }
 
-  /* On mobile collapse left col, logo stays centred via flex column */
-  .nav-col--left { flex: 0 0 auto; }
-  .nav-col--center { flex: 1; }
-  .nav-col--right { flex: 0 0 auto; }
+  /* 900px rules already handle the collapsed layout — no overrides needed */
 
   /* Overlay bar — match top nav exactly: 20px padding, logo left, close right */
   .nav-overlay-bar {
