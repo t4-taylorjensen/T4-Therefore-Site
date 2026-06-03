@@ -12,6 +12,7 @@ import CrosshairHover from '../../ui/CrosshairHover/CrosshairHover';
 ───────────────────────────────────── */
 
 const W = (a) => `rgba(255,255,255,${a})`;
+const D = (a) => `rgba(18,18,18,${a})`;
 const OFFSETS = ['0px', '72px', '32px'];
 const HEIGHTS = ['460px', '520px', '488px'];
 
@@ -25,11 +26,14 @@ function useWindowWidth() {
   return width;
 }
 
-function CursorCard({ p, i, hov, setHov }) {
+function CursorCard({ p, i, hov, setHov, lightBg }) {
   const active = hov === i;
+  const C = lightBg
+    ? { label: D(0.45), name: active ? D(0.9) : D(0.5), imgF: 'brightness(1) saturate(1)', imgFH: 'brightness(0.88) saturate(0.95)' }
+    : { label: W(0.7),  name: active ? W(0.92) : W(0.6), imgF: 'brightness(0.82) saturate(0.88)', imgFH: 'brightness(0.55) saturate(0.8)' };
 
   const label = (
-    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: W(0.7), display: 'flex', alignItems: 'center', gap: 5 }}>
+    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.label, display: 'flex', alignItems: 'center', gap: 5 }}>
       View <IconCornerDownRight style={{ width: 9, height: 9 }} />
     </span>
   );
@@ -54,7 +58,7 @@ function CursorCard({ p, i, hov, setHov }) {
           style={{
             width: '100%', height: '100%', objectFit: 'cover', display: 'block',
             transform: active ? 'scale(1.04)' : 'scale(1)',
-            filter: active ? 'brightness(0.55) saturate(0.8)' : 'brightness(0.82) saturate(0.88)',
+            filter: active ? C.imgFH : C.imgF,
             transition: 'transform 1.1s cubic-bezier(0.4,0,0.2,1), filter 0.5s ease',
           }}
         />
@@ -64,7 +68,7 @@ function CursorCard({ p, i, hov, setHov }) {
         fontFamily: 'var(--font-primary)',
         fontSize: 'clamp(17px,1.9vw,25px)',
         fontWeight: 400,
-        color: W(active ? 0.92 : 0.6),
+        color: C.name,
         letterSpacing: '-0.02em',
         lineHeight: 1.1,
         margin: '18px 0 0',
@@ -147,7 +151,7 @@ function TabletCard({ p, i, hov, setHov, tabletOffsets, tabletHeights }) {
   );
 }
 
-function StaggeredCards({ projects }) {
+function StaggeredCards({ projects, lightBg = false }) {
   const [hov, setHov] = useState(null);
   const width = useWindowWidth();
   const items = projects.slice(0, 3);
@@ -160,14 +164,17 @@ function StaggeredCards({ projects }) {
   const tabletHeights = ['320px', '280px', '300px'];
 
   const pad = 'clamp(20px,5vw,90px)';
+  const bg = lightBg ? 'var(--color-surface-1)' : '#121212';
+  const borderColor = lightBg ? 'var(--color-border)' : W(0.07);
+  const titleColor = lightBg ? 'var(--color-ink)' : W(0.88);
 
   return (
-    <section style={{ background: '#121212', borderTop: `1px solid ${W(0.07)}`, paddingBottom: isMobile ? 60 : 'clamp(80px,10vw,140px)' }}>
+    <section style={{ background: bg, borderTop: `1px solid ${borderColor}`, paddingBottom: isMobile ? 60 : 'clamp(80px,10vw,140px)' }}>
 
       {/* header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `clamp(32px,5vw,64px) ${pad} 0` }}>
-        <p style={{ fontFamily: 'var(--font-primary)', fontSize: 'clamp(18px,1.8vw,24px)', fontWeight: 400, color: W(0.88), letterSpacing: '-0.02em', margin: 0 }}>More Work</p>
-        <BtnLink href="#" icon={IconCornerDownRight} nudge="right">All Case Studies</BtnLink>
+        <p style={{ fontFamily: 'var(--font-primary)', fontSize: 'clamp(18px,1.8vw,24px)', fontWeight: 400, color: titleColor, letterSpacing: '-0.02em', margin: 0 }}>Case Studies</p>
+        <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className={lightBg ? 'btn-link--light' : ''}>All Work</BtnLink>
       </div>
 
       {/* mobile — 2-col split, first two cards only */}
@@ -208,7 +215,7 @@ function StaggeredCards({ projects }) {
       {!isMobile && !isTablet && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 'clamp(12px,1.5vw,20px)', padding: `clamp(32px,4vw,52px) ${pad} 0`, alignItems: 'start' }}>
           {items.map((p, i) => (
-            <CursorCard key={i} p={p} i={i} hov={hov} setHov={setHov} />
+            <CursorCard key={i} p={p} i={i} hov={hov} setHov={setHov} lightBg={lightBg} />
           ))}
         </div>
       )}
@@ -217,8 +224,8 @@ function StaggeredCards({ projects }) {
   );
 }
 
-export default function MoreWork({ projects = [], columns = 3, layout = 'grid' }) {
-  if (layout === 'staggered') return <StaggeredCards projects={projects} />;
+export default function MoreWork({ projects = [], columns = 3, layout = 'grid', lightBg = false }) {
+  if (layout === 'staggered') return <StaggeredCards projects={projects} lightBg={lightBg} />;
 
   const cols = columns === 2 ? 2 : 3;
 
