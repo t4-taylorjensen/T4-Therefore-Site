@@ -239,20 +239,21 @@ function CaseStudies() {
             All Work
           </BtnLink>
         </div>
-        {CASE_STUDIES.map((c, i) => (
-          <a key={c.client} href="#" className="v2-cs-row">
-            <span className="v2-cs-row-num">{String(i + 1).padStart(2, '0')}</span>
-            <div className="v2-cs-row-img-wrap">
-              <img src={c.img} alt={c.client} className="v2-cs-row-img" />
-            </div>
-            <div className="v2-cs-row-info">
-              <span className="v2-cs-row-tag">{c.tag}</span>
-              <p className="v2-cs-row-client">{c.client}</p>
-            </div>
-            <p className="v2-cs-row-value">{c.value}</p>
-            <IconArrowRight className="v2-cs-row-arrow" />
-          </a>
-        ))}
+        <div className="v2-cs-grid">
+          {CASE_STUDIES.map((c, i) => (
+            <a key={c.client} href="#" className="v2-cs-card">
+              <img src={c.img} alt={c.client} className="v2-cs-card-img" />
+              <div className="v2-cs-card-overlay" />
+              <span className="v2-cs-card-num">{String(i + 1).padStart(2, '0')}</span>
+              <div className="v2-cs-card-content">
+                <span className="v2-cs-card-tag">{c.tag}</span>
+                <p className="v2-cs-card-client">{c.client}</p>
+                <p className="v2-cs-card-value">{c.value}</p>
+                <IconArrowRight className="v2-cs-card-arrow" />
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -314,7 +315,7 @@ function Platforms() {
                       <li key={pt} className="v2-plat-point">{pt}</li>
                     ))}
                   </ul>
-                  <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">
+                  <BtnLink href="#" icon={IconCornerDownRight} nudge="right">
                     Learn More
                   </BtnLink>
                 </div>
