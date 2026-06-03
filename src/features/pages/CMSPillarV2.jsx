@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './CMSPillarV2.css';
 
 import PageLayout from '../../components/layout/PageLayout';
@@ -7,6 +7,7 @@ import FeatureStack from '../../components/patterns/feature-stack/FeatureStack';
 import CMSScreenReveal from '../../components/features/pages/hero-media/cms/CMSScreenReveal';
 import AIEditorialAssistant from '../../components/features/pages/hero-media/ai/AIEditorialAssistant';
 import Eyebrow from '../../components/ui/Eyebrow';
+import CrosshairHover from '../../components/ui/CrosshairHover/CrosshairHover';
 import { BtnSecondary, BtnArrow, BtnLink, IconCornerDownRight } from '../../components/ui/Button/Button';
 import { IconArrowRight } from '../../components/ui/icons';
 
@@ -154,7 +155,7 @@ function WhatWeDo() {
         <div className="v2-wwd-grid">
           {CAPABILITIES.map((c, i) => (
             <div key={c.title} className="v2-wwd-card">
-              <img src={c.img} alt="" className="v2-wwd-card-img" />
+              <div className="v2-wwd-card-fpo" />
               <div className="v2-wwd-card-overlay" />
               <div className="v2-wwd-card-content">
                 <span className="v2-wwd-card-num">{String(i + 1).padStart(2, '0')}</span>
@@ -234,24 +235,31 @@ function CaseStudies() {
     <section className="v2-cs">
       <div className="v2-cs-inner">
         <div className="v2-cs-head">
-          <Eyebrow>Case Studies</Eyebrow>
+          <h2 className="v2-cs-headline">Case Studies</h2>
           <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">
             All Work
           </BtnLink>
         </div>
         <div className="v2-cs-grid">
           {CASE_STUDIES.map((c, i) => (
-            <a key={c.client} href="#" className="v2-cs-card">
-              <img src={c.img} alt={c.client} className="v2-cs-card-img" />
-              <div className="v2-cs-card-overlay" />
-              <span className="v2-cs-card-num">{String(i + 1).padStart(2, '0')}</span>
-              <div className="v2-cs-card-content">
-                <span className="v2-cs-card-tag">{c.tag}</span>
-                <p className="v2-cs-card-client">{c.client}</p>
-                <p className="v2-cs-card-value">{c.value}</p>
-                <IconArrowRight className="v2-cs-card-arrow" />
-              </div>
-            </a>
+            <CrosshairHover key={c.client} className="v2-cs-card-xhair">
+              <a href="#" className="v2-cs-card-link">
+                <div className="v2-cs-card-img-wrap">
+                  <img src={c.img} alt={c.client} className="v2-cs-card-img" />
+                </div>
+                <div className="v2-cs-card-body">
+                  <div className="v2-cs-card-meta">
+                    <span className="v2-cs-card-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="v2-cs-card-tag">{c.tag}</span>
+                  </div>
+                  <div className="v2-cs-card-foot">
+                    <p className="v2-cs-card-client">{c.client}</p>
+                    <p className="v2-cs-card-value">{c.value}</p>
+                    <IconArrowRight className="v2-cs-card-arrow" />
+                  </div>
+                </div>
+              </a>
+            </CrosshairHover>
           ))}
         </div>
       </div>
@@ -296,29 +304,24 @@ function Platforms() {
           </h2>
         </div>
         <div className="v2-plat-grid">
-          {PLATFORMS.map((p) => (
+          {PLATFORMS.map((p, i) => (
             <div key={p.logoAlt} className="v2-plat-card">
-              <div className="v2-plat-card-bg-wrap">
-                <img src={p.bg} alt="" className="v2-plat-card-bg" />
-                <div className="v2-plat-card-overlay" />
+              <div className="v2-plat-card-top">
+                <img src={p.logo} alt={p.logoAlt} className="v2-plat-logo" />
+                <span className="v2-plat-tag">{p.tag}</span>
               </div>
-              <div className="v2-plat-card-inner">
-                <div className="v2-plat-card-top">
-                  <span className="v2-plat-tag">{p.tag}</span>
-                  <img src={p.logo} alt={p.logoAlt} className="v2-plat-logo" />
-                </div>
-                <div className="v2-plat-card-bottom">
-                  <h3 className="v2-plat-card-headline">{p.headline}</h3>
-                  <p className="v2-plat-card-copy">{p.body}</p>
-                  <ul className="v2-plat-points">
-                    {p.points.map((pt) => (
-                      <li key={pt} className="v2-plat-point">{pt}</li>
-                    ))}
-                  </ul>
-                  <BtnLink href="#" icon={IconCornerDownRight} nudge="right">
-                    Learn More
-                  </BtnLink>
-                </div>
+              <div className="v2-plat-card-num">{String(i + 1).padStart(2, '0')}</div>
+              <div className="v2-plat-card-bottom">
+                <h3 className="v2-plat-card-headline">{p.headline}</h3>
+                <p className="v2-plat-card-copy">{p.body}</p>
+                <ul className="v2-plat-points">
+                  {p.points.map((pt) => (
+                    <li key={pt} className="v2-plat-point">{pt}</li>
+                  ))}
+                </ul>
+                <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">
+                  Learn More
+                </BtnLink>
               </div>
             </div>
           ))}
@@ -358,12 +361,55 @@ const QUOTES = [
   },
 ];
 
+const CAROUSEL_INTERVAL = 5000;
+
 function Testimonials() {
   const [active, setActive] = useState(0);
-  const q = QUOTES[active];
-  const total = QUOTES.length;
-  function prev() { setActive(i => (i - 1 + total) % total); }
-  function next() { setActive(i => (i + 1) % total); }
+  const [progress, setProgress] = useState(0);
+  const timerRef    = useRef(null);
+  const startRef    = useRef(null);
+  const rafRef      = useRef(null);
+  const total       = QUOTES.length;
+  const q           = QUOTES[active];
+
+  const startCycle = useCallback((fromIndex) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (rafRef.current)   cancelAnimationFrame(rafRef.current);
+    setProgress(0);
+    startRef.current = performance.now();
+
+    const tick = (now) => {
+      const elapsed = now - startRef.current;
+      const pct     = Math.min(elapsed / CAROUSEL_INTERVAL, 1);
+      setProgress(pct);
+      if (pct < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    timerRef.current = setTimeout(() => {
+      const next = (fromIndex + 1) % total;
+      setActive(next);
+      startCycle(next);
+    }, CAROUSEL_INTERVAL);
+  }, [total]);
+
+  useEffect(() => {
+    startCycle(active);
+    return () => {
+      clearTimeout(timerRef.current);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const goTo = useCallback((i) => {
+    setActive(i);
+    startCycle(i);
+  }, [startCycle]);
+
+  const prev = () => goTo((active - 1 + total) % total);
+  const next = () => goTo((active + 1) % total);
 
   return (
     <section className="v2-quotes">
@@ -376,15 +422,17 @@ function Testimonials() {
               <button
                 key={i}
                 className={`v2-quotes-tab${i === active ? ' is-active' : ''}`}
-                onClick={() => setActive(i)}
+                onClick={() => goTo(i)}
               >
                 {item.company}
+                {i === active && (
+                  <span className="v2-quotes-tab-bar" style={{ transform: `scaleX(${progress})` }} />
+                )}
               </button>
             ))}
           </div>
         </div>
 
-        {/* key={active} remounts the element, triggering the CSS entry animation */}
         <div className="v2-quotes-body">
           <p key={active} className="v2-quote-text">
             &ldquo;{QUOTES[active].quote}&rdquo;
