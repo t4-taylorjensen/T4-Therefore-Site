@@ -155,15 +155,9 @@ function WhatWeDo() {
         <div className="v2-wwd-grid">
           {CAPABILITIES.map((c, i) => (
             <div key={c.title} className="v2-wwd-card">
-              <div className="v2-wwd-card-fpo" />
-              <div className="v2-wwd-card-overlay" />
-              <div className="v2-wwd-card-content">
-                <span className="v2-wwd-card-num">{String(i + 1).padStart(2, '0')}</span>
-                <div className="v2-wwd-card-foot">
-                  <h3 className="v2-wwd-card-title">{c.title}</h3>
-                  <p className="v2-wwd-card-body">{c.body}</p>
-                </div>
-              </div>
+              <span className="v2-wwd-card-index">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="v2-wwd-card-title">{c.title}</h3>
+              <p className="v2-wwd-card-body">{c.body}</p>
             </div>
           ))}
         </div>
@@ -241,25 +235,19 @@ function CaseStudies() {
           </BtnLink>
         </div>
         <div className="v2-cs-grid">
-          {CASE_STUDIES.map((c, i) => (
-            <CrosshairHover key={c.client} className="v2-cs-card-xhair">
-              <a href="#" className="v2-cs-card-link">
-                <div className="v2-cs-card-img-wrap">
-                  <img src={c.img} alt={c.client} className="v2-cs-card-img" />
-                </div>
-                <div className="v2-cs-card-body">
-                  <div className="v2-cs-card-meta">
-                    <span className="v2-cs-card-num">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="v2-cs-card-tag">{c.tag}</span>
-                  </div>
-                  <div className="v2-cs-card-foot">
-                    <p className="v2-cs-card-client">{c.client}</p>
-                    <p className="v2-cs-card-value">{c.value}</p>
-                    <IconArrowRight className="v2-cs-card-arrow" />
-                  </div>
-                </div>
-              </a>
-            </CrosshairHover>
+          {CASE_STUDIES.map((c) => (
+            <a key={c.client} href="#" className="v2-cs-card">
+              <CrosshairHover className="v2-cs-card-img-wrap">
+                <img src={c.img} alt={c.client} className="v2-cs-card-img" />
+              </CrosshairHover>
+              <div className="v2-cs-card-info">
+                <p className="v2-cs-card-client">{c.client}</p>
+                <p className="v2-cs-card-value">{c.value}</p>
+                <span className="v2-cs-card-cta">
+                  View Project <IconArrowRight className="v2-cs-card-arrow" />
+                </span>
+              </div>
+            </a>
           ))}
         </div>
       </div>
@@ -294,6 +282,22 @@ const PLATFORMS = [
 ];
 
 function Platforms() {
+  const [active, setActive] = useState(0);
+  const [dir, setDir]       = useState(1);   // +1 forward, -1 backward
+  const [animKey, setAnimKey] = useState(0);
+  const total = PLATFORMS.length;
+
+  const goTo = useCallback((i) => {
+    setDir(i > active ? 1 : -1);
+    setActive(i);
+    setAnimKey(k => k + 1);
+  }, [active]);
+
+  const prev = () => goTo((active - 1 + total) % total);
+  const next = () => goTo((active + 1) % total);
+
+  const p = PLATFORMS[active];
+
   return (
     <section className="v2-plat">
       <div className="v2-plat-inner">
@@ -303,29 +307,61 @@ function Platforms() {
             We partner with two platforms because two platforms are enough to do it right.
           </h2>
         </div>
-        <div className="v2-plat-grid">
-          {PLATFORMS.map((p, i) => (
-            <div key={p.logoAlt} className="v2-plat-card">
-              <div className="v2-plat-card-top">
+
+        <div className="v2-plat-stage">
+          {/* Indicators */}
+          <div className="v2-plat-indicators">
+            {PLATFORMS.map((_, i) => (
+              <button
+                key={i}
+                className={`v2-plat-dot${i === active ? ' is-active' : ''}`}
+                onClick={() => goTo(i)}
+                aria-label={PLATFORMS[i].logoAlt}
+              />
+            ))}
+          </div>
+
+          {/* Single card, re-keyed to trigger CSS animation */}
+          <div
+            key={animKey}
+            className={`v2-plat-card v2-plat-card--anim-${dir > 0 ? 'fwd' : 'bwd'}`}
+          >
+            <div className="v2-plat-card-top">
+              <div className="v2-plat-card-top-left">
                 <img src={p.logo} alt={p.logoAlt} className="v2-plat-logo" />
                 <span className="v2-plat-tag">{p.tag}</span>
               </div>
-              <div className="v2-plat-card-num">{String(i + 1).padStart(2, '0')}</div>
-              <div className="v2-plat-card-bottom">
-                <h3 className="v2-plat-card-headline">{p.headline}</h3>
-                <p className="v2-plat-card-copy">{p.body}</p>
-                <ul className="v2-plat-points">
-                  {p.points.map((pt) => (
-                    <li key={pt} className="v2-plat-point">{pt}</li>
-                  ))}
-                </ul>
-                <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">
-                  Learn More
-                </BtnLink>
+              <div className="v2-plat-nav">
+                <button className="v2-plat-nav-btn" onClick={prev} aria-label="Previous">
+                  <IconArrowRight style={{ transform: 'scaleX(-1)' }} />
+                </button>
+                <span className="v2-plat-nav-count">
+                  {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                </span>
+                <button className="v2-plat-nav-btn" onClick={next} aria-label="Next">
+                  <IconArrowRight />
+                </button>
               </div>
             </div>
-          ))}
+
+            <div className="v2-plat-card-body">
+              <h3 className="v2-plat-card-headline">{p.headline}</h3>
+              <p className="v2-plat-card-copy">{p.body}</p>
+            </div>
+
+            <div className="v2-plat-card-bottom">
+              <ul className="v2-plat-points">
+                {p.points.map((pt) => (
+                  <li key={pt} className="v2-plat-point">{pt}</li>
+                ))}
+              </ul>
+              <BtnLink href="#" icon={IconCornerDownRight} nudge="right">
+                Learn More
+              </BtnLink>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
   );
@@ -415,55 +451,37 @@ function Testimonials() {
     <section className="v2-quotes">
       <div className="v2-quotes-inner">
 
-        <div className="v2-quotes-header">
+        <div className="v2-quotes-eyebrow-row">
           <Eyebrow>Client Perspectives</Eyebrow>
-          <div className="v2-quotes-tabs">
+        </div>
+
+        <div className="v2-quotes-layout">
+
+          {/* Left: large quote */}
+          <div className="v2-quotes-left">
+            <p key={active} className="v2-quote-text">
+              &ldquo;{QUOTES[active].quote}&rdquo;
+            </p>
+          </div>
+
+          {/* Right: author list — all three always visible, active highlighted */}
+          <div className="v2-quotes-right">
             {QUOTES.map((item, i) => (
               <button
                 key={i}
-                className={`v2-quotes-tab${i === active ? ' is-active' : ''}`}
+                className={`v2-quotes-person${i === active ? ' is-active' : ''}`}
                 onClick={() => goTo(i)}
               >
-                {item.company}
+                <img src={item.photo} alt={item.name} className="v2-quotes-person-photo" />
+                <div className="v2-quotes-person-text">
+                  <p className="v2-quotes-person-name">{item.name}</p>
+                  <p className="v2-quotes-person-role">{item.role}, {item.company}</p>
+                </div>
                 {i === active && (
-                  <span className="v2-quotes-tab-bar" style={{ transform: `scaleX(${progress})` }} />
+                  <span className="v2-quotes-person-bar" style={{ transform: `scaleX(${progress})` }} />
                 )}
               </button>
             ))}
-          </div>
-        </div>
-
-        <div className="v2-quotes-body">
-          <p key={active} className="v2-quote-text">
-            &ldquo;{QUOTES[active].quote}&rdquo;
-          </p>
-        </div>
-
-        <div className="v2-quotes-foot">
-          <div className="v2-quotes-author">
-            <img key={`photo-${active}`} src={q.photo} alt={q.name} className="v2-quotes-photo" />
-            <div>
-              <p className="v2-quotes-name">{q.name}</p>
-              <p className="v2-quotes-role">{q.role}, {q.company}</p>
-            </div>
-          </div>
-          <div className="v2-quotes-nav">
-            <BtnArrow
-              icon={IconArrowRight}
-              label="Previous"
-              nudge="left"
-              onClick={prev}
-              style={{ transform: 'scaleX(-1)' }}
-            />
-            <span className="v2-quotes-count">
-              {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-            </span>
-            <BtnArrow
-              icon={IconArrowRight}
-              label="Next"
-              nudge="right"
-              onClick={next}
-            />
           </div>
         </div>
 
