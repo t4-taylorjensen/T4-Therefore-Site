@@ -1,0 +1,123 @@
+/* ═══════════════════════════════════════
+   OPPORTUNITY
+═══════════════════════════════════════ */
+.opp-section {
+  background: var(--color-bg-page);
+  padding: clamp(80px, 10vw, 130px) var(--padding-x);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.opp-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 9fr 11fr;
+  gap: clamp(48px, 7vw, 112px);
+  align-items: start;
+}
+
+.opp-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.opp-statement {
+  font-family: var(--font-primary);
+  font-size: clamp(32px, 3.4vw, 54px);
+  font-weight: var(--fw-regular);
+  line-height: 1.05;
+  color: var(--color-ink);
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.opp-body {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+.opp-right {
+  display: flex;
+  flex-direction: column;
+  padding-left: clamp(32px, 5vw, 72px);
+}
+
+.opp-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  column-gap: clamp(20px, 2.5vw, 32px);
+  row-gap: 8px;
+  padding: clamp(24px, 2.8vw, 36px) 0;
+  border-bottom: 1px solid var(--color-border);
+  cursor: default;
+}
+
+.opp-row:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.opp-row-dash {
+  display: block;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  background: var(--color-border);
+  transition: background 0.4s ease;
+}
+.opp-row-dash.is-active {
+  background: var(--color-accent);
+}
+
+.opp-row-title {
+  grid-column: 2;
+  grid-row: 1;
+  font-family: var(--font-primary);
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: var(--fw-regular);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.opp-row-body {
+  grid-column: 2;
+  grid-row: 2;
+  font-family: var(--font-primary);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--color-ink-muted);
+  margin: 0;
+  max-width: 400px;
+}
+
+@media (max-width: 1024px) {
+  .opp-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .opp-left { position: static; }
+
+  /* Once the list owns the full column, drop the inset that paired it
+     with the statement and let the rows + body copy run the full width
+     rather than staying penned into a narrow inner measure. */
+  .opp-right { padding-left: 0; }
+  .opp-row-body { max-width: none; }
+}
+
+@media (max-width: 640px) {
+  /* Tighten the marker column and let title/body sit closer to the
+     edge so the list reads cleanly on phones. */
+  .opp-row {
+    grid-template-columns: 20px 1fr;
+    column-gap: var(--space-4);
+    padding: var(--space-6) 0;
+  }
+}

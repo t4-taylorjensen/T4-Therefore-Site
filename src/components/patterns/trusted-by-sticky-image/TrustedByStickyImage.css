@@ -1,0 +1,561 @@
+/* ═══════════════════════════════════════════════════════════════
+   TRUSTED BY — full-bleed CSS gradient background (no photo),
+   quote on top. Normal page flow. Grain sits over the gradient.
+═══════════════════════════════════════════════════════════════ */
+
+.tbsi-section {
+  position: relative;
+  height: clamp(720px, 100vh, 1040px);
+  overflow: visible;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.tbsi-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Dark, moody, moving gradient — near-black base with one bright
+   blue blob doing most of the work, plus two quieter glows for
+   depth, all drifting slowly so the section never feels static.
+   The cursor glow below layers on top of this, it doesn't replace it. */
+.tbsi-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(38% 46% at 25% 30%, rgba(120,190,255,0.95) 0%, rgba(66,151,255,0.55) 38%, transparent 72%),
+    radial-gradient(50% 60% at 88% 78%, rgba(52,134,238,0.4) 0%, transparent 70%),
+    radial-gradient(60% 70% at 55% 5%, rgba(90,165,255,0.2) 0%, transparent 65%),
+    linear-gradient(160deg, #030408 0%, #060a14 35%, #080d1e 65%, #030408 100%);
+  background-size: 220% 220%, 200% 200%, 200% 200%, 100% 100%;
+  animation: tbsiBgDrift 16s ease-in-out infinite alternate;
+}
+
+@keyframes tbsiBgDrift {
+  from { background-position: 10% 30%, 100% 80%, 30% 0%, 0% 0%; }
+  to   { background-position: 55% 5%, 70% 100%, 65% 35%, 0% 0%; }
+}
+
+.tbsi-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,10,20,0.35), rgba(6,10,20,0.2) 55%, rgba(6,10,20,0.45));
+}
+
+/* Brand square motif, same hard-light blend treatment used on the
+   hero media cards (see AITranslation.jsx) — stretched to fully
+   overlay the background for extra depth/contrast on the gradient. */
+.tbsi-square {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  mix-blend-mode: hard-light;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Subtle grain over the square — static, same as the square above. */
+.tbsi-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  opacity: 0.26;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.tbsi-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  max-width: 78%;
+  padding: 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Byline + segments, pinned to the bottom of the content box;
+   the quote stays fixed at the top with the section's 30px padding. */
+.tbsi-bottom-row {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Crossfade stack: incoming + outgoing overlap in the same
+   grid cell so one fades/lifts in while the other fades/sinks
+   out — a real crossfade instead of a hard cut. ── */
+.tbsi-stack {
+  display: grid;
+  width: 100%;
+  will-change: transform;
+}
+
+.tbsi-stack > * { grid-area: 1 / 1; }
+
+.tbsi-quote {
+  font-family: var(--font-primary);
+  font-size: clamp(26px, 2.6vw, 40px);
+  font-weight: var(--fw-regular);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  margin: 0;
+  max-width: none;
+}
+
+.tbsi-quote.is-entering { animation: tbsiIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.tbsi-quote.is-leaving  { animation: tbsiOut 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes tbsiIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes tbsiOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ── Byline, restyled: name reads like a small headline, role +
+   company sit underneath in a quieter line — no more all-caps
+   mono block. ── */
+.tbsi-byline {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tbsi-byline-name {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+}
+
+.tbsi-byline-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.tbsi-byline.is-entering { animation: tbsiIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.tbsi-byline.is-leaving  { animation: tbsiOut 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ── Counter, redesigned: three thin segments that fill with the
+   auto-advance progress — no boxes, no numbers. ── */
+.tbsi-segments {
+  display: flex;
+  gap: var(--space-3);
+  width: 160px;
+  margin-top: var(--space-2);
+}
+
+.tbsi-segment {
+  all: unset;
+  flex: 1;
+  height: 2px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.tbsi-segment-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-white);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+}
+
+
+/* Active person's photo — flush to the bottom-right corner,
+   square (no radius), no shadow, larger. The wrap clips both the
+   outgoing and incoming photo so the wipe below reads as one
+   clean reveal instead of a layout-shifting swap. */
+.tbsi-profile-wrap {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  width: clamp(140px, 18vw, 240px);
+  height: clamp(140px, 18vw, 240px);
+  overflow: hidden;
+}
+
+.tbsi-profile {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+/* Incoming photo wipes in left → right, same clip-path reveal
+   idiom as the Case Study "Clip Wipe" screen variant, with a
+   slight scale-settle for depth. Outgoing photo just sinks back
+   and fades so the two never visibly overlap-flicker. */
+.tbsi-profile.is-entering {
+  animation: tbsiProfileIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.tbsi-profile.is-leaving {
+  animation: tbsiProfileOut 0.6s ease both;
+}
+
+@keyframes tbsiProfileIn {
+  from { clip-path: inset(0 100% 0 0); transform: scale(1.08); }
+  to   { clip-path: inset(0 0 0 0); transform: scale(1); }
+}
+
+@keyframes tbsiProfileOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.94); }
+}
+
+/* Full-width line sitting above the section, offset up 30px so it
+   seams into whatever precedes it. */
+.tbsi-topline {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .tbsi-section { height: clamp(480px, 70vh, 620px); }
+  .tbsi-profile-wrap { width: 110px; height: 110px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ALTERNATE LAYOUT — centered content over a parallax photo bg,
+   with a small square portrait to the left of the byline.
+═══════════════════════════════════════════════════════════════ */
+.tbsi-section--centered {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Photo background — taller than the section so the parallax
+   translate never exposes an edge. Transform set inline by JS. */
+.tbsi-photo {
+  position: absolute;
+  top: -15%;
+  left: 0;
+  width: 100%;
+  height: 130%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+/* Darker overlay than the gradient variant — the photo needs more
+   knock-back to keep the white quote legible. */
+.tbsi-section--centered .tbsi-overlay {
+  background: linear-gradient(180deg, rgba(4,7,14,0.62), rgba(4,7,14,0.5) 50%, rgba(4,7,14,0.68));
+}
+
+.tbsi-section--centered .tbsi-content {
+  height: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 30px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-8);
+}
+
+.tbsi-section--centered .tbsi-bottom-row {
+  margin-top: 0;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Small square portrait, left of the byline; group is centered. */
+.tbsi-byline-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.tbsi-mini-photo-wrap {
+  position: relative;
+  display: grid;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.tbsi-mini-photo {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.tbsi-mini-photo.is-entering { animation: tbsiProfileIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.tbsi-mini-photo.is-leaving  { animation: tbsiProfileOut 0.6s ease both; }
+
+/* Byline text reads left-aligned beside its square. */
+.tbsi-section--centered .tbsi-byline {
+  text-align: left;
+  gap: 5px;
+}
+
+.tbsi-section--centered .tbsi-byline-name {
+  font-size: 18px;
+  font-weight: var(--fw-light);
+  letter-spacing: -0.01em;
+}
+
+.tbsi-section--centered .tbsi-byline-meta {
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+}
+
+/* Segments centered, a touch wider and taller for presence + tap target. */
+.tbsi-section--centered .tbsi-segments {
+  width: 220px;
+  margin: 0 auto;
+}
+
+.tbsi-section--centered .tbsi-segment {
+  height: 3px;
+}
+
+@media (max-width: 640px) {
+  .tbsi-section--centered .tbsi-content { padding: 40px 20px; gap: var(--space-6); }
+  .tbsi-mini-photo-wrap { width: 48px; height: 48px; }
+  .tbsi-section--centered .tbsi-segments { width: 180px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   "KIND WORDS" LAYOUT — light, multi-column carousel. Bylines sit
+   across the row divided by hairlines; the active testimonial
+   expands its quote. Auto-advances + prev/next controls.
+═══════════════════════════════════════════════════════════════ */
+.tbsi-cards {
+  background: var(--color-white);
+  color: var(--color-ink, #121212);
+  padding: var(--space-11) 0 var(--space-11);
+}
+
+.tbsi-cards-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+
+.tbsi-cards-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-9);
+}
+
+.tbsi-cards-title {
+  font-family: var(--font-primary);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: var(--fw-light);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0;
+  color: var(--color-ink, #121212);
+}
+
+.tbsi-cards-nav {
+  display: flex;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* nav arrows use the canonical .btn-arrow--outline foundation element */
+
+/* Row of testimonials, hairline dividers between columns. The active
+   column grows wider so its open quote spans more room. */
+.tbsi-cards-track {
+  display: flex;
+  align-items: stretch;
+  min-height: 520px;
+}
+
+.tbsi-card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 var(--space-7);
+  border-left: 1px solid var(--color-border);
+  min-height: 520px;
+  transition: flex-grow 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.tbsi-card.is-active {
+  flex-grow: 2.6;
+}
+
+.tbsi-card:first-child { border-left: none; padding-left: 0; }
+
+.tbsi-card:not(.is-active) { opacity: 0.4; }
+.tbsi-card:not(.is-active):hover { opacity: 0.7; }
+
+/* Byline trigger — avatar + name/role, doubles as a click target. */
+.tbsi-card-byline {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  width: 100%;
+}
+
+.tbsi-card-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;     /* never let the flex row stretch the avatar */
+  max-width: 44px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.tbsi-card-id {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tbsi-card-name {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.01em;
+  color: var(--color-ink, #121212);
+}
+
+.tbsi-card-role {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  color: rgba(18,18,18,0.45);
+}
+
+.tbsi-card-quote-wrap {
+  margin-top: var(--space-6);
+}
+
+.tbsi-card-quote {
+  font-family: var(--font-primary);
+  font-size: clamp(22px, 1.9vw, 28px);
+  font-weight: var(--fw-regular);
+  line-height: var(--leading-snug, 1.4);
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.tbsi-card-quote.is-entering {
+  animation: tbsiCardQuoteIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes tbsiCardQuoteIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Auto-advance progress hairline — single clean 1px line under the
+   active column only; inactive columns show nothing. */
+.tbsi-card-progress {
+  position: absolute;
+  left: var(--space-7);
+  right: var(--space-7);
+  bottom: 0;
+  height: 1px;
+  background: rgba(18,18,18,0.1);
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.tbsi-card.is-active .tbsi-card-progress { opacity: 1; }
+.tbsi-card:first-child .tbsi-card-progress { left: 0; }
+
+.tbsi-card-progress-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+}
+
+/* Small tablet + mobile: the side-by-side columns (with the active one
+   growing 2.6×) cram and overlap badly below the desktop width. Drop to
+   a single clean stacked card — only the active testimonial, full width,
+   normal flow, no flex-grow — so nothing overlaps. */
+@media (max-width: 1024px) {
+  .tbsi-cards { padding: var(--space-10) 0; }
+  /* Airy, modern rhythm: generous space under the headline, the byline,
+     and the quote. */
+  .tbsi-cards-head { margin-bottom: var(--space-9); }
+
+  .tbsi-cards-track {
+    flex-direction: column;
+    min-height: 0;
+    gap: var(--space-6);
+  }
+  .tbsi-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: none;
+    flex-grow: 0;
+    border-left: none;
+    padding: 0;
+    min-height: 0;
+    opacity: 1;
+  }
+  /* Only the active card shows — collapse the peeking ones entirely. */
+  .tbsi-card:not(.is-active) { display: none; }
+
+  .tbsi-card-avatar { width: 44px; height: 44px; flex: 0 0 44px; }
+  .tbsi-card-quote-wrap { margin-top: var(--space-7); }
+  .tbsi-card-quote { font-size: clamp(20px, 4.6vw, 25px); line-height: 1.45; }
+
+  /* Load line sits below the quote, same 1px hairline styling as desktop.
+     MUST stay position:relative (not static) — the fill is absolute
+     inset:0, so a static parent would let it resolve against .tbsi-card
+     and paint a full-card black box that "loads" across the whole card.
+     relative keeps the fill clipped to this 1px line. */
+  .tbsi-card-progress {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: var(--space-9);
+  }
+}

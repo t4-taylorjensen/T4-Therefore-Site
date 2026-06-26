@@ -1,0 +1,42 @@
+/* ═══════════════════════════════════════
+   PAGE TRANSITION — vertical curtain wipe
+   A full-screen solid panel that slides upward.
+   Resting position is below the viewport; it sweeps
+   up to cover, then continues up to reveal.
+═══════════════════════════════════════ */
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: var(--color-ink);
+  pointer-events: none;
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+/* covering sweep: from below → fully covering */
+.page-wipe--cover {
+  transform: translateY(0);
+  transition: transform var(--wipe-dur, 0.6s) cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* instant cover (entrance hold) — no transition, ready to reveal */
+.page-wipe--hold {
+  transform: translateY(0);
+}
+
+/* reveal sweep: fully covering → up and off the top */
+.page-wipe--reveal {
+  transform: translateY(-100%);
+  transition: transform var(--wipe-dur, 0.6s) cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* idle — parked below the viewport, ready for the next sweep */
+.page-wipe--idle {
+  transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-wipe--cover,
+  .page-wipe--reveal { transition-duration: 0.01ms; }
+}

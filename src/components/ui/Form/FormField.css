@@ -1,0 +1,126 @@
+/* ─────────────────────────────────────────
+   STATIC VARIANT — label above, boxed input
+   (ContactCTA)
+───────────────────────────────────────── */
+.form-field--static {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.form-field--static .form-field-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: var(--fw-regular);
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-wider);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.form-field--static .form-field-control {
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-field--static input.form-field-control {
+  height: 60px;
+  padding: 0 20px;
+}
+
+.form-field--static textarea.form-field-control {
+  display: block;
+  padding: 20px 20px 60px;
+  line-height: 1.45;
+  min-height: 111px;
+  resize: none;
+}
+
+.form-field--static .form-field-control::placeholder {
+  color: var(--color-ink-subtle);
+}
+
+.form-field--static .form-field-control:focus {
+  border-color: var(--color-accent);
+}
+
+/* ─────────────────────────────────────────
+   FLOATING VARIANT — underline input, label
+   animates from placeholder position to top
+   (ModalVariants, LetsTalkVariants)
+───────────────────────────────────────── */
+.form-field--floating {
+  position: relative;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: clamp(20px, 2.4vw, 28px);
+}
+
+.form-field--floating::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form-field--floating:focus-within::after { transform: scaleX(1); }
+
+.form-field--floating .form-field-control {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  color: var(--color-ink);
+  padding: 18px 0 10px;
+  display: block;
+  box-sizing: border-box;
+  resize: none;
+}
+.form-field--floating .form-field-control::placeholder { color: transparent; }
+
+.form-field--floating .form-field-label {
+  position: absolute;
+  top: 16px; left: 0;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  color: var(--color-ink-subtle);
+  pointer-events: none;
+  transition: top 0.18s ease, font-size 0.18s ease, color 0.18s ease, letter-spacing 0.18s ease;
+}
+.form-field--floating .form-field-control:focus ~ .form-field-label,
+.form-field--floating .form-field-control:not(:placeholder-shown) ~ .form-field-label {
+  top: 0;
+  font-size: 9px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+}
+
+/* Dark tone override — LetsTalkVariants */
+.form-field--floating.form-field--dark {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+.form-field--floating.form-field--dark::after { background: var(--color-accent); }
+.form-field--floating.form-field--dark .form-field-control { color: var(--color-white); }
+.form-field--floating.form-field--dark .form-field-label { color: rgba(255, 255, 255, 0.45); }
+.form-field--floating.form-field--dark .form-field-control:focus ~ .form-field-label,
+.form-field--floating.form-field--dark .form-field-control:not(:placeholder-shown) ~ .form-field-label {
+  color: var(--color-accent);
+}

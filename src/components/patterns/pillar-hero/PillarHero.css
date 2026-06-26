@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════
+   PILLAR HERO
+   Two-column: left text / right media
+   Separated by hairline border.
+═══════════════════════════════════════ */
+.ph-hero {
+  background: var(--color-bg-page);
+  display: grid;
+  grid-template-columns: 11fr 9fr;
+  min-height: 96vh;
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.ph-hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(48px, 5.5vw, 80px) clamp(52px, 6vw, 92px) clamp(52px, 6vw, 80px) var(--padding-x);
+  position: relative;
+}
+
+.ph-hero-left::after {
+  content: '';
+  position: absolute;
+  right: 30px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border);
+  pointer-events: none;
+}
+
+/* Eyebrow uses the canonical <Eyebrow> component (.text-eyebrow utility). */
+
+.ph-hero-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.ph-hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(50px, 5.8vw, 90px);
+  font-weight: var(--fw-semibold);
+  line-height: var(--leading-display);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.ph-hero-copy {
+  font-family: var(--font-primary);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.8;
+  color: var(--color-ink-muted);
+  margin: 0;
+  max-width: 460px;
+}
+
+.ph-hero-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-1);
+}
+
+@media (max-width: 1024px) {
+  .ph-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .ph-hero-left {
+    padding: 36px 24px clamp(36px, 5vw, 52px);
+    gap: var(--space-9);
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .ph-hero-media {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Mobile rail inset — match the footer's frame (30px → var(--space-5)). */
+@media (max-width: 768px) {
+  .ph-hero-left::after { right: var(--space-5); }
+}

@@ -44,9 +44,7 @@ const groups = [
   {
     label: 'Borders',
     swatches: [
-      { name: 'Border',        var: '--color-border',        hex: 'rgba(0,0,0,0.1)' },
-      { name: 'Border Medium', var: '--color-border-medium', hex: 'rgba(0,0,0,0.15)' },
-      { name: 'Border Light',  var: '--color-border-light',  hex: '#E8E8E8' },
+      { name: 'Border', var: '--color-border', hex: 'rgba(0,0,0,0.1)' },
     ],
   },
 ];

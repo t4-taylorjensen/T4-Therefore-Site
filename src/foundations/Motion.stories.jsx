@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../styles/global.css';
+import ScrambleText from '../components/ui/ScrambleText';
+import FlipLink from '../components/ui/FlipLink';
+import LoadLine from '../components/ui/LoadLine/LoadLine';
 
 export default {
   title: 'Foundations/Motion',
   parameters: { layout: 'padded' },
 };
+
+/* ── stage chrome shared by the effect demos ── */
+const stage = {
+  background: '#f2f2f2',
+  height: 120,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 24,
+};
+const caption = { fontFamily: 'Roobert, sans-serif', fontSize: 13, color: 'rgba(18,18,18,0.55)', margin: '14px 0 0', maxWidth: 620, lineHeight: 1.6 };
+const mono = { fontFamily: 'Roobert Mono, monospace', fontSize: 11, color: '#121212', margin: '0 0 4px' };
 
 const sectionLabel = {
   fontFamily: 'Roobert Mono, monospace',
@@ -114,6 +129,72 @@ function NudgeDemo({ label, keyframeName, direction, description }) {
     </div>
   );
 }
+
+/* ─────────────────────────────────────────
+   Scramble — useScramble / <ScrambleText>
+───────────────────────────────────────── */
+function ScrambleDemo() {
+  const [k, setK] = useState(0);
+  return (
+    <div>
+      <div style={{ ...stage, cursor: 'pointer' }} title="Click to replay" onClick={() => setK(k + 1)}>
+        <span style={{ fontFamily: 'Roobert Mono, monospace', fontSize: 22, letterSpacing: '0.06em', color: '#121212' }}>
+          <ScrambleText key={k} text="(DISCOVER)" active />
+        </span>
+      </div>
+      <p style={mono}>useScramble(text, active) · &lt;ScrambleText&gt;</p>
+      <p style={caption}>Character-scramble reveal — resolves text out of random noise over 14 frames once active. Drives the FAQ "(FAQS)" eyebrow and the "(DISCOVER)" cursor labels on the case-study / related / carousel cards. Click to replay.</p>
+    </div>
+  );
+}
+export const Scramble = { name: 'Scramble Text', render: () => <div style={{ maxWidth: 620 }}><ScrambleDemo /></div> };
+
+/* ─────────────────────────────────────────
+   Text flip — vertical roll (.flip-a / .flip-b, <FlipLink>)
+───────────────────────────────────────── */
+export const TextFlip = {
+  name: 'Text Flip',
+  render: () => (
+    <div style={{ maxWidth: 620 }}>
+      <div style={{ ...stage, gap: 40 }}>
+        <FlipLink href="#" style={{ fontFamily: 'Roobert, sans-serif', fontSize: 18, color: '#121212' }}>Capabilities</FlipLink>
+        <FlipLink href="#" style={{ fontFamily: 'Roobert, sans-serif', fontSize: 18, color: '#121212' }}>Contact</FlipLink>
+      </div>
+      <p style={mono}>.flip-a / .flip-b · &lt;FlipLink&gt;</p>
+      <p style={caption}>Vertical-roll label: the resting text rolls up and out as a duplicate rolls in from below. Shared motion behind FlipLink, the footer nav/legal links, and the Let's Talk links. Hover to trigger.</p>
+    </div>
+  ),
+};
+
+/* ─────────────────────────────────────────
+   Load line — scroll / auto-advance progress (<LoadLine>)
+───────────────────────────────────────── */
+function LoadLineDemo() {
+  const [p, setP] = useState(0);
+  const raf = useRef(null);
+  const run = () => {
+    cancelAnimationFrame(raf.current);
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min((now - start) / 2200, 1);
+      setP(t);
+      if (t < 1) raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+  };
+  useEffect(() => { run(); return () => cancelAnimationFrame(raf.current); }, []);
+  return (
+    <div>
+      <div style={{ ...stage, flexDirection: 'column', gap: 28, cursor: 'pointer' }} title="Click to replay" onClick={run}>
+        <div style={{ width: '80%' }}><LoadLine progress={p} /></div>
+        <div style={{ width: '80%', background: '#121212', padding: '20px 16px' }}><LoadLine progress={p} tone="dark" /></div>
+      </div>
+      <p style={mono}>&lt;LoadLine progress tone /&gt;</p>
+      <p style={caption}>1px progress hairline — fills left-to-right with scroll position (ContentCarousel) or an auto-advance timer (testimonials). Light + dark tones. Click to replay.</p>
+    </div>
+  );
+}
+export const LoadLineMotion = { name: 'Load Line', render: () => <div style={{ maxWidth: 620 }}><LoadLineDemo /></div> };
 
 export const Default = {
   name: 'Motion Tokens',

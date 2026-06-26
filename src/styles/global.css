@@ -11,6 +11,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -20,7 +21,6 @@ body {
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -57,15 +57,16 @@ a {
   align-items: center;
   gap: 12px;
   height: 34px;
-  padding: 0 10px;
+  padding: 0 16px;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  outline: none;
   align-self: flex-start;
   flex-shrink: 0;
   font-family: var(--font-mono);
   font-size: 12.5px;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   white-space: nowrap;
@@ -92,6 +93,7 @@ a {
 
 .btn-secondary {
   background-image: linear-gradient(to right, var(--color-accent) 50%, var(--color-surface-1) 50%);
+  background-size: 204% 100%;
   color: var(--color-ink);
 }
 .btn-secondary:hover {
@@ -122,14 +124,18 @@ a {
   color: var(--color-ink);
 }
 
-/* Ghost — transparent + white border, white text · use on dark backgrounds */
-.btn-ghost {
-  background-image: linear-gradient(to right, rgba(255,255,255,0.15) 50%, transparent 50%);
-  color: var(--color-white);
-  border: 1px solid var(--color-white);
+/* Dark — solid black bg, white border → blue fill + black text on hover · use inside dark panels/dropdowns */
+.btn-dark {
+  background-image: none;
+  background-color: var(--color-ink);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s ease, border-color 0.15s ease;
 }
-.btn-ghost:hover {
-  background-position: left center;
+.btn-dark:hover {
+  background-color: var(--color-accent);
+  color: var(--color-ink);
+  border-color: var(--color-accent);
 }
 
 /* Arrow / icon button — 44×44 square */
@@ -159,6 +165,37 @@ a {
   cursor: default;
 }
 
+/* Outline nav arrow — bordered square, transparent bg, ink icon, fills
+   solid ink on hover. Carousel / slider previous-next control. Matches
+   the testimonials (Kind Words) nav. Pair with IconArrowLeft /
+   IconArrowRight. Overrides the solid .btn-arrow gradient treatment. */
+.btn-arrow--outline {
+  width: 40px;
+  height: 40px;
+  background-image: none;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.btn-arrow--outline:hover:not(:disabled) {
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-white);
+}
+/* on-dark surfaces — inverts: fills solid white on hover */
+.btn-arrow--outline.btn-arrow--on-dark {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--color-white);
+}
+.btn-arrow--outline.btn-arrow--on-dark:hover:not(:disabled) {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-ink);
+}
+
 /* Icon accent — 34×34 blue square, black icon · compound CTA pair */
 .btn-icon-accent {
   display: flex;
@@ -186,7 +223,7 @@ a {
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.7);
@@ -201,6 +238,40 @@ a {
 }
 .btn-link--light:hover {
   color: var(--color-ink);
+}
+
+/* Size / style variants — replace the scattered one-off font-size
+   overrides (csg-link, plat-cta, psplit-cta, etc.) so every pillar page
+   reuses the same link treatments.
+   --compact: one step up from the 11px default mono label.
+   --text:    reads as a sentence link (brand font, sentence case) rather
+              than a mono uppercase label. */
+/* ─────────────────────────────────────────
+   FLIP LABEL — shared vertical-roll motion used by FlipLink and any
+   hover-flip link (Footer nav/legal, Let's Talk links). The flip lives
+   in a clip wrapper (overflow:hidden, position:relative); the hover
+   trigger sits on the link itself (.flip-link / .ltc-link / etc.).
+───────────────────────────────────────── */
+.flip-a {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.flip-b {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-link--compact { font-size: 13px; }
+.btn-link--text {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  letter-spacing: -0.005em;
+  text-transform: none;
 }
 .btn-link:hover .icon-nudge--right svg {
   animation: arrow-shoot-right 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
@@ -237,6 +308,13 @@ a {
 .btn-arrow:hover:not(:disabled) .icon-nudge--down svg,
 .btn-icon-accent:hover .icon-nudge--down svg {
   animation: arrow-shoot-down 0.42s cubic-bezier(0.4, 0, 0.2, 1) 1;
+}
+
+/* Outline nav arrows: keep the hover simple — just the fill/colour
+   transition, no icon "shoot" (it conflicted with the flipped left
+   arrow's transform and glitched mid-animation). */
+.btn-arrow--outline:hover:not(:disabled) .icon-nudge svg {
+  animation: none;
 }
 
 /* ─────────────────────────────────────────

@@ -1,7 +1,7 @@
 import '../styles/global.css';
 
 export default {
-  title: 'Foundations/Grid',
+  title: 'Foundations/Layout & Grid',
   parameters: { layout: 'padded' },
 };
 
@@ -27,7 +27,7 @@ function ContainerDiagram({ maxWidth, paddingNote, label }) {
       {/* Outer: full-width background */}
       <div style={{
         background: '#f0f0ef',
-        borderRadius: 8,
+        borderRadius: 0,
         padding: '12px',
         position: 'relative',
         marginBottom: 8,
@@ -46,7 +46,7 @@ function ContainerDiagram({ maxWidth, paddingNote, label }) {
           maxWidth: 600,
           margin: '0 auto',
           background: '#4297FF',
-          borderRadius: 5,
+          borderRadius: 0,
           padding: '12px 24px',
           display: 'flex',
           alignItems: 'center',
@@ -56,7 +56,7 @@ function ContainerDiagram({ maxWidth, paddingNote, label }) {
             width: 24,
             height: '100%',
             background: 'rgba(255,255,255,0.3)',
-            borderRadius: 2,
+            borderRadius: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -70,7 +70,7 @@ function ContainerDiagram({ maxWidth, paddingNote, label }) {
             width: 24,
             height: '100%',
             background: 'rgba(255,255,255,0.3)',
-            borderRadius: 2,
+            borderRadius: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -97,7 +97,7 @@ function ColumnGrid({ cols, gapPx, label, note }) {
             flex: 1,
             height: 48,
             background: i === 0 ? '#4297FF' : '#f2f2f2',
-            borderRadius: 4,
+            borderRadius: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

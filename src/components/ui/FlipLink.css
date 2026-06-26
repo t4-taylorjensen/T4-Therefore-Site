@@ -1,24 +1,12 @@
+/* .flip-a / .flip-b presentation now live as shared utilities in
+   global.css (one source of truth for the vertical-roll motion). This
+   file keeps only the FlipLink container + its hover trigger. */
 .flip-link {
   display: inline-block;
   overflow: hidden;
   position: relative;
   padding-bottom: 0.15em;
   margin-bottom: -0.15em;
-}
-
-.flip-a {
-  display: block;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.flip-b {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform: translateY(100%);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .flip-link:hover .flip-a {

@@ -24,14 +24,13 @@
   --color-bg-page:       #ffffff;
   --color-bg-card:       #f2f2f2;
   --color-bg-section:    #f0f0ef;
+  --color-bg-subtle:     #fafafa;        /* faint hover/active row tint */
   --color-bg-dark:       #121212;
 
   /* ─────────────────────────────────────────
      BORDER COLORS
   ───────────────────────────────────────── */
-  --color-border:        rgba(0,0,0,0.1);
-  --color-border-medium: rgba(0,0,0,0.1);
-  --color-border-light:  rgba(0,0,0,0.1);
+  --color-border:        rgba(0,0,0,0.1);   /* single hairline border / divider colour */
 
   /* ─────────────────────────────────────────
      TEXT ON DARK
@@ -62,6 +61,14 @@
   --text-body-sm:   15px;
   --text-mono:      11px;
   --text-mono-md:   14px;
+
+  /* ─────────────────────────────────────────
+     FONT WEIGHTS
+  ───────────────────────────────────────── */
+  --fw-light:     300;
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;   /* heaviest weight in the system (bold maps here) */
 
   /* ─────────────────────────────────────────
      LINE HEIGHTS
@@ -103,6 +110,7 @@
   ───────────────────────────────────────── */
   --radius-sm:  5px;
   --radius-md:  16px;
+  --radius-full: 999px;
 
   /* ─────────────────────────────────────────
      OFF-NEUTRAL GRAYS
@@ -135,14 +143,6 @@
     0 12px 32px rgba(0,0,0,0.12),
     0 4px 12px rgba(0,0,0,0.08);
 
-  /* Soft blue glow used on focused inputs and the HeroStack guide card */
-  --shadow-blue-soft:
-    0px 1px 1px  rgba(85,136,229,0.10),
-    0px 2px 2px  rgba(85,136,229,0.15),
-    0px 5px 3px  rgba(85,136,229,0.05),
-    0px 10px 4px rgba(85,136,229,0.01),
-    0px 15px 4px rgba(85,136,229,0.00);
-
   /* ─────────────────────────────────────────
      TRANSITIONS
   ───────────────────────────────────────── */
@@ -160,6 +160,20 @@
   ───────────────────────────────────────── */
   --container-max:  1440px;
   --container-md:   1280px;
-  --padding-x:      clamp(24px, 6.25vw, 90px);
+  --padding-x:      clamp(20px, 5vw, 64px);
   --padding-x-sm:   20px;
+
+  /* ─────────────────────────────────────────
+     Z-INDEX SCALE
+     Stacking layers for page-level chrome. Component-local
+     stacking (e.g. layered media effects within a single
+     component) can stay unscaled — this scale exists to keep
+     cross-component layers (nav, modals, toasts) from colliding.
+  ───────────────────────────────────────── */
+  --z-base:      0;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-overlay:   500;
+  --z-modal:     1000;
+  --z-toast:     1100;
 }

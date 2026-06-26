@@ -3,6 +3,7 @@ import {
   IconArrowRight,
   IconCornerDownRight,
   IconCornerRightArrow,
+  IconPlus,
 } from '../components/ui/icons';
 
 export default {
@@ -14,6 +15,7 @@ const ICONS = [
   { name: 'IconArrowRight',      Icon: IconArrowRight,      usage: 'Decorative only — not for buttons' },
   { name: 'IconCornerDownRight', Icon: IconCornerDownRight, usage: 'Case Study CTA, FeatureStack pill' },
   { name: 'IconCornerRightArrow',Icon: IconCornerRightArrow,usage: 'Footer CTA, download' },
+  { name: 'IconPlus',            Icon: IconPlus,            usage: 'Accordion / disclosure toggles — rotate 45° for close' },
 ];
 
 const label = {

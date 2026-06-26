@@ -34,8 +34,13 @@
   --hm-text-subtle:      rgba(255, 255, 255, 0.22);
   --hm-text-faint:       rgba(255, 255, 255, 0.09);
 
-  /* ── Extended accent palette ── */
-  --hm-blue:             #4297FF;   /* system / infrastructure */
+  /* ── Extended accent palette ──
+     --hm-blue is the same color as the global --color-accent token —
+     aliased rather than redefined so the two stay in sync. The other
+     three are intentional, segment-specific accents with no global
+     equivalent (amber/teal/sage map to editorial, AI, and destination
+     business segments) and are not duplicates needing consolidation. */
+  --hm-blue:             var(--color-accent);
   --hm-amber:            #C8A96E;   /* editorial / travel warmth */
   --hm-teal:             #3BBFB0;   /* AI / intelligence */
   --hm-sage:             #7FA98E;   /* organic / destination */

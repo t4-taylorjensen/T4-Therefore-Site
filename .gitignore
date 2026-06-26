@@ -3,3 +3,6 @@ storybook-static
 dist
 .DS_Store
 **/.DS_Store
+t4-pillar-pages-full-handoff.zip
+*.zip
+t4-pillar-pages-full-handoff/

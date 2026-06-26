@@ -1,7 +1,7 @@
 import Hero from './Hero';
 
 export default {
-  title: 'Patterns/Hero',
+  title: 'Archived/Patterns/Hero',
   component: Hero,
   parameters: {
     layout: 'fullscreen',

@@ -4,7 +4,7 @@ import DigitalAgentPortal from './digital/DigitalAgentPortal';
 import DigitalConciergeApp from './digital/DigitalConciergeApp';
 
 export default {
-  title: 'Patterns/Hero/Digital Products',
+  title: 'Archived/Patterns/Hero/Digital Products',
   parameters: {
     layout: 'fullscreen',
   },

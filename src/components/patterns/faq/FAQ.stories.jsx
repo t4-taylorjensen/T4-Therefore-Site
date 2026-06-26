@@ -34,10 +34,21 @@ Place FAQ near the bottom of a marketing page, after core content sections have 
 - Plus/minus icons are \`aria-hidden\` — the button text alone describes the action
 - Keyboard operable: Tab to focus trigger, Enter/Space to toggle
 - Height animation is CSS-driven via inline style — does not interfere with screen readers
+
+## Variants
+- \`variant="sidebar"\` (default, above) — two-column, boxed plus/minus icons, sticky insight card
+- \`variant="inline"\` (below) — single content column with the eyebrow in its own column, no sidebar, hairline rows, thin plus/minus lines. This is what CMS Page V2 uses. Pass \`reveal\` to enable the scroll-into-view stagger; \`eyebrow\` can be a function \`(active) => node\` to drive an effect (e.g. scramble-text) off the section's own visibility state.
         `.trim(),
       },
     },
   },
 };
 
-export const Default = {};
+export const Default = {
+  args: {
+    variant: 'inline',
+    reveal: true,
+    eyebrow: '(FAQS)',
+    headline: "Questions we're often asked",
+  },
+};

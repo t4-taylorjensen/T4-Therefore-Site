@@ -1,0 +1,13 @@
+.pixel-shader {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg-page);
+}
+
+.pixel-shader-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

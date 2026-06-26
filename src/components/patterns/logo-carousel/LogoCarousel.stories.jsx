@@ -1,7 +1,7 @@
 import LogoCarousel from './LogoCarousel';
 
 export default {
-  title: 'Patterns/LogoCarousel',
+  title: 'Archived/Patterns/LogoCarousel',
   component: LogoCarousel,
   parameters: {
     layout: 'fullscreen',

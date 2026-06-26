@@ -1,0 +1,25 @@
+/* ─────────────────────────────────────────
+   LOAD LINE — 1px scroll/auto-advance progress hairline.
+   A track with a scaleX(0→1) fill. Used under the ContentCarousel
+   carousel (manual scroll progress) and as the testimonials
+   auto-advance indicator. `progress` is a 0→1 value set inline.
+───────────────────────────────────────── */
+.load-line {
+  position: relative;
+  height: 1px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.load-line-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+}
+
+/* On dark sections. */
+.load-line--on-dark { background: rgba(255, 255, 255, 0.15); }
+.load-line--on-dark .load-line-fill { background: var(--color-white); }

@@ -7,7 +7,7 @@
 .heading-display {
   font-family: var(--font-display);
   font-size: var(--text-display);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: var(--leading-display);
   letter-spacing: 0;
   text-transform: uppercase;
@@ -22,7 +22,7 @@
 .heading-xl {
   font-family: var(--font-primary);
   font-size: var(--text-xl);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
   color: var(--color-ink);
@@ -36,7 +36,7 @@
 .heading-lg {
   font-family: var(--font-primary);
   font-size: var(--text-lg);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-snug);
   letter-spacing: 0;
   color: var(--color-ink);
@@ -50,7 +50,7 @@
 .heading-md {
   font-family: var(--font-primary);
   font-size: var(--text-md);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-snug);
   letter-spacing: 0;
   color: var(--color-ink);
@@ -64,7 +64,7 @@
 .body-lg {
   font-family: var(--font-primary);
   font-size: var(--text-body-lg);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-normal);
   letter-spacing: 0;
   color: var(--color-ink);
@@ -78,7 +78,7 @@
 .body-md {
   font-family: var(--font-primary);
   font-size: var(--text-body-md);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-relaxed);
   letter-spacing: 0;
   color: var(--color-ink);
@@ -92,7 +92,7 @@
 .body-sm {
   font-family: var(--font-primary);
   font-size: var(--text-body-sm);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-normal);
   letter-spacing: var(--tracking-wide);
   color: var(--color-ink-faint);
@@ -106,7 +106,7 @@
 .text-eyebrow {
   font-family: var(--font-mono);
   font-size: var(--text-mono);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: 1;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
@@ -121,7 +121,7 @@
 .text-mono-md {
   font-family: var(--font-mono);
   font-size: var(--text-mono-md);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: 1;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;

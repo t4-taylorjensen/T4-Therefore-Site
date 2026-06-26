@@ -19,7 +19,7 @@
 .cmsplat-headline {
   font-family: var(--font-primary);
   font-size: clamp(30px, 3.8vw, 55px);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: 1;
   letter-spacing: var(--tracking-tight);
   max-width: 1112px;
@@ -110,7 +110,7 @@
 .cmsplat-row-headline {
   font-family: var(--font-primary);
   font-size: clamp(22px, 2.4vw, 32px);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
   color: var(--color-ink);

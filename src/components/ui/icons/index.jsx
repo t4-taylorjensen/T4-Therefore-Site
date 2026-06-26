@@ -5,7 +5,7 @@
    strokeWidth is scaled per viewBox so all render at 1px at 16×16.
 ───────────────────────────────────────── */
 
-/** Straight right arrow → · decorative only, not for buttons */
+/** Straight right arrow → · carousel / slider "next" nav button (BtnArrow outline) */
 export function IconArrowRight(props) {
   return (
     <svg width="12" height="12" viewBox="0 0 8 8" fill="none"
@@ -18,7 +18,7 @@ export function IconArrowRight(props) {
   );
 }
 
-/** Left arrow ← · (unused — kept for reference) */
+/** Left arrow ← · carousel / slider "previous" nav button (BtnArrow outline) */
 export function IconArrowLeft(props) {
   return (
     <svg width="12" height="12" viewBox="0 0 8 8" fill="none"
@@ -51,6 +51,19 @@ export function IconCornerRightArrow(props) {
       aria-hidden="true" {...props}>
       <path
         d="M7.52816 10.5L7.52815 5.99996C7.52815 3.63722 7.52815 1.5 7.52815 1.5L1 1.5M11 6.98434L7.52816 10.5L4.05631 6.98434"
+        stroke="currentColor" strokeWidth="1"
+      />
+    </svg>
+  );
+}
+
+/** Plus · accordion / disclosure toggles — rotate 45deg via CSS to read as a close (×) */
+export function IconPlus(props) {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+      aria-hidden="true" {...props}>
+      <path
+        d="M6 1V11M1 6H11"
         stroke="currentColor" strokeWidth="1"
       />
     </svg>

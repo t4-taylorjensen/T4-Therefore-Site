@@ -1,202 +1,128 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
 import './CMSPillarV2.css';
 
 import PageLayout from '../../components/layout/PageLayout';
-import FAQ from '../../components/patterns/faq/FAQ';
-import FeatureStack from '../../components/patterns/feature-stack/FeatureStack';
 import CMSScreenReveal from '../../components/features/pages/hero-media/cms/CMSScreenReveal';
-import AIEditorialAssistant from '../../components/features/pages/hero-media/ai/AIEditorialAssistant';
-import Eyebrow from '../../components/ui/Eyebrow';
-import CrosshairHover from '../../components/ui/CrosshairHover/CrosshairHover';
-import { BtnSecondary, BtnArrow, BtnLink, IconCornerDownRight } from '../../components/ui/Button/Button';
-import { IconArrowRight } from '../../components/ui/icons';
+import { TrustedByStickyImage } from '../../components/patterns/trusted-by-sticky-image/TrustedByStickyImage';
+import FAQ from '../../components/patterns/faq/FAQ';
+import PillarHero from '../../components/patterns/pillar-hero/PillarHero';
+import PillarIntro from '../../components/patterns/pillar-intro/PillarIntro';
+import WhatWeDo from '../../components/patterns/what-we-do/WhatWeDo';
+import CaseStudiesGrid from '../../components/patterns/case-studies-grid/CaseStudiesGrid';
+import ContentCarousel from '../../components/patterns/content-carousel/ContentCarousel';
+import PlatformTabs from '../../components/patterns/platform-tabs/PlatformTabs';
+import LogoWall from '../../components/patterns/logo-wall/LogoWall';
+import ContactCTA from '../../components/patterns/contact-cta/ContactCTA';
+import RelatedContent from '../../components/patterns/related-content/RelatedContent';
+import ScrambleText from '../../components/ui/ScrambleText';
+import PageTransition from '../../components/ui/PageTransition/PageTransition';
 
-import imgGoway        from './assets/proj-goway-1.jpg';
+import imgGoway        from './assets/goway-post-2.jpg';
 import imgDuvine       from './assets/proj-duvine-1.jpg';
 import imgCanyonSpirit from './assets/proj-canyon-spirit-1.jpg';
 
 import aiBackground    from '../../components/features/pages/hero-media/assets/therefore-int-bg-08.jpg';
-import bgInt01         from '../../components/features/pages/hero-media/assets/therefore-int-bg-01.jpg';
-import bgInt02         from '../../components/features/pages/hero-media/assets/therefore-int-bg-02.jpg';
-import bgInt03         from '../../components/features/pages/hero-media/assets/therefore-int-bg-03.jpg';
-import bgInt04         from '../../components/features/pages/hero-media/assets/therefore-int-bg-04.jpg';
+import imgAiSquares    from '../../components/features/pages/hero-media/assets/therefore-int-bg-03.jpg';
 import bgInt07         from '../../components/features/pages/hero-media/assets/therefore-int-bg-07.jpg';
-import screenDuvine    from '../../components/features/pages/hero-media/assets/therefore-cms-solutions-duvine-screen-01.jpg';
-import screenNap       from '../../components/features/pages/hero-media/assets/therefore-cms-solutions-new-american-paintings-screen-01.jpg';
+import aiBgBase        from '../../components/features/pages/hero-media/assets/therefore-int-bg-base.jpg';
 
 import logoSanity      from '../../components/patterns/cms-platforms/logo-sanity.svg';
+import logoContentful  from '../../components/patterns/cms-platforms/logo-contentful.svg';
 import logoDrupal      from '../../components/patterns/cms-platforms/logo-drupal.svg';
 
-import lukePhoto       from '../../components/ui/brand assets/therefore-int-luke-bowler.jpg';
-import person1         from '../../components/patterns/testimonials-carousel/person-1.jpg';
-import person2         from '../../components/patterns/testimonials-carousel/person-2.jpg';
-import person3         from '../../components/patterns/testimonials-carousel/person-3.jpg';
+import logoNetlify        from '../../components/patterns/logo-wall/logo-netlify.svg';
+import logoVercel         from '../../components/patterns/logo-wall/logo-vercel.svg';
+import logoUpsun          from '../../components/patterns/logo-wall/logo-upsun.svg';
+import logoCommerceLayer  from '../../components/patterns/logo-wall/logo-commerce-layer.svg';
 
-/* ─────────────────────────────────────────
-   01. HERO
-───────────────────────────────────────── */
-function Hero() {
-  return (
-    <section className="v2-hero">
-      <div className="v2-hero-left">
-        <p className="v2-hero-eyebrow anim-fade-up anim-delay-1">
-          Content Management Systems
-        </p>
-        <div className="v2-hero-main anim-fade-up anim-delay-2">
-          <h1 className="v2-hero-headline">
-            Content should move your business forward.
-          </h1>
-          <p className="v2-hero-copy">
-            We design content operations that give teams control, speed, and consistency
-            across every channel, every market, every moment.
-          </p>
-          <BtnSecondary icon={IconCornerDownRight} nudge="right">
-            Speak to an Expert
-          </BtnSecondary>
-        </div>
-      </div>
-      <div className="v2-hero-media anim-fade-in anim-delay-3">
-        <CMSScreenReveal animated />
-      </div>
-    </section>
-  );
-}
+import lukePhoto       from '../../components/ui/brand assets/therefore-int-luke-bowler.jpg';
 
 /* ─────────────────────────────────────────
    02. OPPORTUNITY
 ───────────────────────────────────────── */
 const PROBLEMS = [
   {
-    title: 'Content Velocity',
-    body:  "Your teams can't publish fast enough. Approvals stall. Launches slip. Competitors move.",
+    title: 'Move faster',
+    body:  'The shorter the gap between product launch, guest interest and proposal, the higher your conversion rate. Editorial efficiency might not be glamorous, but it drives bookings.',
   },
   {
-    title: 'Governance at Scale',
-    body:  'Brands fracture across markets, regions, and channels. Consistency becomes a full-time job nobody owns.',
+    title: 'Maintain control and consistency',
+    body:  'As brands scale, guest experiences often become fragmented. Centralized content keeps you in control, no matter how far your efforts extend across markets, regions, and channels.',
   },
   {
-    title: 'Channel Proliferation',
-    body:  'Web, app, email, digital signage, partner APIs. Content gets rebuilt from scratch for every surface.',
+    title: 'Reach guests where they are',
+    body:  "New channels emerge every year. Without a structured approach to content, each one demands a major effort and often gets deprioritized. It doesn't have to be that way.",
   },
   {
-    title: 'Institutional Knowledge',
-    body:  'When key people leave, the process leaves with them. Undocumented workflows become silent liabilities.',
+    title: '(Really) benefit from AI',
+    body:  "The same foundation that powers faster, higher-converting experiences also gives AI the institutional knowledge it needs to produce outputs you'll actually want to publish.",
   },
 ];
-
-function Opportunity() {
-  return (
-    <section className="v2-opp">
-      <div className="v2-opp-inner">
-        <div className="v2-opp-left">
-          <Eyebrow>The Opportunity</Eyebrow>
-          <p className="v2-opp-statement">
-            There's vast untapped potential in the content you already have.
-          </p>
-          <p className="v2-opp-body">
-            Most organizations focus on producing more content. The real opportunity
-            is making that content work harder across more channels, more markets,
-            and more moments without rebuilding every time something changes.
-          </p>
-        </div>
-        <div className="v2-opp-right">
-          {PROBLEMS.map((p, i) => (
-            <div key={p.title} className="v2-opp-row">
-              <span className="v2-opp-row-num">{String(i + 1).padStart(2, '0')}</span>
-              <div className="v2-opp-row-text">
-                <p className="v2-opp-row-title">{p.title}</p>
-                <p className="v2-opp-row-body">{p.body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ─────────────────────────────────────────
    03. WHAT WE DO
-   Dark. 3×2 image overlay card grid.
-   Image fills card. Title pinned bottom.
-   Description reveals on hover.
+   Light. Quiet 2×3 grid — no icons, no boxes.
+   Hairline rules, restrained type, a single
+   accent-coloured rule on hover.
 ───────────────────────────────────────── */
 const CAPABILITIES = [
-  { title: 'Content Operations Design',
-    body:  'Clear ownership, structured workflows, and repeatable processes that reduce bottlenecks and remove reliance on IT.',
-    img:   bgInt01 },
-  { title: 'Governance Frameworks',
-    body:  'Brand and compliance rules built into the system, not enforced after the fact.',
-    img:   bgInt07 },
-  { title: 'Omnichannel Publishing',
-    body:  "One content model that serves every channel. Build once, distribute everywhere, including channels you haven't launched yet.",
-    img:   screenDuvine },
-  { title: 'Accessibility by Design',
-    body:  'WCAG compliance embedded in components and editorial process, not retrofitted before launch.',
-    img:   screenNap },
+  { title: 'Audience Research',
+    body:  'We bring audience insight to the table to ensure each layer of your digital experience, from the interfaces guests interact with to the systems that power them, keeps the guest at the centre.' },
+  { title: 'AI-Powered Content Operations',
+    body:  'We design repeatable workflows for creating and managing content across channels, combining audience understanding with business goals and engineering processes that fit the way your team already works.' },
+  { title: 'Technology Consultancy',
+    body:  'We partner with marketing and technology teams to align all the moving parts, ensuring your systems serve both the business and the guest.' },
+  { title: 'Bespoke User Experiences',
+    body:  'We craft digital experiences that highlight what makes your brand unique, delivering fast, accessible, and personalized interactions at every touchpoint.' },
+  { title: 'Accessibility and Security (by design)',
+    body:  'Everything we build meets the highest standards of accessibility and security, with rigorous testing applied continuously throughout the project.' },
   { title: 'Analytics & Optimisation',
-    body:  'Content performance measured against business goals, not just traffic.',
-    img:   bgInt04 },
-  { title: 'Workflow & Approvals',
-    body:  'Structured editorial workflows that match how your organization actually works.',
-    img:   aiBackground },
+    body:  "Long after launch, we remain committed to helping you maximize the foundation you've invested in and focused on achieving the commercial goals it was built to meet." },
 ];
 
-function WhatWeDo() {
-  return (
-    <section className="v2-wwd">
-      <div className="v2-wwd-inner">
-        <div className="v2-wwd-head">
-          <Eyebrow>What We Do</Eyebrow>
-          <h2 className="v2-wwd-headline">
-            From content model to editorial workflow, we build systems that get out of your team's way.
-          </h2>
-        </div>
-        <div className="v2-wwd-grid">
-          {CAPABILITIES.map((c, i) => (
-            <div key={c.title} className="v2-wwd-card">
-              <span className="v2-wwd-card-index">{String(i + 1).padStart(2, '0')}</span>
-              <h3 className="v2-wwd-card-title">{c.title}</h3>
-              <p className="v2-wwd-card-body">{c.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─────────────────────────────────────────
-   04. AI CALLOUT
+   04b. LINKED CONTENT
+   Carousel of linkable articles / posts. First
+   card points back to the AI Capabilities callout.
 ───────────────────────────────────────── */
-function AICallout() {
-  return (
-    <section className="v2-ai">
-      <div className="v2-ai-inner">
-        <div className="v2-ai-media">
-          <div className="v2-ai-screen">
-            <AIEditorialAssistant animated bgOverride={aiBackground} />
-          </div>
-        </div>
-        <div className="v2-ai-text">
-          <Eyebrow>AI & Content</Eyebrow>
-          <h2 className="v2-ai-headline">
-            AI doesn't replace your editorial team. It makes everything they build more valuable.
-          </h2>
-          <p className="v2-ai-body">
-            We embed AI at the content model level, meaning your AI strategy is
-            structurally sound before a single prompt is written. Translation at scale,
-            SEO metadata generation, workflow automation, and content performance
-            analytics all become possible when the foundation is right.
-          </p>
-          <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">
-            Our AI Capabilities
-          </BtnLink>
-        </div>
-      </div>
-    </section>
-  );
-}
+const LINKED_CONTENT = [
+  {
+    category: 'AI & Content',
+    title: 'How structured content makes AI actually useful',
+    excerpt: 'Why we embed AI at the content-model level, and what becomes possible once the foundation is right.',
+    image: imgAiSquares,
+    href: '#ai-capabilities',
+  },
+  {
+    category: 'CMS Strategy',
+    title: 'Choosing a headless CMS for a travel brand',
+    excerpt: 'A practical framework for weighing Sanity, Contentful and Drupal against your content model.',
+    image: aiBackground,
+  },
+  {
+    category: 'Case Study',
+    title: 'Goway: a content platform built to scale',
+    excerpt: 'How we centralized editorial operations across markets without growing the team.',
+    image: imgGoway,
+  },
+  {
+    category: 'Commerce',
+    title: 'Connecting editorial content to live availability',
+    excerpt: 'Bridging the experience layer and the booking engine for a seamless funnel.',
+    image: imgCanyonSpirit,
+  },
+  {
+    category: 'Perspective',
+    title: 'Personalisation that respects the guest',
+    excerpt: 'Structured content unlocks tailored experiences without the creepiness.',
+    image: bgInt07,
+  },
+  {
+    category: 'Field Notes',
+    title: 'What we learned replatforming a tour operator',
+    excerpt: 'The migration decisions that mattered, and the ones that quietly did not.',
+    image: aiBgBase,
+  },
+];
 
 /* ─────────────────────────────────────────
    05. CASE STUDIES
@@ -204,376 +130,136 @@ function AICallout() {
    Each project: num | image | client | outcome | arrow.
 ───────────────────────────────────────── */
 const CASE_STUDIES = [
-  {
-    img:    imgGoway,
-    client: 'Goway Travel',
-    tag:    'CMS & Content Operations',
-    value:  'Structured content serving 8 destination markets from a single model.',
-  },
-  {
-    img:    imgDuvine,
-    client: 'DuVine Cycling',
-    tag:    'CMS & Commerce',
-    value:  'Headless architecture that turned a boutique operator into a digital-first business.',
-  },
-  {
-    img:    imgCanyonSpirit,
-    client: 'Canyon Spirit',
-    tag:    'CMS & Commerce',
-    value:  'A partially decoupled CMS delivering measurable uplift in booking conversion.',
-  },
+  { img: imgGoway,        client: 'Goway Travel',   year: '2022' },
+  { img: imgDuvine,       client: 'DuVine Cycling', year: '2023' },
+  { img: imgCanyonSpirit, client: 'Canyon Spirit',  year: '2024' },
 ];
 
-function CaseStudies() {
-  return (
-    <section className="v2-cs">
-      <div className="v2-cs-inner">
-        <div className="v2-cs-head">
-          <h2 className="v2-cs-headline">Case Studies</h2>
-          <BtnLink href="#" icon={IconCornerDownRight} nudge="right" className="btn-link--light">
-            All Work
-          </BtnLink>
-        </div>
-        <div className="v2-cs-grid">
-          {CASE_STUDIES.map((c) => (
-            <a key={c.client} href="#" className="v2-cs-card">
-              <CrosshairHover className="v2-cs-card-img-wrap">
-                <img src={c.img} alt={c.client} className="v2-cs-card-img" />
-              </CrosshairHover>
-              <div className="v2-cs-card-info">
-                <p className="v2-cs-card-client">{c.client}</p>
-                <p className="v2-cs-card-value">{c.value}</p>
-                <span className="v2-cs-card-cta">
-                  View Project <IconArrowRight className="v2-cs-card-arrow" />
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// How many of the case studies above to display — set to 3 to show all.
+const CASE_STUDY_COUNT = 2;
 
 /* ─────────────────────────────────────────
    06. PLATFORMS
-   Dark. Two large image showcase cards.
-   Logo + headline + body + points + link.
+   White, AI-card proportions. Sticky media + scroll-driven text.
 ───────────────────────────────────────── */
+
 const PLATFORMS = [
   {
     logo:     logoSanity,
     logoAlt:  'Sanity',
-    tag:      'Headless CMS',
+    tag:      'Hybrid Source',
     headline: 'Built for speed, structured for scale.',
-    body:     'A cloud-native headless CMS with a schema-first architecture. Real-time collaboration, a powerful query language, and composable content models make it our default for high-velocity teams.',
-    bg:       bgInt03,
+    body:     'Sanity is a cloud-based, natively headless and AI-driven content system built for managing structured content at scale. Sanity hosts your content but you decide how to structure and manage it.',
+    bg:       aiBackground,
     points:   ['Real-time collaborative editing', 'API-first, any front-end', 'Custom content schemas at any scale'],
+    cta:      'Why we like Sanity and you should too',
+  },
+  {
+    logo:     logoContentful,
+    logoAlt:  'Contentful',
+    tag:      'Closed Source',
+    headline: 'Built for marketing and business teams to move with confidence.',
+    body:     'Contentful is a fully cloud-based content system with a strong emphasis on ease of use for marketing and business teams.',
+    bg:       bgInt07,
+    points:   ['Intuitive editing experience', 'Fast time-to-value for marketing teams', 'Reliable, managed cloud infrastructure'],
+    cta:      'The advantages of using Contentful',
   },
   {
     logo:     logoDrupal,
     logoAlt:  'Drupal',
-    tag:      'Enterprise CMS',
+    tag:      'Open Source',
     headline: 'Enterprise-grade. Open architecture. Proven at complexity.',
-    body:     'For organizations with deep integration requirements, compliance obligations, or legacy infrastructure, Drupal provides the governance and flexibility to build on what you already have.',
-    bg:       bgInt02,
+    body:     "Drupal is an open source, enterprise-grade CMS built for complexity. We reach for Drupal where deep integration requirements demand a battle-tested foundation and when the business wants to own the solution not rent it.",
+    bg:       aiBgBase,
     points:   ['Mature access control and governance', 'Extensive integration ecosystem', 'Open-source, no vendor lock-in'],
+    cta:      'Why Drupal has stood the test of time',
   },
 ];
-
-function Platforms() {
-  const [active, setActive] = useState(0);
-  const [dir, setDir]       = useState(1);   // +1 forward, -1 backward
-  const [animKey, setAnimKey] = useState(0);
-  const total = PLATFORMS.length;
-
-  const goTo = useCallback((i) => {
-    setDir(i > active ? 1 : -1);
-    setActive(i);
-    setAnimKey(k => k + 1);
-  }, [active]);
-
-  const prev = () => goTo((active - 1 + total) % total);
-  const next = () => goTo((active + 1) % total);
-
-  const p = PLATFORMS[active];
-
-  return (
-    <section className="v2-plat">
-      <div className="v2-plat-inner">
-        <div className="v2-plat-head">
-          <Eyebrow tone="on-dark">Our Go-To Stack</Eyebrow>
-          <h2 className="v2-plat-headline">
-            We partner with two platforms because two platforms are enough to do it right.
-          </h2>
-        </div>
-
-        <div className="v2-plat-stage">
-          {/* Indicators */}
-          <div className="v2-plat-indicators">
-            {PLATFORMS.map((_, i) => (
-              <button
-                key={i}
-                className={`v2-plat-dot${i === active ? ' is-active' : ''}`}
-                onClick={() => goTo(i)}
-                aria-label={PLATFORMS[i].logoAlt}
-              />
-            ))}
-          </div>
-
-          {/* Single card, re-keyed to trigger CSS animation */}
-          <div
-            key={animKey}
-            className={`v2-plat-card v2-plat-card--anim-${dir > 0 ? 'fwd' : 'bwd'}`}
-          >
-            <div className="v2-plat-card-top">
-              <div className="v2-plat-card-top-left">
-                <img src={p.logo} alt={p.logoAlt} className="v2-plat-logo" />
-                <span className="v2-plat-tag">{p.tag}</span>
-              </div>
-              <div className="v2-plat-nav">
-                <button className="v2-plat-nav-btn" onClick={prev} aria-label="Previous">
-                  <IconArrowRight style={{ transform: 'scaleX(-1)' }} />
-                </button>
-                <span className="v2-plat-nav-count">
-                  {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-                </span>
-                <button className="v2-plat-nav-btn" onClick={next} aria-label="Next">
-                  <IconArrowRight />
-                </button>
-              </div>
-            </div>
-
-            <div className="v2-plat-card-body">
-              <h3 className="v2-plat-card-headline">{p.headline}</h3>
-              <p className="v2-plat-card-copy">{p.body}</p>
-            </div>
-
-            <div className="v2-plat-card-bottom">
-              <ul className="v2-plat-points">
-                {p.points.map((pt) => (
-                  <li key={pt} className="v2-plat-point">{pt}</li>
-                ))}
-              </ul>
-              <BtnLink href="#" icon={IconCornerDownRight} nudge="right">
-                Learn More
-              </BtnLink>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
 
 /* ─────────────────────────────────────────
-   07. TESTIMONIALS
-   Surface-2. Company tabs at top.
-   Quote animates in on change (key trick).
-   Attribution + arrows in foot.
+   06b. LOGO WALL
+   Light grid of partner / vendor wordmarks, 4-up. Real logos where
+   we have them (Sanity, Contentful, Drupal); styled text wordmarks
+   for the rest, matching weight and scale.
 ───────────────────────────────────────── */
-const QUOTES = [
-  {
-    photo:   person1,
-    name:    'Tristan Armstrong',
-    role:    'Chief Executive Officer',
-    company: 'Canyon Spirit',
-    quote:   'Therefore has been tenacious improving our technological capabilities and guest experience. They have been supportive partners and met the changing needs of the tourism landscape.',
-  },
-  {
-    photo:   person2,
-    name:    'Sarah Chen',
-    role:    'Head of Product',
-    company: 'Meridian Labs',
-    quote:   'Working with this team transformed how we approach digital infrastructure. Their expertise and dedication to our vision made every milestone feel achievable.',
-  },
-  {
-    photo:   person3,
-    name:    'Marcus Webb',
-    role:    'Founder & Creative Director',
-    company: 'Northlight Studio',
-    quote:   'From day one, the collaboration felt effortless. They understood our brand deeply and delivered an experience our customers talk about constantly.',
-  },
+const LOGO_WALL = [
+  { name: 'Sanity',         logo: logoSanity },
+  { name: 'Contentful',     logo: logoContentful },
+  { name: 'Drupal',         logo: logoDrupal },
+  { name: '▲ Next.js' },
+  { name: 'Netlify',        logo: logoNetlify },
+  { name: 'Vercel',         logo: logoVercel },
+  { name: 'Upsun',          logo: logoUpsun },
+  { name: 'Commerce Layer', logo: logoCommerceLayer },
 ];
-
-const CAROUSEL_INTERVAL = 5000;
-
-function Testimonials() {
-  const [active, setActive] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const timerRef    = useRef(null);
-  const startRef    = useRef(null);
-  const rafRef      = useRef(null);
-  const total       = QUOTES.length;
-  const q           = QUOTES[active];
-
-  const startCycle = useCallback((fromIndex) => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (rafRef.current)   cancelAnimationFrame(rafRef.current);
-    setProgress(0);
-    startRef.current = performance.now();
-
-    const tick = (now) => {
-      const elapsed = now - startRef.current;
-      const pct     = Math.min(elapsed / CAROUSEL_INTERVAL, 1);
-      setProgress(pct);
-      if (pct < 1) {
-        rafRef.current = requestAnimationFrame(tick);
-      }
-    };
-    rafRef.current = requestAnimationFrame(tick);
-
-    timerRef.current = setTimeout(() => {
-      const next = (fromIndex + 1) % total;
-      setActive(next);
-      startCycle(next);
-    }, CAROUSEL_INTERVAL);
-  }, [total]);
-
-  useEffect(() => {
-    startCycle(active);
-    return () => {
-      clearTimeout(timerRef.current);
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const goTo = useCallback((i) => {
-    setActive(i);
-    startCycle(i);
-  }, [startCycle]);
-
-  const prev = () => goTo((active - 1 + total) % total);
-  const next = () => goTo((active + 1) % total);
-
-  return (
-    <section className="v2-quotes">
-      <div className="v2-quotes-inner">
-
-        <div className="v2-quotes-eyebrow-row">
-          <Eyebrow>Client Perspectives</Eyebrow>
-        </div>
-
-        <div className="v2-quotes-layout">
-
-          {/* Left: large quote */}
-          <div className="v2-quotes-left">
-            <p key={active} className="v2-quote-text">
-              &ldquo;{QUOTES[active].quote}&rdquo;
-            </p>
-          </div>
-
-          {/* Right: author list — all three always visible, active highlighted */}
-          <div className="v2-quotes-right">
-            {QUOTES.map((item, i) => (
-              <button
-                key={i}
-                className={`v2-quotes-person${i === active ? ' is-active' : ''}`}
-                onClick={() => goTo(i)}
-              >
-                <img src={item.photo} alt={item.name} className="v2-quotes-person-photo" />
-                <div className="v2-quotes-person-text">
-                  <p className="v2-quotes-person-name">{item.name}</p>
-                  <p className="v2-quotes-person-role">{item.role}, {item.company}</p>
-                </div>
-                {i === active && (
-                  <span className="v2-quotes-person-bar" style={{ transform: `scaleX(${progress})` }} />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
 
 /* ─────────────────────────────────────────
    08. LET'S TALK
+   Brand-blue contact card: eyebrow + headline
+   top, short copy bottom-left, a compound
+   pill + circle CTA bottom-right. Card fades
+   / rises into view as it scrolls in.
 ───────────────────────────────────────── */
-function CTA() {
-  return (
-    <section className="v2-cta">
-      <div className="v2-cta-inner">
-
-        <div className="v2-cta-left">
-          <div className="v2-cta-top">
-            <Eyebrow tone="on-dark">Let's Talk</Eyebrow>
-            <h2 className="v2-cta-headline">
-              Most great projects start with a single conversation.
-            </h2>
-            <p className="v2-cta-body">
-              Tell us what you're working on. We'll come back within one business day.
-            </p>
-          </div>
-          <div className="v2-cta-person">
-            <img src={lukePhoto} alt="Luke Bowler" className="v2-cta-photo" />
-            <div className="v2-cta-person-text">
-              <p className="v2-cta-person-name">Luke Bowler</p>
-              <p className="v2-cta-person-role">Head of Client Services & Growth</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="v2-cta-right">
-          <div className="v2-form-panel">
-            <form className="v2-form" onSubmit={(e) => e.preventDefault()}>
-              <div className="v2-form-row-2">
-                <div className="v2-form-field">
-                  <input type="text" className="v2-form-input" placeholder=" " id="f-name" />
-                  <label className="v2-form-label" htmlFor="f-name">Your name</label>
-                </div>
-                <div className="v2-form-field">
-                  <input type="email" className="v2-form-input" placeholder=" " id="f-email" />
-                  <label className="v2-form-label" htmlFor="f-email">Email address</label>
-                </div>
-              </div>
-              <div className="v2-form-field">
-                <input type="text" className="v2-form-input" placeholder=" " id="f-company" />
-                <label className="v2-form-label" htmlFor="f-company">Company</label>
-              </div>
-              <div className="v2-form-field v2-form-field--textarea">
-                <textarea className="v2-form-input v2-form-textarea" placeholder=" " id="f-message" rows={4} />
-                <label className="v2-form-label" htmlFor="f-message">Tell us about your project</label>
-              </div>
-              <button type="submit" className="v2-form-submit">
-                <span className="v2-form-submit-label">Send Message</span>
-                <IconArrowRight />
-              </button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
 
 /* ─────────────────────────────────────────
    FAQ DATA
 ───────────────────────────────────────── */
 const CMS_FAQS = [
   {
-    question: 'What is headless CMS?',
-    answer:   'A headless CMS separates content management from content presentation. Your editorial team manages content in one place, and it gets delivered via API to any channel, web, app, email, digital signage, or AI-powered interfaces. This architecture gives organizations lasting flexibility as channels evolve.',
+    question: 'What is a headless CMS and why is it relevant for travel brands?',
+    answer:   'A headless CMS separates content management from content presentation, storing content via an API that any front-end can consume. For travel brands, this means the same content - destinations, itineraries, pricing - can be delivered to a website, mobile app, kiosk, or voice assistant without duplication or manual re-entry.',
   },
   {
-    question: 'When does headless make sense?',
-    answer:   'Headless is most effective for organizations with complex integrations, multi-channel requirements, or growth plans that exceed the limits of all-in-one platforms. It becomes valuable when flexibility and scalability outweigh the simplicity of a monolithic setup.',
+    question: 'How does a headless CMS handle the complexity of travel content?',
+    answer:   'Travel content is inherently structured and relational - a destination links to tours, which link to availability, pricing tiers, and media. A headless CMS lets you model these relationships explicitly, so content teams manage each element once and the front-end assembles the right combination dynamically for each user context.',
   },
   {
-    question: 'How long does implementation take?',
-    answer:   'Enterprise implementations typically range from 6 to 9 months, depending on integration complexity, content modeling, and migration scope. A phased approach can accelerate time to value while long-term architecture evolves.',
+    question: 'Can a headless CMS support real-time pricing and availability from booking engines?',
+    answer:   'Yes. A headless CMS handles editorial content (descriptions, imagery, reviews), while live data like pricing and availability is pulled from booking APIs at render time. The two layers work together - the CMS provides the experience layer, the booking engine provides the transactional layer.',
   },
   {
-    question: 'How does headless connect to existing systems?',
-    answer:   'Headless integrates through APIs, allowing your CMS, commerce engine, CRM, ERP, and PIM to operate as a unified system. The architecture supports existing workflows while improving flexibility and performance across every touchpoint.',
+    question: 'How does going headless improve the booking funnel for travel websites?',
+    answer:   'Headless architectures allow travel sites to deliver faster page loads, personalised content by traveller type or geography, and seamless cross-device experiences - all of which reduce drop-off in the booking funnel. Performance improvements alone can meaningfully increase conversion rates on high-intent pages like destination and package detail pages.',
   },
   {
-    question: 'Is headless right for mid-sized enterprises?',
-    answer:   'Headless can be the right choice for mid-sized enterprises with growing complexity, multiple digital channels, or long-term scalability goals. For smaller organizations with simple requirements, a monolithic platform may remain sufficient, and we will tell you honestly which applies.',
+    question: "Is a headless CMS suitable for multi-brand or multi-region travel operators?",
+    answer:   "It's one of the strongest use cases. A headless CMS lets you maintain a single content repository while delivering localised, branded experiences across regions, languages, and sub-brands. Content governance stays centralised while regional teams control their own editorial workflows.",
+  },
+  {
+    question: 'What are the trade-offs of headless CMS versus a traditional CMS for a travel company?',
+    answer:   'Traditional CMS platforms offer faster initial setup and built-in page editing, but limit flexibility as your channel mix grows. Headless requires more upfront architecture work and typically a stronger development team, but pays off at scale - especially for travel brands managing high content volumes, multiple markets, or ambitious personalisation goals.',
+  },
+  {
+    question: 'Which headless CMS platforms are most commonly used for travel websites?',
+    answer:   'Contentful and Sanity are among the most widely adopted for travel and hospitality. The right choice depends on your content model complexity, editorial team size, and integration requirements with booking, loyalty, and CRM systems. An experienced digital partner can help evaluate fit against your specific platform ecosystem.',
+  },
+];
+
+/* FAQ now uses the canonical Patterns/FAQ component (variant="inline"),
+   see render call below — was a page-local FaqItem/CMSFaq reimplementation. */
+
+/* ─────────────────────────────────────────
+   09. RELATED CONTENT
+   Quiet headline + pill link up top, a flush
+   3-up grid of rounded image cards below —
+   title and one-line excerpt sit under each
+   image, not inside it.
+───────────────────────────────────────── */
+const RELATED_CONTENT = [
+  {
+    title: 'Commerce',
+    desc: 'Headless and agentic commerce',
+    image: imgDuvine,
+  },
+  {
+    title: 'Platforms',
+    desc: 'Bespoke digital platforms',
+    image: bgInt07,
+  },
+  {
+    title: 'AI',
+    desc: 'Agentic content operations',
+    image: aiBgBase,
   },
 ];
 
@@ -582,22 +268,53 @@ const CMS_FAQS = [
 ───────────────────────────────────────── */
 export default function CMSPillarV2() {
   return (
-    <PageLayout activePage="CMS & Commerce">
-      <Hero />
-      <Opportunity />
-      <WhatWeDo />
-      <AICallout />
-      <CaseStudies />
-      <Platforms />
-      <Testimonials />
-      <CTA />
-      <FAQ faqs={CMS_FAQS} eyebrow="CMS FAQs" />
-      <FeatureStack
-        eyebrow="Beyond the Platform"
-        headlineDark="The right CMS is just the beginning. Where we take you next."
-        headlineMuted=""
-        headerTitle="What we build together"
+    <>
+    <PageTransition enterOnMount />
+    <PageLayout activePage="CMS">
+      <PillarHero
+        eyebrow="Content Management Systems"
+        headline="We work with content that's going places."
+        bodyCopy="Your content can do more. Our CMS experts help you unlock its full potential to engage travellers across channels and continents."
+        ctaLabel="Speak to a CMS expert"
+        mediaSlot={<CMSScreenReveal animated />}
       />
+      <PillarIntro
+        eyebrow="The Art of the Possible"
+        statement="We build foundations that make your content go further, faster."
+        body="When your content is centralized and structured as data, it becomes infinitely more reusable and adaptable. This foundation allows you to deliver deeply personalized guest experiences at scale, ensuring your marketing team extracts maximum value from every piece of existing and future content without increasing headcount."
+        problems={PROBLEMS}
+      />
+      <WhatWeDo
+        headline="We design and build content-managed digital experiences that are loved by editors, agents and guests."
+        capabilities={CAPABILITIES}
+      />
+      <ContentCarousel
+        eyebrow={null}
+        headline="Go deeper on the ideas behind the work."
+        layout="split"
+        tone="dark"
+        items={LINKED_CONTENT}
+      />
+      <CaseStudiesGrid studies={CASE_STUDIES} count={CASE_STUDY_COUNT} />
+      <PlatformTabs
+        variant="split"
+        graphic="halftone"
+        eyebrow="Our Go-To Technology Stack"
+        headline="The right platform changes what your team can do, and how fast they can do it."
+        platforms={PLATFORMS}
+      />
+      <LogoWall logos={LOGO_WALL} />
+      <TrustedByStickyImage variant="cards" />
+      <ContactCTA contactPhoto={lukePhoto} />
+      <FAQ
+        faqs={CMS_FAQS}
+        eyebrow={(active) => <ScrambleText text="(FAQS)" active={active} />}
+        headline="Questions we're often asked"
+        variant="inline"
+        reveal
+      />
+      <RelatedContent items={RELATED_CONTENT} />
     </PageLayout>
+    </>
   );
 }

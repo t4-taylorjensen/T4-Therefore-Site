@@ -1,0 +1,200 @@
+/* ─────────────────────────────────────────
+   SHARED FORM
+───────────────────────────────────────── */
+.cm-form { display: flex; flex-direction: column; }
+/* name + email stack rather than split */
+.cm-row { display: block; }
+
+/* Field styling lives in src/components/ui/Form/FormField.css
+   (variant="floating", default tone) */
+
+.cm-submit {
+  align-self: flex-start;
+  margin-top: var(--space-3);
+}
+
+/* ─────────────────────────────────────────
+   OVERLAY
+───────────────────────────────────────── */
+.cm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  animation: cm-overlay-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* frost builds in while the overlay fades */
+@keyframes cm-overlay-in {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px) saturate(1);
+    -webkit-backdrop-filter: blur(0px) saturate(1);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  }
+}
+
+/* card springs up + scales in, just after the frost starts */
+@keyframes cm-panel-in {
+  from { opacity: 0; transform: translateY(48px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─────────────────────────────────────────
+   PANEL — wide, hairline-framed, two columns
+───────────────────────────────────────── */
+.cm-panel {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--color-white);
+  border-radius: 0;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.3);
+  padding: clamp(24px, 3.4vw, 44px);
+  transform-origin: center bottom;
+  animation: cm-panel-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+
+/* HEAD — mono eyebrow + plus-icon close, full-width hairline */
+.cm-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-bottom: clamp(16px, 1.8vw, 24px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Eyebrow uses the canonical <Eyebrow> component (.text-eyebrow utility). */
+
+.cm-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-ink);
+  transition: opacity 0.2s ease;
+}
+.cm-close:hover { opacity: 0.55; }
+.cm-close-icon {
+  width: 18px;
+  height: 18px;
+  transform: rotate(45deg);
+}
+.cm-close-icon path { stroke-width: 0.75; }
+
+/* GRID — intro column | form column, vertical hairline divider */
+.cm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+
+.cm-intro {
+  display: flex;
+  flex-direction: column;
+  padding-right: clamp(32px, 4vw, 56px);
+}
+
+.cm-form-col {
+  border-left: 1px solid var(--color-border);
+  padding-left: clamp(32px, 4vw, 56px);
+}
+
+.cm-headline {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-regular);
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  margin: 0;
+  max-width: 12ch;
+}
+
+.cm-body {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-subtle);
+  margin: clamp(16px, 2vw, 22px) 0 0;
+  max-width: 34ch;
+}
+
+/* attribution byline — pinned to the bottom of the intro column */
+.cm-byline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: clamp(22px, 2.6vw, 32px);
+}
+.cm-byline-photo {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 0;
+}
+.cm-byline-id {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cm-byline-name {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--color-ink);
+}
+.cm-byline-title {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  color: var(--color-ink-muted);
+}
+
+/* compact field rhythm so the whole form fits without scrolling */
+.cm-panel .form-field--floating { margin-bottom: 12px; }
+.cm-panel .form-field--floating .form-field-control { padding: 14px 0 8px; }
+.cm-panel .cm-form textarea.form-field-control { min-height: 64px; padding-bottom: 14px; }
+.cm-submit { margin-top: var(--space-4); }
+
+@media (max-width: 720px) {
+  .cm-grid { grid-template-columns: 1fr; }
+  .cm-intro { padding-right: 0; }
+  /* Let the headline + body run the full width on mobile. */
+  .cm-headline { max-width: none; }
+  .cm-body { max-width: none; }
+  /* Drop the extra divider between the Luke callout and the form (the
+     field underlines already separate things) and replace it with open
+     space below the callout instead. */
+  .cm-form-col {
+    border-left: none;
+    padding-left: 0;
+    border-top: none;
+    margin-top: clamp(36px, 10vw, 56px);
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-overlay, .cm-panel { animation: none !important; transition: none !important; }
+}

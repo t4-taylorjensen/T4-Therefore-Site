@@ -6,7 +6,7 @@ import bgCanyon   from './assets/cms-bg-canyon.mp4';
 import heroCanyon from './assets/cms-hero-canyon.png';
 
 export default {
-  title: 'Patterns/Hero/CMS & Commerce',
+  title: 'Archived/Patterns/Hero/CMS & Commerce',
   parameters: { layout: 'fullscreen' },
 };
 

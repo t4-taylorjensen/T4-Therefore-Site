@@ -1,0 +1,421 @@
+/* ═══════════════════════════════════════
+   PLATFORMS SCROLLER — White, AI-Card proportions, scroll-driven
+   Matches the AI Callout section: white background, no outer box,
+   media sized at the same 4/4.3 aspect ratio as the AI screen. The
+   media panel is sticky and stays put while the platform write-ups
+   scroll past on the right; whichever is centered drives the sticky
+   media's photo + logo chip via IntersectionObserver.
+═══════════════════════════════════════ */
+.plat-section {
+  background: var(--color-bg-page);
+  padding: clamp(80px, 10vw, 130px) var(--padding-x);
+}
+
+.plat-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.plat-head {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-bottom: clamp(32px, 4vw, 56px);
+}
+
+.plat-headline {
+  font-family: var(--font-primary);
+  font-size: clamp(22px, 2.6vw, 36px);
+  font-weight: var(--fw-regular);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+  margin: 0;
+  max-width: 620px;
+}
+
+.plat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: start;
+  margin-top: clamp(44px, 5vw, 68px);
+}
+
+.plat-media-sticky {
+  position: sticky;
+  top: clamp(24px, 4vw, 64px);
+  aspect-ratio: 16 / 12;
+  background: var(--color-ink-deepest);
+  overflow: hidden;
+}
+
+.plat-media-photo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.plat-media-photo.is-active {
+  opacity: 1;
+}
+
+.plat-media-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.plat-media-logo-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.plat-media-logo-box {
+  position: absolute;
+  width: 140px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.plat-media-logo-box.is-active {
+  opacity: 0.95;
+}
+
+.plat-media-logo {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.plat-media-tag {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-white);
+  padding: 8px 12px;
+}
+
+.plat-media-tag-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  display: inline-flex;
+  align-items: center;
+  min-width: 1px;
+}
+
+.plat-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.plat-text-block {
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.plat-text-block:last-child {
+  border-bottom: none;
+}
+
+.plat-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--space-5);
+}
+
+.plat-eyebrow-square {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  background: var(--color-border);
+  transition: background 0.35s ease;
+}
+
+.plat-eyebrow-square.is-active {
+  background: var(--color-accent);
+}
+
+.plat-eyebrow {
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.plat-text-headline {
+  font-family: var(--font-primary);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.02em;
+  line-height: var(--leading-tight);
+  margin: 0 0 var(--space-5);
+  color: var(--color-ink);
+  max-width: 460px;
+}
+
+.plat-text-copy {
+  font-family: var(--font-primary);
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-7);
+  max-width: 460px;
+}
+
+/* Text-link CTA (BtnLink) reads a touch small at the shared 11px
+   default in this context — bump +2px. */
+.plat-cta {
+  align-self: flex-start;
+  font-size: 13px;
+}
+
+@media (max-width: 1024px) {
+  .plat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plat-media-sticky {
+    /* relative, not static — its photo/logo children are
+       position:absolute;inset:0 and need this element to stay a
+       valid containing block. Dropping to static here made them
+       fall back to the viewport as their containing block, so the
+       platform background image rendered as a full-viewport layer
+       pinned to the very top of the document on mobile instead of
+       inside this card. */
+    position: relative;
+  }
+
+  .plat-text-block {
+    min-height: 0;
+    padding: var(--space-9) 0;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   6) SPLIT — image left, tabbed snapshot right
+─────────────────────────────────────────────────────────────── */
+.plat-split .plat-head { padding-bottom: 0; }
+
+.plat-split .plat-rule {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  margin-top: clamp(20px, 2.4vw, 32px);
+}
+
+/* Balanced two-column frame — open whitespace, a vertical hairline
+   divider between the graphic and the write-up. */
+.psplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  margin-top: clamp(40px, 4.5vw, 64px);
+}
+
+/* ── LEFT — generative graphic (ink on white) + switcher pinned low. */
+.psplit-media-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3vw, 44px);
+  padding-right: clamp(40px, 5vw, 80px);
+}
+
+.psplit-media {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-height: clamp(440px, 40vw, 600px);
+  background: var(--color-surface-1);
+}
+
+.psplit-tabs {
+  display: flex;
+  gap: clamp(24px, 3vw, 44px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.psplit-tab {
+  position: relative;
+  padding: 0 0 var(--space-4);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.psplit-tab-name {
+  font-family: var(--font-primary);
+  font-size: clamp(14px, 1.1vw, 15px);
+  letter-spacing: 0.01em;
+  color: var(--color-ink-muted);
+  opacity: 0.5;
+  transition: opacity 0.35s ease, color 0.35s ease;
+}
+
+.psplit-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 0;
+  background: var(--color-ink);
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.psplit-tab:hover .psplit-tab-name { opacity: 1; color: var(--color-ink); }
+.psplit-tab.is-active .psplit-tab-name { opacity: 1; color: var(--color-ink); }
+.psplit-tab.is-active::after { width: 100%; }
+
+/* ── RIGHT — balanced column: brand top, body middle, meta bottom. */
+.psplit-content {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--color-border);
+  padding-left: clamp(40px, 5vw, 80px);
+}
+
+/* Stack every panel so the column reserves the tallest tab's height. */
+.psplit-panels {
+  position: relative;
+  flex: 1;
+  display: grid;
+  padding-top: clamp(32px, 4vw, 52px);
+}
+
+.psplit-panel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(28px, 4vw, 56px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.5s;
+  pointer-events: none;
+}
+
+.psplit-panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+.psplit-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.psplit-logo {
+  max-height: 30px;
+  max-width: 170px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.psplit-logo[alt="Contentful"] {
+  max-height: 42px;
+  max-width: 210px;
+}
+
+.plat-split .p-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  text-align: right;
+}
+
+.psplit-body {
+  font-family: var(--font-primary);
+  font-size: clamp(19px, 1.8vw, 26px);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  max-width: 30ch;
+  margin: 0;
+}
+
+.psplit-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  padding-top: clamp(20px, 2.4vw, 32px);
+}
+
+/* CTA uses the shared BtnLink `btn-link--text` variant (see global.css). */
+
+@media (max-width: 900px) {
+  .psplit { grid-template-columns: 1fr; }
+
+  /* Pull the logo wall that follows closer to the graphic on mobile. */
+  .plat-section { padding-bottom: clamp(36px, 7vw, 56px); }
+
+  /* Drop the full-width rule under the section headline on mobile. */
+  .plat-split .plat-rule { display: none; }
+
+  /* More generous vertical rhythm between switcher, write-up + CTA. */
+  .psplit-panels { padding-top: clamp(28px, 8vw, 44px); }
+  .psplit-panel { gap: clamp(32px, 9vw, 52px); }
+  .psplit-foot { padding-top: clamp(24px, 6vw, 36px); }
+
+  /* Stacked order: content (switcher + write-up) on top, graphic below.
+     No dividing line above the image — just spacing. */
+  .psplit-content {
+    order: 1;
+    border-left: none;
+    padding-left: 0;
+  }
+  .psplit-media-col {
+    order: 2;
+    padding-right: 0;
+    margin-top: clamp(28px, 6vw, 40px);
+  }
+  /* Full-width landscape graphic, height-capped so it never balloons to
+     440-600px the way the un-capped 3/2 did at tablet widths. 16/10 is a
+     gentle landscape crop of the source photo (reads cleanly, not cut),
+     and max-height keeps it compact on bigger phones / small tablets. */
+  .psplit-media { flex: none; min-height: 0; aspect-ratio: 16 / 10; max-height: 320px; }
+
+  /* Full-width column + smaller type on mobile. */
+  .psplit-body { max-width: none; font-size: clamp(17px, 4.6vw, 20px); }
+  .psplit-tab-name { font-size: 14px; }
+  .psplit-panels { padding-top: clamp(24px, 5vw, 36px); }
+}
+
+@media (max-width: 560px) {
+  .psplit-tabs { gap: var(--space-5); }
+  /* Shorter still on phones. */
+  .psplit-media { max-height: 240px; }
+}

@@ -1,7 +1,7 @@
 import '../styles/global.css';
 
 export default {
-  title: 'Layout/Breakpoints',
+  title: 'Foundations/Breakpoints',
   parameters: { layout: 'padded' },
 };
 
@@ -28,7 +28,7 @@ const breakpoints = [
     color: '#e8f0ff',
     stroke: '#4297FF',
     changes: [
-      'WhyTherefore cards shrink to 85vw',
+      'Tightest single-column layout',
       'Section vertical padding reduces further',
       'Card hover transforms disabled (translateY: none)',
     ],
@@ -40,12 +40,22 @@ const breakpoints = [
     color: '#f0f0ef',
     stroke: '#121212',
     changes: [
-      'Hero, Stats, HeroStack, FeatureStack, WhyTherefore, LogoCarousel stack to 1 column',
+      'Multi-column patterns stack to 1 column',
       'Horizontal padding reduces to 20px',
       'Section top/bottom padding scales down',
-      'Stats section becomes horizontal-scroll carousel',
-      'FeatureStack cards flex-direction: column',
-      'HeroStack headline font-size drops to 36px',
+      'Scrollers/grids collapse to single-column or h-scroll',
+    ],
+  },
+  {
+    name: 'Tablet',
+    width: 1165,
+    token: 'max-width: 1165px',
+    color: '#f4f6f8',
+    stroke: '#121212',
+    changes: [
+      'Intermediate layout — column padding tightens (e.g. FAQ → 40px)',
+      'Two-column sections may reflow before full mobile stacking',
+      'Last breakpoint before single-column mobile rules engage',
     ],
   },
   {
@@ -58,8 +68,19 @@ const breakpoints = [
       'Full multi-column layouts active',
       'Horizontal padding: clamp(24px, 6.25vw, 90px) → resolves to 90px at 1440px',
       'Scroll-reveal headline animation fully active',
-      'Card hover transforms (translateY -20px) enabled',
-      'WhyTherefore draggable carousel — full desktop experience',
+      'Card hover transforms enabled',
+    ],
+  },
+  {
+    name: 'Desktop LG',
+    width: 1920,
+    token: 'min-width: 1441px',
+    color: '#eef2f6',
+    stroke: '#4297FF',
+    changes: [
+      'Large-display target — content held to max-width containers',
+      'Horizontal padding stays clamped at 90px; gutters widen',
+      'No new column counts — layouts match Desktop, more breathing room',
     ],
   },
 ];
@@ -83,7 +104,7 @@ function DeviceFrame({ bp }) {
         width: displayW,
         height: displayH,
         border: `2px solid ${bp.stroke}`,
-        borderRadius: bp.width <= 768 ? 10 : 4,
+        borderRadius: 0,
         background: bp.color,
         position: 'relative',
         display: 'flex',
@@ -92,14 +113,14 @@ function DeviceFrame({ bp }) {
       }}>
         {/* Simulated content lines */}
         <div style={{ padding: bp.width <= 480 ? '6px 4px' : '8px 6px', display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <div style={{ height: 4, background: bp.stroke, borderRadius: 2, opacity: 0.6, width: '70%' }} />
-          <div style={{ height: 3, background: bp.stroke, borderRadius: 2, opacity: 0.3, width: '90%' }} />
-          <div style={{ height: 3, background: bp.stroke, borderRadius: 2, opacity: 0.3, width: '80%' }} />
+          <div style={{ height: 4, background: bp.stroke, borderRadius: 0, opacity: 0.6, width: '70%' }} />
+          <div style={{ height: 3, background: bp.stroke, borderRadius: 0, opacity: 0.3, width: '90%' }} />
+          <div style={{ height: 3, background: bp.stroke, borderRadius: 0, opacity: 0.3, width: '80%' }} />
           {bp.width > 480 && (
             <div style={{ display: 'flex', gap: 3, marginTop: 4 }}>
-              <div style={{ flex: 1, height: 20, background: bp.stroke, opacity: 0.15, borderRadius: 2 }} />
-              {bp.width > 768 && <div style={{ flex: 1, height: 20, background: bp.stroke, opacity: 0.15, borderRadius: 2 }} />}
-              {bp.width > 768 && <div style={{ flex: 1, height: 20, background: bp.stroke, opacity: 0.15, borderRadius: 2 }} />}
+              <div style={{ flex: 1, height: 20, background: bp.stroke, opacity: 0.15, borderRadius: 0 }} />
+              {bp.width > 768 && <div style={{ flex: 1, height: 20, background: bp.stroke, opacity: 0.15, borderRadius: 0 }} />}
+              {bp.width > 768 && <div style={{ flex: 1, height: 20, background: bp.stroke, opacity: 0.15, borderRadius: 0 }} />}
             </div>
           )}
         </div>
@@ -141,9 +162,10 @@ export const Default = {
       <span style={sectionLabel}>Overview</span>
       <hr style={divider} />
       <p style={{ fontSize: 14, color: 'rgba(18,18,18,0.6)', lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
-        The design system uses two primary breakpoints applied consistently across all pattern components.
+        The design system defines five breakpoints applied consistently across all pattern components.
         Breakpoints are written as <code style={{ fontFamily: 'Roobert Mono, monospace', fontSize: 12, background: '#f2f2f2', padding: '1px 5px', borderRadius: 3 }}>@media (max-width: …)</code> rules
         inside each component's CSS file. There are no shared breakpoint tokens — viewport queries live in the component.
+        Each pattern story exposes these same five sizes (Mobile SM, Mobile, Tablet, Desktop, Desktop LG) both as sidebar entries and in the viewport toolbar.
       </p>
 
       {/* Visual frames */}
@@ -181,15 +203,16 @@ export const Default = {
       <hr style={divider} />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 680 }}>
         {[
-          { pattern: 'Hero',                   mobile: '1-col, media hidden',      desktop: '2-col, content + media' },
-          { pattern: 'HeroStack',              mobile: '1-col, stacked',           desktop: '2-col, headline + card' },
-          { pattern: 'FeatureStack',           mobile: '1-col, cards stacked',     desktop: '3-col equal cards grid' },
-          { pattern: 'LogoCarousel',           mobile: 'same — always full-width', desktop: 'full-width ticker' },
-          { pattern: 'Stats',                  mobile: 'h-scroll carousel + snap', desktop: '4-col equal distribution' },
-          { pattern: 'TestimonialsCarousel',   mobile: 'same layout, narrower',    desktop: 'full dark section' },
-          { pattern: 'WhyTherefore',           mobile: '85vw cards, no hover',     desktop: 'draggable carousel' },
+          { pattern: 'PillarHero',         mobile: '1-col, media below headline',  desktop: '2-col, content + media' },
+          { pattern: 'Opportunity',        mobile: '1-col stacked rows',            desktop: '2-col with sticky header' },
+          { pattern: 'WhatWeDo',           mobile: '1-col capability list',         desktop: 'multi-col capability grid' },
+          { pattern: 'CaseStudiesGrid',    mobile: '1-col tiles',                   desktop: 'multi-col editorial grid' },
+          { pattern: 'PlatformTabs',  mobile: 'h-scroll, narrower cards',      desktop: 'full-width horizontal scroller' },
+          { pattern: 'LogoWall',           mobile: 'fewer columns, tighter gaps',   desktop: 'full logo grid' },
+          { pattern: 'FAQ (inline)',       mobile: '1-col, eyebrow inline',         desktop: '2-col, eyebrow column + accordion' },
+          { pattern: 'TestimonialHero',    mobile: 'image stacks above copy',       desktop: 'sticky image + scrolling copy' },
         ].map(({ pattern, mobile, desktop }) => (
-          <div key={pattern} style={{ padding: '12px 16px', background: '#f9f9f9', borderRadius: 6 }}>
+          <div key={pattern} style={{ padding: '12px 16px', background: '#f9f9f9', borderRadius: 0 }}>
             <p style={{ fontFamily: 'Roobert, sans-serif', fontSize: 12, fontWeight: 500, color: '#121212', margin: '0 0 6px' }}>{pattern}</p>
             <p style={{ fontFamily: 'Roobert Mono, monospace', fontSize: 10, color: '#4297FF', margin: '0 0 2px' }}>≤768px: {mobile}</p>
             <p style={{ fontFamily: 'Roobert Mono, monospace', fontSize: 10, color: 'rgba(18,18,18,0.4)', margin: 0 }}>&gt;768px: {desktop}</p>

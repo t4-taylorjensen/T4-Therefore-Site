@@ -31,7 +31,7 @@
 .hero-headline {
   font-family: var(--font-display);
   font-size: var(--text-display);        /* 112px */
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: var(--leading-display);   /* 0.85 */
@@ -136,7 +136,7 @@
   height: calc(min(508px, 70%) * 682 / 508);
   left: min(116px, 16%);
   top: 12%;
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
   box-shadow:
     0px 8px 18px rgba(0,0,0,0.08),
     0px 33px 33px rgba(0,0,0,0.06),

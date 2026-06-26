@@ -20,11 +20,6 @@ const scale = [
   { token: '--space-12', value: '160px', label: 'space-12', note: 'Section top padding, large gaps' },
 ];
 
-const radii = [
-  { token: '--radius-sm', value: '5px',  note: 'Buttons, tags, profile photos' },
-  { token: '--radius-md', value: '16px', note: 'Case Study section inset' },
-];
-
 const sectionLabel = {
   fontFamily: 'Roobert Mono, monospace',
   fontSize: 10,
@@ -121,31 +116,6 @@ export const Default = {
         ))}
       </div>
 
-      {/* Border Radius */}
-      <span style={sectionLabel}>Border Radius</span>
-      <hr style={divider} />
-      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 48 }}>
-        {radii.map(r => (
-          <div key={r.token} style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
-            <div style={{
-              width: 80, height: 80,
-              background: '#f2f2f2',
-              border: '1px solid rgba(0,0,0,0.1)',
-              borderRadius: r.value,
-            }} />
-            <div>
-              <p style={{ fontFamily: 'Roobert Mono, monospace', fontSize: 12, color: '#121212', margin: 0 }}>{r.value}</p>
-              <p style={{ fontFamily: 'Roobert Mono, monospace', fontSize: 10, color: 'rgba(18,18,18,0.35)', letterSpacing: '0.5px', margin: '2px 0 0' }}>
-                var({r.token})
-              </p>
-              <p style={{ fontFamily: 'Roobert, sans-serif', fontSize: 12, color: 'rgba(18,18,18,0.45)', margin: '2px 0 0' }}>
-                {r.note}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Layout Tokens */}
       <span style={sectionLabel}>Layout Tokens</span>
       <hr style={divider} />
@@ -170,7 +140,7 @@ export const Default = {
       <p style={{ fontSize: 13, color: 'rgba(18,18,18,0.5)', marginBottom: 16 }}>
         Most full-width sections follow this padding convention:
       </p>
-      <div style={{ background: '#f2f2f2', borderRadius: 8, padding: 24, marginBottom: 40, fontFamily: 'Roobert Mono, monospace', fontSize: 12, lineHeight: 2, color: '#121212' }}>
+      <div style={{ background: '#f2f2f2', borderRadius: 0, padding: 24, marginBottom: 40, fontFamily: 'Roobert Mono, monospace', fontSize: 12, lineHeight: 2, color: '#121212' }}>
         padding-top: var(--space-12);    <span style={{ color: 'rgba(18,18,18,0.4)' }}>/* 160px */</span><br />
         padding-bottom: var(--space-11); <span style={{ color: 'rgba(18,18,18,0.4)' }}>/* 120px */</span><br />
         padding-left: var(--space-10);   <span style={{ color: 'rgba(18,18,18,0.4)' }}>/* 90px — or var(--padding-x) */</span><br />

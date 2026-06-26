@@ -1,0 +1,60 @@
+/* ═══════════════════════════════════════
+   AI CALLOUT
+═══════════════════════════════════════ */
+.ai-callout {
+  background: var(--color-bg-page);
+  padding: clamp(80px, 10vw, 130px) var(--padding-x);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ai-callout-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: center;
+}
+
+.ai-callout-media {
+  position: relative;
+}
+
+.ai-callout-screen {
+  position: relative;
+  aspect-ratio: 16 / 12;
+  background: var(--color-ink-deepest);
+  overflow: hidden;
+}
+
+.ai-callout-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.ai-callout-headline {
+  font-family: var(--font-primary);
+  font-size: clamp(22px, 2.6vw, 36px);
+  font-weight: var(--fw-regular);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.ai-callout-body {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+/* CTA uses the shared BtnLink `btn-link--compact` variant (see global.css). */
+
+@media (max-width: 1024px) {
+  .ai-callout-inner {
+    grid-template-columns: 1fr;
+  }
+}

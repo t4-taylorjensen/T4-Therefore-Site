@@ -32,7 +32,7 @@
   left: 90px;
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--color-ink);
@@ -170,7 +170,7 @@
 .pc-stat-number {
   font-family: 'ABC Gravity Normal', sans-serif;
   font-size: clamp(160px, 30vw, 440px);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 0.82;
   letter-spacing: -0.04em;
   color: #fff;
@@ -186,7 +186,7 @@
 .pc-stat-label {
   font-family: var(--font-display);
   font-size: clamp(22px, 3.4vw, 48px);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 0.9;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -204,7 +204,7 @@
 .pc-headline {
   font-family: var(--font-display);
   font-size: clamp(56px, 12vh, 160px);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 0.88;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -241,7 +241,7 @@
 .pc-list-name {
   font-family: var(--font-display);
   font-size: clamp(44px, 7.5vw, 108px);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -311,7 +311,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--color-border-medium);
+  background: var(--color-border);
 }
 
 .hp-case-screen-main {
@@ -334,7 +334,7 @@
   right: 16px;
   font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ink-muted);

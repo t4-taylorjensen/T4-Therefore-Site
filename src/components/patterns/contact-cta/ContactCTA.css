@@ -1,344 +1,259 @@
-/* ─────────────────────────────────────────
-   CONTACT CTA — Component Styles
-   Keyframes: shader-drift defined locally.
-   nudge-right comes from global animations.css.
-───────────────────────────────────────── */
-
-/* ── Local keyframe: shader blob drift ── */
-@keyframes shader-drift {
-  0%, 100% { opacity: 0.45; transform: scale(1)    translate(0,    0);   }
-  33%       { opacity: 0.40; transform: scale(1.06) translate(2%, -3%);  }
-  66%       { opacity: 0.50; transform: scale(0.96) translate(-2%, 2%);  }
+/* ═══════════════════════════════════════
+   LET'S TALK CTA — solid ink, full-bleed
+   (no inset card, no rounded corners, flush
+   to the viewport edges). White text. Eyebrow
+   + headline top, a compound photo + name +
+   CTA mini contact card pinned bottom-right.
+   Content fades / rises into view on scroll.
+═══════════════════════════════════════ */
+.ltc-section {
+  position: relative;
+  background: var(--color-ink);
+  padding: 30px;
 }
 
-/* ── Section ── */
-.cta-section {
-  background: var(--color-bg-page);
-  padding: var(--space-10) var(--space-6);
+.ltc-inner {
+  position: relative;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr clamp(360px, 30vw, 440px);
+  grid-template-rows: 1fr auto;
+  column-gap: var(--space-8);
+  min-height: clamp(620px, 92vh, 940px);
+  opacity: 0;
+  transform: translateY(56px);
+  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Card ── */
-.cta-card {
-  background: var(--color-bg-dark);
-  overflow: hidden;
+/* headline bottom-left in the upper row */
+.ltc-headline-wrap {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
 }
 
-/* ── Shader ── */
-.cta-shader {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* ── Card inner ── */
-.cta-inner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: var(--space-6);
-}
-
-/* ─────────────────────────────────────────
-   LEFT PANEL
-───────────────────────────────────────── */
-.cta-left {
-  width: 459px;
-  flex-shrink: 0;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-6);
-}
-
-.cta-title-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.cta-title-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.cta-headline {
-  font-family: var(--font-primary);
-  font-size: 55px;
-  font-weight: 400;
-  line-height: 1;
-  color: var(--color-text-on-dark);
-  margin: 0;
-}
-
-/* ── Buttons ── */
-.cta-btn-list {
-  display: flex;
-  gap: var(--space-3);
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* ── Profile card ── */
-.cta-profile {
-  display: flex;
-  gap: var(--space-6);
-  align-items: flex-start;
-}
-
-.cta-profile-photo {
-  width: 62px;
-  height: 62px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  flex-shrink: 0;
-  box-shadow: var(--shadow-blue-soft);
-}
-
-.cta-profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  justify-content: center;
+/* card column spans the upper row; the card sticks while it scrolls */
+.ltc-aside {
+  grid-column: 2;
+  grid-row: 1;
   align-self: stretch;
 }
-
-.cta-profile-name {
-  font-family: var(--font-primary);
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--color-text-on-dark);
-  line-height: var(--leading-normal);
-  margin: 0;
+.ltc-aside .ltc-contact {
+  position: sticky;
+  top: clamp(90px, 14vh, 150px);
+}
+.ltc-section.is-visible .ltc-inner {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.cta-profile-role {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 400;
-  color: var(--color-text-on-dark);
-  letter-spacing: var(--tracking-wider);
-  line-height: 1;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-/* ─────────────────────────────────────────
-   RIGHT PANEL — form
-───────────────────────────────────────── */
-.cta-form-panel {
-  flex: 0 1 740px;
-  background: var(--color-white);
-  padding: var(--space-8);
-}
-
-.cta-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-7);
-}
-
-.cta-fields {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
-
-.cta-field-row {
-  display: flex;
-  gap: var(--space-7);
-  align-items: flex-start;
-}
-
-.cta-field {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-}
-
-.cta-field-label {
+.ltc-label {
+  position: absolute;
+  top: 0;
+  left: 0;
   font-family: var(--font-mono);
   font-size: var(--text-mono);
-  font-weight: 400;
-  color: var(--color-ink);
-  letter-spacing: var(--tracking-wider);
+  font-weight: var(--fw-regular);
   line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.cta-input {
-  height: 60px;
-  padding: 0 20px;
-  background: var(--color-white);
-  border: 1px solid var(--color-border-medium);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-primary);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-ink);
-  outline: none;
-  width: 100%;
-  transition:
-    border-color 0.15s ease,
-    box-shadow   0.15s ease;
-}
-
-.cta-input::placeholder {
-  color: var(--color-ink-subtle);
-}
-
-.cta-input:focus {
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-blue-soft);
-}
-
-.cta-textarea {
-  display: block;
-  width: 100%;
-  padding: 20px 20px 60px;
-  background: var(--color-white);
-  border: 1px solid var(--color-border-medium);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-primary);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-ink);
-  line-height: 1.45;
-  outline: none;
-  resize: none;
-  min-height: 111px;
-  transition:
-    border-color 0.15s ease,
-    box-shadow   0.15s ease;
-}
-
-.cta-textarea::placeholder {
-  color: var(--color-ink-subtle);
-}
-
-.cta-textarea:focus {
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-blue-soft);
-}
-
-.cta-submit {
-  height: 71px;
-  width: 100%;
-  background: var(--color-ink);
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--duration-fast) ease;
-}
-
-.cta-submit:hover:not(:disabled) {
-  background: var(--color-accent);
-}
-
-.cta-submit:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.cta-submit span {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono-md);
-  font-weight: 400;
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--color-white);
-  line-height: 1;
 }
 
-/* ── Success state ── */
-.cta-success {
+.ltc-headline {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: clamp(50px, 5.8vw, 90px);
+  line-height: var(--leading-display);
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin: 0;
+}
+
+/* Stacked text links under the headline — each with a clean
+   hairline rule above it. On-dark; brighten + nudge on hover. */
+.ltc-links {
+  grid-column: 1 / -1;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  min-height: 400px;
-  justify-content: center;
+  margin-top: var(--space-8);
+  width: 100%;
 }
-
-.cta-success-label {
+.ltc-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
   font-family: var(--font-mono);
   font-size: var(--text-mono);
-  letter-spacing: var(--tracking-wider);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--color-ink-subtle);
-  margin: 0;
+  color: var(--color-text-on-dark-muted);
+  text-decoration: none;
+  transition: color 0.25s ease, border-top-color 0.25s ease;
+}
+button.ltc-link {
+  width: 100%;
+  background: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  cursor: pointer;
+  text-align: left;
+}
+/* Clip wrapper for the shared .flip-a / .flip-b motion (global.css);
+   the trigger sits on the link row. */
+.ltc-link-flip {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
+}
+.ltc-link:hover .flip-a { transform: translateY(-100%); }
+.ltc-link:hover .flip-b { transform: translateY(0); }
+.ltc-link svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translate(-6px, -6px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+.ltc-link:hover {
+  color: var(--color-white);
+  border-top-color: rgba(255, 255, 255, 0.55);
+}
+.ltc-link:hover svg { opacity: 1; transform: translate(0, 0); }
+
+/* Mini contact card — sits top-right on the headline's line. White so
+   it reads as a distinct surface against the solid black background.
+   Photo on the left; name pinned to its top edge and the CTA pinned to
+   its bottom edge in a column on the right. */
+.ltc-contact {
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-5);
+  background: var(--color-white);
+  border-radius: 0;
+  padding: var(--space-5);
 }
 
-.cta-success-msg {
+.ltc-contact-photo-btn {
+  position: relative;
+  width: 160px;
+  height: 168px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ltc-contact-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.3);
+  animation: ltc-ken-burns 14s ease-in-out infinite alternate;
+  transform-origin: 60% 30%;
+  transition: filter 0.4s ease;
+}
+.ltc-contact-photo-btn:hover .ltc-contact-photo {
+  filter: grayscale(0.1) saturate(0.85) brightness(0.78);
+}
+
+@keyframes ltc-ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ltc-contact-photo { animation: none; }
+}
+
+.ltc-contact-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ltc-contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ltc-contact-name {
   font-family: var(--font-primary);
-  font-size: var(--text-md);
-  font-weight: 400;
-  line-height: var(--leading-snug);
+  font-size: 14px;
+  line-height: 1.4;
   color: var(--color-ink);
   margin: 0;
+  max-width: 180px;
 }
 
-/* ─────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .cta-inner {
-    flex-direction: column;
-    gap: 0;
-  }
+@media (max-width: 900px) {
+  /* Trim the heavy 30px frame inset to a tighter side gutter. */
+  .ltc-section { padding: clamp(40px, 9vw, 60px) var(--space-5); }
 
-  .cta-left {
-    width: 100%;
-    align-self: auto;
-    gap: var(--space-8);
+  /* Stack on small tablets + phones (was only firing at 700px, so small
+     tablets kept the 2-col / 92vh-tall desktop grid — that left the
+     label stranded at the top and the headline pinned to the bottom of a
+     huge empty box, which read as "missing content"). Collapse to a
+     single content-height column. */
+  .ltc-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    min-height: 0;
+    row-gap: var(--space-8);
   }
-
-  .cta-form-panel {
-    flex: none;
-    width: 100%;
+  /* Let the label flow at the top instead of absolutely overlapping the
+     stacked headline. */
+  .ltc-label {
+    position: static;
+    margin-bottom: var(--space-5);
   }
+  .ltc-headline-wrap {
+    align-self: start;
+  }
+  /* grid-row:auto so the base row:1 / row:1 / row:2 placements don't
+     pile the headline + card into the same cell once stacked. */
+  .ltc-headline-wrap,
+  .ltc-aside,
+  .ltc-links {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .ltc-aside .ltc-contact { position: static; }
+  /* row-gap already separates the links block — drop the extra top margin
+     so it isn't double-spaced. */
+  .ltc-links { margin-top: 0; }
 }
 
-@media (max-width: 768px) {
-  .cta-section {
-    padding: var(--space-5);
+@media (max-width: 700px) {
+  /* Keep the desktop card layout — photo left, name + Book a Call right —
+     rather than wrapping the photo onto its own row. Let the photo flex
+     down so the two columns always fit side by side. */
+  .ltc-contact {
+    width: 100%;
+    max-width: 460px;
+    gap: var(--space-4);
   }
-
-  .cta-inner {
-    padding: var(--space-5);
+  .ltc-contact-photo-btn {
+    width: clamp(116px, 34vw, 160px);
+    height: auto;
+    aspect-ratio: 160 / 168;
   }
-
-  .cta-left {
-    padding: var(--space-5);
-  }
-
-  .cta-headline {
-    font-size: clamp(32px, 7vw, 55px);
-  }
-
-  .cta-form-panel {
-    padding: var(--space-6);
-  }
-
-  .cta-field-row {
-    flex-direction: column;
+  /* Group the name + CTA together instead of stretching them to the
+     photo's top and bottom edges (which left an empty gap between). */
+  .ltc-contact-col {
+    justify-content: center;
     gap: var(--space-5);
-  }
-}
-
-/* ─────────────────────────────────────────
-   REDUCED MOTION
-───────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .cta-shader {
-    animation: none !important;
   }
 }

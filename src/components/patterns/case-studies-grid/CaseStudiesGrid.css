@@ -1,0 +1,162 @@
+/* ═══════════════════════════════════════
+   CASE STUDIES GRID
+   N-col card grid, flush. Image fills tile,
+   info row tracks cursor on hover.
+═══════════════════════════════════════ */
+.csg-section {
+  position: relative;
+  background: var(--color-bg-page);
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.csg-section::before,
+.csg-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border);
+  z-index: 1;
+}
+.csg-section::before { left: 30px; }
+.csg-section::after  { right: 30px; }
+
+.csg-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+
+.csg-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(20px, 2.5vw, 32px);
+  padding-top: clamp(96px, 12vw, 170px);
+  padding-bottom: clamp(96px, 12vw, 170px);
+}
+
+.csg-headline {
+  font-family: var(--font-display);
+  font-size: clamp(50px, 5.8vw, 90px);
+  font-weight: var(--fw-semibold);
+  line-height: var(--leading-display);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* CTA uses the shared BtnLink `btn-link--compact` variant (see global.css). */
+
+/* Flush triptych — no gap, inset to sit flush with the 30px guides */
+.csg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 0 30px;
+}
+
+.csg-tile {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-ink-deepest);
+  cursor: pointer;
+}
+
+.csg-media { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.csg-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  filter: saturate(0.9);
+}
+.csg-tile:hover .csg-media img {
+  transform: scale(1.05);
+  filter: saturate(0.75) brightness(0.75);
+}
+
+/* Info row — hidden by default. On hover it tracks the cursor's vertical
+   position within the tile, including while the page scrolls beneath it. */
+.csg-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.csg-info.is-active {
+  opacity: 1;
+}
+
+.csg-info-title {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--color-white);
+  margin: 0;
+}
+.csg-info-discover {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  line-height: 1;
+}
+
+/* Mobile rail inset — match the footer's frame (it drops from 30px to
+   var(--space-5)=20px at this same breakpoint). Move the grid in with
+   the rails so the tiles stay flush against them. */
+@media (max-width: 768px) {
+  .csg-section::before { left: var(--space-5); }
+  .csg-section::after  { right: var(--space-5); }
+  .csg-grid { padding: 0 var(--space-5); }
+}
+
+@media (max-width: 640px) {
+  .csg-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small tablet / mobile (and any touch device): there's no reliable
+   hover, so stop tracking the cursor and just park the info row as a
+   clean caption bar pinned to the bottom of each tile, always visible.
+   The !important beats the inline `top` that the JS hover-tracker may
+   have set on a narrow desktop window. */
+@media (max-width: 900px), (hover: none) {
+  .csg-info {
+    top: auto !important;
+    bottom: 0;
+    transform: none !important;
+    opacity: 1;
+    align-items: flex-end;
+    justify-content: center;       /* centre the client name */
+    padding: 16px 16px 18px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  }
+  /* "(DISCOVER)" is a hover affordance — with no hover here it's just
+     noise. Show the client name alone, centred. */
+  .csg-info-discover { display: none; }
+  .csg-info-title { font-size: 15px; text-align: center; }
+}

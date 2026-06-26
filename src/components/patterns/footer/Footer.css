@@ -7,7 +7,7 @@
 
 .footer-section {
   background: var(--color-bg-page);
-  border-top: 1px solid var(--color-border-medium);   /* rgba(0,0,0,0.15) */
+  border-top: 1px solid var(--color-border);   /* rgba(0,0,0,0.15) */
   padding: 0 var(--space-6);                           /* 0 30px */
   overflow-x: clip;
 }
@@ -18,8 +18,8 @@
   display: flex;
   align-items: stretch;
   min-height: 500px;
-  border-left:  1px solid var(--color-border-medium);
-  border-right: 1px solid var(--color-border-medium);
+  border-left:  1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
 }
 
 /* ─────────────────────────────────────────
@@ -28,12 +28,14 @@
 
 .footer-left {
   width: 798px;
-  flex-shrink: 0;
+  max-width: 60%;
+  flex-shrink: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: var(--space-6);                             /* 30px */
-  border-right: 1px solid var(--color-border-medium);
+  border-right: 1px solid var(--color-border);
 }
 
 /* ── About block ── */
@@ -47,7 +49,7 @@
 .footer-about-text {
   font-family: var(--font-primary);
   font-size: var(--text-body-md);                      /* 16px */
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: 1.8;
   color: var(--color-ink);
   max-width: 427px;
@@ -80,7 +82,7 @@
 .footer-cta-label {
   font-family: var(--font-mono);
   font-size: var(--text-mono-md);                      /* 14px */
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: var(--tracking-wide);                /* 0.5px */
   text-transform: uppercase;
   line-height: 1;
@@ -116,10 +118,11 @@
 
 .footer-right {
   flex: 1;
+  min-width: 0;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto;
-  column-gap: 90px;
+  column-gap: clamp(40px, 6vw, 90px);
   padding: var(--space-6);                             /* 30px */
 }
 
@@ -150,7 +153,7 @@
 .footer-nav-col li a {
   font-family: var(--font-primary);
   font-size: var(--text-body-sm);                      /* 15px */
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: 1;
   color: var(--color-ink);
   text-decoration: none;
@@ -168,6 +171,7 @@
   grid-row: 2;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: var(--space-6);                                 /* 30px */
   align-self: end;
   padding-top: var(--space-6);
@@ -176,7 +180,7 @@
 .footer-legal a {
   font-family: var(--font-mono);
   font-size: var(--text-mono);                         /* 11px */
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: var(--tracking-wider);               /* 1px */
   text-transform: uppercase;
   color: var(--color-gray-300);
@@ -193,28 +197,57 @@
    RESPONSIVE
 ───────────────────────────────────────── */
 
+/* Once the footer stacks (≤1024) apply the full clean-up — not just at
+   ≤768. Between 768-1024 it was still the boxed desktop frame: rails on,
+   30px gutter, 52px wordmark crammed against the button by the 500px
+   min-height's space-between. Drop the frame, the min-height, and the
+   double inset so it reads as simple stacked sections at every size. */
 @media (max-width: 1024px) {
+  .footer-section {
+    padding: 0;
+  }
   .footer-frame {
     flex-direction: column;
+    border-left: none;
+    border-right: none;
+    min-height: 0;
   }
 
   .footer-left {
     width: auto;
+    max-width: none;
     border-right: none;
-    border-bottom: 1px solid var(--color-border-medium);
+    border-bottom: 1px solid var(--color-border);
+    /* short copy sits 20px below the section's top divider line */
+    padding: var(--space-5) var(--space-5) var(--space-7);
+    /* clear separation between the CTA button and the wordmark */
+    gap: var(--space-11);
   }
-}
-
-@media (max-width: 768px) {
-  .footer-section {
-    padding: 0 var(--space-5);                         /* 0 20px */
+  .footer-about {
+    gap: var(--space-5);
+  }
+  .footer-logo-img {
+    height: 40px;
   }
 
   .footer-right {
-    column-gap: var(--space-8);                        /* 60px */
+    padding: var(--space-7) var(--space-5) var(--space-8);
+    column-gap: var(--space-6);
+    row-gap: var(--space-8);
   }
+  .footer-nav-col {
+    gap: var(--space-4);
+  }
+  .footer-legal {
+    padding-top: var(--space-7);
+    gap: var(--space-4) var(--space-6);
+  }
+}
 
-  .footer-logo-img {
-    height: 36px;
+@media (max-width: 420px) {
+  .footer-left,
+  .footer-right {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
   }
 }

@@ -1,107 +1,73 @@
 import { useState, useEffect, useRef } from 'react';
 import './Nav.css';
 import thereforeLogo from '../../ui/brand assets/therefore-logo.svg';
-import FlipLink      from '../../ui/FlipLink';
-import { BtnSecondary, IconCornerDownRight } from '../../ui/Button/Button';
+import { BtnSecondary, BtnDark, IconCornerDownRight } from '../../ui/Button/Button';
 
-const NAV_LINKS = ['CMS & Commerce', 'Digital Platforms', 'AI'];
+const NAV_LINKS = ['CMS', 'Commerce', 'Platforms', 'AI'];
 
-const MENU = {
-  main: ['CMS & Commerce', 'Digital Platforms', 'AI Solutions'],
-  discover: [
-    ['Work', 'Insights', 'About'],
-    ['Culture', 'Insights', 'Contact'],
-  ],
-  contact: ['Send a message', 'hello@therefore.ca'],
-};
+const LINKS = [
+  'Capabilities',
+  'Insights',
+  'Culture',
+  'Work',
+  'Contact',
+];
 
 // ─── Icons ───────────────────────────────────────────────────
 
-function IconChevron() {
+function IconPlus() {
   return (
-    <svg width="6" height="6" viewBox="0 0 6 6" fill="none" aria-hidden="true">
-      <path d="M1 2L3 4L5 2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+    <svg className="plus-icon" width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+      <line x1="0" y1="5.5" x2="11" y2="5.5" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round"/>
+      <line x1="5.5" y1="0" x2="5.5" y2="11" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round"/>
     </svg>
   );
 }
 
-function IconClose() {
+// Solid blue square, no icon, no radius
+function Sq({ size = 8 }) {
   return (
-    <svg className="close-svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <path className="close-line close-line--a" d="M0.541016 16.5184L15.8457 0.518434" stroke="currentColor" strokeWidth="1.5"/>
-      <path className="close-line close-line--b" d="M1.23633 0.518433L16.541 16.5184" stroke="currentColor" strokeWidth="1.5"/>
+    <svg width={size} height={size} viewBox="0 0 8 8" fill="none" aria-hidden="true">
+      <rect width="8" height="8" fill="#4297FF"/>
     </svg>
   );
 }
-
-function IconBurger({ open }) {
-  return (
-    <span className={`burger-icon${open ? ' is-open' : ''}`} aria-hidden="true">
-      <span className="burger-line burger-line--top" />
-      <span className="burger-line burger-line--bottom" />
-    </span>
-  );
-}
-
 
 function IconInstagram() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <g clipPath="url(#ig-clip)">
-        <path d="M10 1.80078C12.6719 1.80078 12.9883 1.8125 14.0391 1.85937C15.0156 1.90234 15.543 2.06641 15.8945 2.20313C16.3594 2.38281 16.6953 2.60156 17.043 2.94922C17.3945 3.30078 17.6094 3.63281 17.7891 4.09766C17.9258 4.44922 18.0898 4.98047 18.1328 5.95312C18.1797 7.00781 18.1914 7.32422 18.1914 9.99219C18.1914 12.6641 18.1797 12.9805 18.1328 14.0313C18.0898 15.0078 17.9258 15.5352 17.7891 15.8867C17.6094 16.3516 17.3906 16.6875 17.043 17.0352C16.6914 17.3867 16.3594 17.6016 15.8945 17.7813C15.543 17.918 15.0117 18.082 14.0391 18.125C12.9844 18.1719 12.668 18.1836 10 18.1836C7.32813 18.1836 7.01172 18.1719 5.96094 18.125C4.98438 18.082 4.45703 17.918 4.10547 17.7813C3.64063 17.6016 3.30469 17.3828 2.95703 17.0352C2.60547 16.6836 2.39063 16.3516 2.21094 15.8867C2.07422 15.5352 1.91016 15.0039 1.86719 14.0313C1.82031 12.9766 1.80859 12.6602 1.80859 9.99219C1.80859 7.32031 1.82031 7.00391 1.86719 5.95312C1.91016 4.97656 2.07422 4.44922 2.21094 4.09766C2.39063 3.63281 2.60938 3.29688 2.95703 2.94922C3.30859 2.59766 3.64063 2.38281 4.10547 2.20313C4.45703 2.06641 4.98828 1.90234 5.96094 1.85937C7.01172 1.8125 7.32813 1.80078 10 1.80078ZM10 0C7.28516 0 6.94531 0.0117187 5.87891 0.0585938C4.81641 0.105469 4.08594 0.277344 3.45313 0.523438C2.79297 0.78125 2.23438 1.12109 1.67969 1.67969C1.12109 2.23438 0.78125 2.79297 0.523438 3.44922C0.277344 4.08594 0.105469 4.8125 0.0585938 5.875C0.0117188 6.94531 0 7.28516 0 10C0 12.7148 0.0117188 13.0547 0.0585938 14.1211C0.105469 15.1836 0.277344 15.9141 0.523438 16.5469C0.78125 17.207 1.12109 17.7656 1.67969 18.3203C2.23438 18.875 2.79297 19.2188 3.44922 19.4727C4.08594 19.7188 4.8125 19.8906 5.875 19.9375C6.94141 19.9844 7.28125 19.9961 9.99609 19.9961C12.7109 19.9961 13.0508 19.9844 14.1172 19.9375C15.1797 19.8906 15.9102 19.7188 16.543 19.4727C17.1992 19.2188 17.7578 18.875 18.3125 18.3203C18.8672 17.7656 19.2109 17.207 19.4648 16.5508C19.7109 15.9141 19.8828 15.1875 19.9297 14.125C19.9766 13.0586 19.9883 12.7188 19.9883 10.0039C19.9883 7.28906 19.9766 6.94922 19.9297 5.88281C19.8828 4.82031 19.7109 4.08984 19.4648 3.45703C19.2188 2.79297 18.8789 2.23438 18.3203 1.67969C17.7656 1.125 17.207 0.78125 16.5508 0.527344C15.9141 0.28125 15.1875 0.109375 14.125 0.0625C13.0547 0.0117188 12.7148 0 10 0Z" fill="currentColor"/>
-        <path d="M10 4.86328C7.16406 4.86328 4.86328 7.16406 4.86328 10C4.86328 12.8359 7.16406 15.1367 10 15.1367C12.8359 15.1367 15.1367 12.8359 15.1367 10C15.1367 7.16406 12.8359 4.86328 10 4.86328ZM10 13.332C8.16016 13.332 6.66797 11.8398 6.66797 10C6.66797 8.16016 8.16016 6.66797 10 6.66797C11.8398 6.66797 13.332 8.16016 13.332 10C13.332 11.8398 11.8398 13.332 10 13.332Z" fill="currentColor"/>
-        <path d="M16.5391 4.6601C16.5391 5.32416 16 5.85932 15.3398 5.85932C14.6758 5.85932 14.1406 5.32025 14.1406 4.6601C14.1406 3.99603 14.6797 3.46088 15.3398 3.46088C16 3.46088 16.5391 3.99994 16.5391 4.6601Z" fill="currentColor"/>
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <g clipPath="url(#ig-nav)">
+        <path d="M10 1.8C12.67 1.8 12.99 1.81 14.04 1.86C15.02 1.9 15.54 2.07 15.89 2.2C16.36 2.38 16.7 2.6 17.04 2.95C17.39 3.3 17.61 3.63 17.79 4.1C17.93 4.45 18.09 4.98 18.13 5.95C18.18 7.01 18.19 7.32 18.19 10C18.19 12.66 18.18 12.98 18.13 14.03C18.09 15.01 17.93 15.54 17.79 15.89C17.61 16.35 17.39 16.69 17.04 17.04C16.69 17.39 16.36 17.6 15.89 17.78C15.54 17.92 15.01 18.08 14.04 18.13C12.98 18.17 12.67 18.18 10 18.18C7.33 18.18 7.01 18.17 5.96 18.13C4.98 18.08 4.46 17.92 4.11 17.78C3.64 17.6 3.3 17.38 2.96 17.04C2.61 16.68 2.39 16.35 2.21 15.89C2.07 15.54 1.91 15 1.87 14.03C1.82 12.98 1.81 12.66 1.81 10C1.81 7.32 1.82 7.01 1.87 5.95C1.91 4.98 2.07 4.45 2.21 4.1C2.39 3.63 2.61 3.3 2.96 2.95C3.31 2.6 3.64 2.38 4.11 2.2C4.46 2.07 4.99 1.9 5.96 1.86C7.01 1.81 7.33 1.8 10 1.8ZM10 0C7.29 0 6.94.01 5.88.06C4.82.1 4.09.28 3.45.52C2.79.78 2.23 1.12 1.68 1.68C1.12 2.23.78 2.79.52 3.45C.28 4.09.1 4.81.06 5.88C.01 6.95 0 7.29 0 10C0 12.71.01 13.05.06 14.12C.1 15.18.28 15.91.52 16.55C.78 17.21 1.12 17.77 1.68 18.32C2.23 18.88 2.79 19.22 3.45 19.47C4.09 19.72 4.81 19.89 5.88 19.94C6.94 19.98 7.28 20 10 20C12.71 20 13.05 19.98 14.12 19.94C15.18 19.89 15.91 19.72 16.54 19.47C17.2 19.22 17.76 18.88 18.31 18.32C18.87 17.77 19.21 17.21 19.46 16.55C19.71 15.91 19.88 15.19 19.93 14.12C19.98 13.06 19.99 12.71 19.99 10C19.99 7.29 19.98 6.95 19.93 5.88C19.88 4.82 19.71 4.09 19.46 3.46C19.22 2.79 18.88 2.23 18.32 1.68C17.77 1.12 17.21.78 16.55.52C15.91.28 15.19.11 14.13.06C13.05.01 12.71 0 10 0Z" fill="currentColor"/>
+        <path d="M10 4.86C7.16 4.86 4.86 7.16 4.86 10C4.86 12.84 7.16 15.14 10 15.14C12.84 15.14 15.14 12.84 15.14 10C15.14 7.16 12.84 4.86 10 4.86ZM10 13.33C8.16 13.33 6.67 11.84 6.67 10C6.67 8.16 8.16 6.67 10 6.67C11.84 6.67 13.33 8.16 13.33 10C13.33 11.84 11.84 13.33 10 13.33Z" fill="currentColor"/>
+        <path d="M16.54 4.66C16.54 5.32 16 5.86 15.34 5.86C14.68 5.86 14.14 5.32 14.14 4.66C14.14 4 14.68 3.46 15.34 3.46C16 3.46 16.54 4 16.54 4.66Z" fill="currentColor"/>
       </g>
-      <defs><clipPath id="ig-clip"><rect width="20" height="20" fill="white"/></clipPath></defs>
+      <defs><clipPath id="ig-nav"><rect width="20" height="20" fill="white"/></clipPath></defs>
     </svg>
   );
 }
 
 function IconLinkedIn() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M18.5195 0H1.47656C0.660156 0 0 0.644531 0 1.44141V18.5547C0 19.3516 0.660156 20 1.47656 20H18.5195C19.3359 20 20 19.3516 20 18.5586V1.44141C20 0.644531 19.3359 0 18.5195 0ZM5.93359 17.043H2.96484V7.49609H5.93359V17.043ZM4.44922 6.19531C3.49609 6.19531 2.72656 5.42578 2.72656 4.47656C2.72656 3.52734 3.49609 2.75781 4.44922 2.75781C5.39844 2.75781 6.16797 3.52734 6.16797 4.47656C6.16797 5.42188 5.39844 6.19531 4.44922 6.19531ZM17.043 17.043H14.0781V12.4023C14.0781 11.2969 14.0586 9.87109 12.5352 9.87109C10.9922 9.87109 10.7578 11.0781 10.7578 12.3242V17.043H7.79688V7.49609H10.6406V8.80078H10.6797C11.0742 8.05078 12.043 7.25781 13.4844 7.25781C16.4883 7.25781 17.043 9.23438 17.043 11.8047V17.043Z" fill="currentColor"/>
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M18.52 0H1.48C.66 0 0 .64 0 1.44V18.55C0 19.35.66 20 1.48 20H18.52C19.34 20 20 19.35 20 18.56V1.44C20 .64 19.34 0 18.52 0ZM5.93 17.04H2.96V7.5H5.93V17.04ZM4.45 6.2C3.5 6.2 2.73 5.43 2.73 4.48C2.73 3.53 3.5 2.76 4.45 2.76C5.4 2.76 6.17 3.53 6.17 4.48C6.17 5.42 5.4 6.2 4.45 6.2ZM17.04 17.04H14.08V12.4C14.08 11.3 14.06 9.87 12.54 9.87C10.99 9.87 10.76 11.08 10.76 12.32V17.04H7.8V7.5H10.64V8.8H10.68C11.07 8.05 12.04 7.26 13.48 7.26C16.49 7.26 17.04 9.23 17.04 11.8V17.04Z" fill="currentColor"/>
     </svg>
   );
 }
 
 function IconTwitterX() {
   return (
-    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" aria-hidden="true">
-      <path d="M17.3263 0H20.6998L13.3297 8.47179L22 20H15.2112L9.89404 13.0082L3.80995 20H0.434432L8.31743 10.9385L0 0H6.96111L11.7674 6.39077L17.3263 0ZM16.1423 17.9692H18.0116L5.94539 1.9241H3.93946L16.1423 17.9692Z" fill="currentColor"/>
+    <svg width="14" height="14" viewBox="0 0 22 20" fill="none" aria-hidden="true">
+      <path d="M17.33 0H20.7L13.33 8.47L22 20H15.21L9.89 13.01L3.81 20H.43L8.32 10.94L0 0H6.96L11.77 6.39L17.33 0ZM16.14 17.97H18.01L5.95 1.92H3.94L16.14 17.97Z" fill="currentColor"/>
     </svg>
   );
 }
 
 function IconClutch() {
   return (
-    <svg width="19" height="20" viewBox="0 0 19 20" fill="none" aria-hidden="true">
-      <path d="M10.5271 6.24629e-06C11.0274 -0.000437743 11.4936 0.0227905 11.99 0.0687489C14.312 0.283705 16.5679 1.23261 18.3251 2.76294C18.445 2.86729 18.889 3.21276 18.9515 3.31584C18.9289 3.37596 18.6149 3.64547 18.5418 3.71493L16.7399 5.39659L16.0474 6.0444C15.9875 6.10035 15.6381 6.45048 15.5905 6.41595C15.3014 6.20638 15.0214 5.96443 14.7371 5.74841C13.7146 4.97134 12.4289 4.50717 11.1425 4.46344C8.30269 4.31492 5.61989 5.68112 4.90577 8.5999C4.54747 10.0603 4.78073 11.6025 5.5552 12.8931C6.37827 14.2368 7.68618 15.0564 9.20446 15.4159C10.991 15.8382 12.8735 15.5022 14.4013 14.4883C14.7645 14.2443 15.096 13.9374 15.4347 13.6603C15.4928 13.6128 15.534 13.5719 15.6004 13.5339C15.7056 13.6612 16.0287 13.9431 16.1679 14.0685C16.3351 14.2191 16.5427 14.4251 16.7096 14.5654C16.7445 14.6044 16.8227 14.6676 16.8667 14.7083C17.008 14.8404 17.1502 14.9715 17.2934 15.1014L18.4618 16.1727C18.6067 16.3053 18.8842 16.5455 19 16.6841C18.9013 16.7448 18.511 17.0958 18.407 17.1872C18.1376 17.426 17.8575 17.6524 17.5673 17.8655C15.8482 19.1067 13.8102 19.8364 11.6908 19.9696C8.60407 20.1731 5.63337 19.3625 3.28235 17.308C1.58446 15.8071 0.46751 13.7623 0.124999 11.5277C0.0781006 11.2363 0.041689 10.8086 0.0224008 10.5125C-0.153119 7.93484 0.708205 5.39351 2.41656 3.44852C4.17111 1.46035 6.82184 0.30258 9.44063 0.0739035C9.80551 0.0420446 10.1622 0.0239059 10.5271 6.24629e-06Z" fill="currentColor"/>
-      <path d="M10.5982 6.66009C11.6045 6.67198 12.509 7.01453 13.2271 7.72964C13.849 8.34451 14.1953 9.18298 14.1882 10.0554C14.1852 11.8805 12.5564 13.318 10.7685 13.3683C10.6999 13.3703 10.6306 13.3696 10.5619 13.3694C8.6997 13.377 7.02417 11.9896 6.97602 10.0775C6.93343 8.3854 8.261 7.01193 9.8822 6.71477C10.1086 6.67328 10.3681 6.66633 10.5982 6.66009Z" fill="currentColor"/>
+    <svg width="14" height="14" viewBox="0 0 19 20" fill="none" aria-hidden="true">
+      <path d="M10.527 0c.5 0 .967.023 1.463.069C14.312.284 16.568 1.233 18.325 2.763c.12.104.564.45.627.553-.023.06-.337.33-.41.399l-1.802 1.681-.692.648c-.06.056-.41.4-.457.366-.289-.21-.569-.45-.853-.666C13.715 4.971 12.429 4.507 11.143 4.464 8.303 4.315 5.62 5.681 4.906 8.6c-.358 1.46-.125 3.002.649 4.293.823 1.343 2.131 2.163 3.649 2.522 1.787.422 3.669.087 5.197-.927.363-.244.695-.55 1.033-.827.058-.048.1-.088.166-.126.105.127.428.41.567.533.168.151.375.357.542.497.035.04.113.103.157.143.141.132.283.263.426.393l1.168 1.072c.145.132.422.372.538.511-.099.06-.489.411-.593.503-.27.238-.55.465-.84.678-1.719 1.241-3.757 1.971-5.876 2.104-3.087.204-6.058-.607-8.409-2.661-1.698-1.501-2.815-3.546-3.157-5.78a13.7 13.7 0 0 1-.103-1.005C-.153 7.935.708 5.394 2.417 3.449 4.171 1.46 6.822.303 9.441.074 9.806.042 10.162.024 10.527 0Z" fill="currentColor"/>
+      <path d="M10.598 6.66c1.006.012 1.911.355 2.629 1.07.622.615.968 1.453.961 2.326-.003 1.825-1.632 3.262-3.42 3.312-.069.002-.138.001-.207.001-1.862.008-3.537-1.38-3.585-3.292-.043-1.692 1.285-3.066 2.906-3.363.226-.041.486-.048.716-.054Z" fill="currentColor"/>
     </svg>
-  );
-}
-
-// ─── Large display link with clean clip-path flip hover ───────
-// Avoids FlipLink's overflow:hidden which causes subpixel bleed
-// at large font sizes. Uses clip-path (GPU-composited) instead.
-function DisplayLink({ children, active, dimmed, delay, onClick }) {
-  return (
-    <a
-      href="#"
-      className={[
-        'nav-display-link',
-        active  ? 'is-active' : '',
-        dimmed  ? 'is-dimmed' : '',
-      ].filter(Boolean).join(' ')}
-      style={{ animationDelay: delay }}
-      onClick={onClick}
-      aria-current={active ? 'page' : undefined}
-    >
-      <span className="nav-display-link-a" aria-hidden="true">{children}</span>
-      <span className="nav-display-link-b" aria-hidden="true">{children}</span>
-      <span className="nav-display-link-sr">{children}</span>
-    </a>
   );
 }
 
@@ -111,35 +77,268 @@ function NavCta() {
       <span className="nav-cta-text">
         <span className="nav-cta-default nav-cta-desktop">Start a Project</span>
         <span className="nav-cta-default nav-cta-mobile">Start Project</span>
-        <span className="nav-cta-hover">Let's Chat</span>
+        <span className="nav-cta-hover">Let's Chat<IconCornerDownRight className="nav-cta-arrow" /></span>
       </span>
     </BtnSecondary>
   );
 }
 
+// ─── Shared link row ─────────────────────────────────────────
+// Square is width:0 by default; expands on hover/active to push text right.
+function PanelLink({ label, active, onClose, className = '' }) {
+  return (
+    <a
+      href="#"
+      className={['dp-link', active ? 'is-active' : '', className].filter(Boolean).join(' ')}
+      onClick={onClose}
+      aria-current={active ? 'page' : undefined}
+    >
+      <span className="dp-sq"><Sq /></span>
+      <span className="dp-label-flip">
+        <span className="dp-label" aria-hidden="true">{label}</span>
+        <span className="dp-label dp-label-b" aria-hidden="true">{label}</span>
+      </span>
+      <span className="dp-link-sr">{label}</span>
+    </a>
+  );
+}
+
+// ─── Social row ───────────────────────────────────────────────
+function Social({ className = '' }) {
+  return (
+    <div className={`dp-social ${className}`}>
+      <a href="#" className="dp-social-link" aria-label="Instagram"><IconInstagram /></a>
+      <a href="#" className="dp-social-link" aria-label="LinkedIn"><IconLinkedIn /></a>
+      <a href="#" className="dp-social-link" aria-label="X / Twitter"><IconTwitterX /></a>
+      <a href="#" className="dp-social-link" aria-label="Clutch"><IconClutch /></a>
+    </div>
+  );
+}
+
+// ─── Panel CTA — BtnDark scaled to fit the side column ───────
+function ContactCta({ onClose }) {
+  return (
+    <BtnDark as="a" href="#" icon={IconCornerDownRight} nudge="right" className="dp-side-cta" onClick={onClose}>
+      Contact Us
+    </BtnDark>
+  );
+}
+
+
+/* Shared right side — used by all panels */
+function PanelSide({ onClose }) {
+  return (
+    <div className="dp-side">
+      <div className="dp-side-body">
+        <span className="dp-eyebrow">Start a Project</span>
+        <ContactCta onClose={onClose} />
+      </div>
+      <Social />
+    </div>
+  );
+}
+
+function DropdownPanel({ activePage, onClose }) {
+  return (
+    <div className="dp dp-2">
+      <div className="dp-links">
+        {LINKS.map(l => (
+          <PanelLink key={l} label={l} active={l === activePage} onClose={onClose} />
+        ))}
+      </div>
+      <PanelSide onClose={onClose} />
+    </div>
+  );
+}
+
+// ─── Mobile menu — full-width panel, shown <=1100px ───────────
+function MobileMenu({ activePage, onClose, isOpen, isClosing, isCompact }) {
+  const panelClass = [
+    'mobile-menu',
+    isCompact ? 'is-enabled' : '',  // display:flex only in compact mode (see CSS note)
+    isOpen    ? 'is-open'    : '',
+    isClosing ? 'is-closing' : '',
+  ].filter(Boolean).join(' ');
+
+  return (
+    <div id="mobile-menu" className={panelClass} aria-hidden={!isOpen}>
+      <div className="mm-inner">
+        <div className="mm-section mm-section--primary">
+          {NAV_LINKS.map(l => (
+            <PanelLink key={l} label={l} active={l === activePage} onClose={onClose} className="mm-link-primary" />
+          ))}
+        </div>
+
+        <div className="mm-divider" />
+
+        <div className="mm-section mm-section--secondary">
+          {LINKS.map(l => (
+            <PanelLink key={l} label={l} active={l === activePage} onClose={onClose} className="mm-link-secondary" />
+          ))}
+        </div>
+
+        <div className="mm-foot">
+          <span className="mm-foot-eyebrow">Start a Project</span>
+          <div className="mm-foot-actions">
+            <ContactCta onClose={onClose} />
+            <Social />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 // ─── Nav ─────────────────────────────────────────────────────
 
-export default function Nav({ activePage = 'CMS & Commerce' }) {
-  const [phase, setPhase]   = useState('closed');
-  const closeTimerRef       = useRef(null);
+export default function Nav({ activePage = null, forceOpen = false }) {
+  const [phase, setPhase]       = useState(forceOpen ? 'open' : 'closed');
+  const [isCompact, setIsCompact] = useState(false);
+  const closeTimerRef        = useRef(null);
+  const hoverDelayRef        = useRef(null);
+  const headerRef            = useRef(null);
+  const linksMeasureRef      = useRef(null);
+  const logoRef               = useRef(null);
+  const ctaColRef             = useRef(null);
+  const [navTheme, setNavTheme] = useState('light');
 
   const isOpen    = phase === 'open';
   const isClosing = phase === 'closing';
 
+  // Frosted nav glass adapts to whatever's scrolled underneath it —
+  // sections can opt in via data-nav-theme="dark" on themselves.
+  useEffect(() => {
+    function evaluateTheme() {
+      const headerEl = headerRef.current;
+      if (!headerEl) return;
+      const rect = headerEl.getBoundingClientRect();
+      const probeX = window.innerWidth / 2;
+      const probeY = rect.bottom + 4;
+      const prevPE = headerEl.style.pointerEvents;
+      headerEl.style.pointerEvents = 'none';
+      const el = document.elementFromPoint(probeX, probeY);
+      headerEl.style.pointerEvents = prevPE;
+      const themed = el ? el.closest('[data-nav-theme]') : null;
+      setNavTheme(themed ? themed.dataset.navTheme : 'light');
+    }
+    evaluateTheme();
+    window.addEventListener('scroll', evaluateTheme, { passive: true });
+    window.addEventListener('resize', evaluateTheme);
+    return () => {
+      window.removeEventListener('scroll', evaluateTheme);
+      window.removeEventListener('resize', evaluateTheme);
+    };
+  }, []);
+
+  // Collapse to "Menu +" only once the primary links would actually
+  // overlap the centered logo — measured live, not a fixed breakpoint.
+  useEffect(() => {
+    const SAFETY      = 28;   // breathing room either side of the logo
+    const MIN_FULL_NAV = 1200; // keep the full menu visible down to this width
+
+    function recompute() {
+      const measureEl = linksMeasureRef.current;
+      const logoEl    = logoRef.current;
+      const ctaEl     = ctaColRef.current;
+      const headerEl  = headerRef.current;
+      if (!measureEl || !logoEl || !ctaEl || !headerEl) return;
+
+      const headerWidth = headerEl.getBoundingClientRect().width;
+      const logoRect    = logoEl.getBoundingClientRect();
+
+      // Bail on degenerate (pre-layout / pre-font) reads. On first paint
+      // and during HMR re-runs the rects can all be 0, and `0 + SAFETY > 0`
+      // evaluates as "overlap" — which silently flipped the bar to compact
+      // "Menu +" off garbage measurements and could stick there. Wait for
+      // a real layout before deciding anything.
+      if (!headerWidth || !logoRect.width || !measureEl.scrollWidth) return;
+
+      if (headerWidth >= MIN_FULL_NAV) {
+        setIsCompact(false);
+        return;
+      }
+
+      // Measure the links' intrinsic right edge as (start + scrollWidth)
+      // rather than reading the last child's rendered rect. In compact
+      // mode the measure box is clipped to width:0/visibility:hidden, so
+      // the child's rect collapses toward the start — making the reading
+      // depend on the very state it's deciding, which left the bar stuck
+      // in compact "Menu +" even at full width. scrollWidth reports the
+      // true content width regardless of the clip, so the decision is now
+      // stable and the full nav reliably returns when there's room.
+      const measureRect = measureEl.getBoundingClientRect();
+      // Include the "More" trigger that sits right after the measured
+      // links — it's the actual right-most item on the left side, so
+      // leaving it out let it slide over the centered logo before the
+      // bar ever collapsed. nextElementSibling is .nav-more-wrapper;
+      // its panel is position:absolute so offsetWidth is just the button.
+      const moreEl = measureEl.nextElementSibling;
+      const GAP = 24; // approx expanded gap between links and the trigger
+      const linksRight = measureRect.left + measureEl.scrollWidth
+        + (moreEl ? GAP + moreEl.offsetWidth : 0);
+
+      // Measure the CTA *button's* left edge, not the column's. The right
+      // column is flex:1 with the center logo taken out of flow, so the
+      // column box spans from the horizontal center to the right edge —
+      // its left edge sits right on top of the logo, making the old
+      // `ctaLeft < logoRect.right` test true at every width and forcing
+      // the bar permanently compact below the 1200px early-return. The
+      // button itself is justified hard right, so its left edge is the
+      // real thing that could collide with the logo.
+      const ctaContent = ctaEl.firstElementChild || ctaEl;
+      const ctaLeft    = ctaContent.getBoundingClientRect().left;
+
+      const overlapsLeft  = linksRight + SAFETY > logoRect.left;
+      const overlapsRight = ctaLeft - SAFETY < logoRect.right;
+      setIsCompact(overlapsLeft || overlapsRight);
+    }
+
+    recompute();
+    // Re-check once fonts swap in (custom font metrics differ from the
+    // fallback used on first paint, which can briefly misreport widths)
+    document.fonts?.ready?.then(recompute);
+    requestAnimationFrame(() => requestAnimationFrame(recompute));
+
+    const ro = new ResizeObserver(recompute);
+    [headerRef, linksMeasureRef, logoRef, ctaColRef].forEach((ref) => {
+      if (ref.current) ro.observe(ref.current);
+    });
+    window.addEventListener('resize', recompute);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', recompute);
+    };
+  }, []);
+
   function handleOpen() {
     clearTimeout(closeTimerRef.current);
+    clearTimeout(hoverDelayRef.current);
     setPhase('open');
   }
 
   function handleClose() {
+    if (forceOpen) return; // keep open in story mode
     setPhase('closing');
-    closeTimerRef.current = setTimeout(() => setPhase('closed'), 750);
+    closeTimerRef.current = setTimeout(() => setPhase('closed'), 380);
   }
 
-  useEffect(() => {
-    document.body.style.overflow = phase !== 'closed' ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [phase]);
+  // Hover-to-open is a mouse affordance only. On touch/pen, a tap
+  // synthesizes pointerenter → click → pointerleave; if hover drove
+  // open/close, that sequence opened then immediately closed the panel
+  // (so it read as "the dropdown won't open" on tablet/mobile). Gating
+  // hover to fine pointers leaves the click handler as the single,
+  // reliable toggle on touch — the dropdown now opens at every viewport.
+  function handleHoverEnter(e) {
+    if (e && e.pointerType && e.pointerType !== 'mouse') return;
+    clearTimeout(hoverDelayRef.current);
+    if (phase !== 'open') handleOpen();
+  }
+
+  function handleHoverLeave(e) {
+    if (e && e.pointerType && e.pointerType !== 'mouse') return;
+    hoverDelayRef.current = setTimeout(handleClose, 120);
+  }
 
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape' && phase !== 'closed') handleClose(); };
@@ -147,147 +346,91 @@ export default function Nav({ activePage = 'CMS & Commerce' }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [phase]);
 
-  useEffect(() => () => clearTimeout(closeTimerRef.current), []);
+  useEffect(() => () => {
+    clearTimeout(closeTimerRef.current);
+    clearTimeout(hoverDelayRef.current);
+  }, []);
 
-  const overlayClass = [
-    'nav-overlay',
+  const panelClass = [
+    'nav-panel',
     isOpen    ? 'is-open'    : '',
     isClosing ? 'is-closing' : '',
   ].filter(Boolean).join(' ');
 
+  const panelProps = { activePage, onClose: handleClose };
+
+  const moreLabel = isCompact ? 'Menu' : 'More';
+
   return (
-    <>
-      <header className="nav">
+    <div className="nav-root">
+      <header ref={headerRef} className={['nav', !activePage ? 'nav--no-active' : '', isCompact ? 'nav--compact' : '', navTheme === 'dark' ? 'nav--theme-dark' : ''].filter(Boolean).join(' ')}>
         <div className="nav-col nav-col--left">
-          <button
-            className="nav-burger"
-            type="button"
-            aria-expanded={phase !== 'closed'}
-            aria-controls="nav-overlay"
-            aria-label="Open menu"
-            onClick={handleOpen}
-          >
-            <IconBurger open={phase !== 'closed'} />
-          </button>
-          <nav className="nav-links" aria-label="Primary navigation">
-            {NAV_LINKS.map((label) => (
-              <a key={label} href="#" className="nav-link">{label}</a>
-            ))}
-            <button
-              className="nav-link nav-more"
-              type="button"
-              aria-expanded={phase !== 'closed'}
-              aria-controls="nav-overlay"
-              onClick={handleOpen}
+          <nav className={['nav-links', isCompact ? 'is-collapsed' : ''].filter(Boolean).join(' ')} aria-label="Primary navigation">
+            <div className="nav-links-measure" ref={linksMeasureRef} aria-hidden={isCompact || undefined}>
+              {NAV_LINKS.map((label) => (
+                <a
+                  key={label}
+                  href="#"
+                  tabIndex={isCompact ? -1 : undefined}
+                  className={['nav-link', label === activePage ? 'is-active' : ''].filter(Boolean).join(' ')}
+                  aria-current={label === activePage ? 'page' : undefined}
+                >
+                  <span className="nav-link-flip">
+                    <span className="nav-link-a" aria-hidden="true">{label}</span>
+                    <span className="nav-link-b" aria-hidden="true">{label}</span>
+                  </span>
+                  <span className="nav-link-sr">{label}</span>
+                </a>
+              ))}
+            </div>
+            <div
+              className="nav-more-wrapper"
+              onPointerEnter={handleHoverEnter}
+              onPointerLeave={handleHoverLeave}
             >
-              More <IconChevron />
-            </button>
+              <button
+                className="nav-link nav-more"
+                type="button"
+                aria-expanded={phase !== 'closed'}
+                aria-controls="nav-panel"
+                onClick={phase !== 'closed' ? handleClose : handleOpen}
+              >
+                <span className="nav-link-flip">
+                  <span className="nav-link-a" aria-hidden="true">{moreLabel}</span>
+                  <span className="nav-link-b" aria-hidden="true">{moreLabel}</span>
+                </span>
+                <span className="nav-link-sr">{moreLabel}</span>
+                <IconPlus />
+              </button>
+
+              {/* Panel — absolutely positioned below the More button */}
+              <div
+                id="nav-panel"
+                className={panelClass}
+                aria-hidden={phase === 'closed'}
+              >
+                <DropdownPanel {...panelProps} />
+              </div>
+            </div>
           </nav>
         </div>
 
         <div className="nav-col nav-col--center">
-          <img src={thereforeLogo} alt="Therefore" className="nav-logo" draggable="false" />
+          <img ref={logoRef} src={thereforeLogo} alt="Therefore" className="nav-logo" draggable="false" />
         </div>
 
-        <div className="nav-col nav-col--right">
+        <div className="nav-col nav-col--right" ref={ctaColRef}>
           <NavCta />
         </div>
       </header>
 
-      {/* ── Full-height overlay menu ── */}
-      <div id="nav-overlay" className={overlayClass} aria-hidden={phase === 'closed'}>
+      <MobileMenu activePage={activePage} onClose={handleClose} isOpen={isOpen} isClosing={isClosing} isCompact={isCompact} />
 
-        {/* Blue curtain that sweeps through on open and close */}
-        <div className="nav-overlay-curtain" aria-hidden="true" />
-
-        {/* Mirror nav bar */}
-        <div className="nav-overlay-bar">
-          <button className="nav-overlay-close" type="button" aria-label="Close menu" onClick={handleClose}>
-            <IconClose />
-          </button>
-          <img src={thereforeLogo} alt="Therefore" className="nav-logo" draggable="false" />
-          <NavCta />
-        </div>
-
-        {/* Body */}
-        <div className="nav-overlay-body">
-          <div className="nav-overlay-top">
-
-            {/* Left — huge display links */}
-            <div className="nav-overlay-main-links">
-              {MENU.main.map((label, i) => (
-                <div key={label} className="nav-overlay-main-link-row">
-                  <div className="nav-overlay-main-link-reveal">
-                    <div
-                      className="nav-overlay-main-link-rise"
-                      style={{ animationDelay: `${370 + i * 65}ms` }}
-                    >
-                      <DisplayLink
-                        active={label === activePage}
-                        dimmed={activePage && label !== activePage}
-                        delay={`${370 + i * 65}ms`}
-                        onClick={handleClose}
-                      >
-                        {label}
-                      </DisplayLink>
-                    </div>
-                  </div>
-                  {label === activePage && (
-                    <span className="nav-overlay-main-arrow">
-                      <span className="icon-nudge icon-nudge--right">
-                        <IconCornerDownRight />
-                      </span>
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Right — Discover section */}
-            <div className="nav-overlay-discover">
-              <span className="nav-overlay-label">Discover</span>
-              <div className="nav-overlay-discover-cols">
-                {MENU.discover.map((col, ci) => (
-                  <ul key={ci} className="nav-overlay-discover-col">
-                    {col.map((item) => (
-                      <li key={item}>
-                        <FlipLink href="#" className="nav-overlay-discover-item" onClick={handleClose}>
-                          {item}
-                        </FlipLink>
-                      </li>
-                    ))}
-                  </ul>
-                ))}
-              </div>
-            </div>
-
-          </div>
-
-          {/* Bottom — contact + social */}
-          <div className="nav-overlay-bottom">
-            <div className="nav-overlay-group">
-              <span className="nav-overlay-label">Contact</span>
-              <ul className="nav-overlay-contact">
-                {MENU.contact.map((item) => (
-                  <li key={item}>
-                    <FlipLink href="#" className="nav-overlay-contact-link">{item}</FlipLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="nav-overlay-group">
-              <span className="nav-overlay-label nav-overlay-label--social-desktop">Social</span>
-              <div className="nav-overlay-social">
-                <a href="#" className="nav-overlay-social-btn" aria-label="Instagram"><IconInstagram /></a>
-                <a href="#" className="nav-overlay-social-btn" aria-label="LinkedIn"><IconLinkedIn /></a>
-                <a href="#" className="nav-overlay-social-btn" aria-label="X / Twitter"><IconTwitterX /></a>
-                <a href="#" className="nav-overlay-social-btn" aria-label="Clutch"><IconClutch /></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+      <div
+        className={['nav-backdrop', phase !== 'closed' ? 'is-visible' : ''].filter(Boolean).join(' ')}
+        onClick={handleClose}
+        aria-hidden="true"
+      />
+    </div>
   );
 }

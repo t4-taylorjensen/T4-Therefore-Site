@@ -56,8 +56,8 @@ export const BtnSecondary = CtaBase('btn-secondary');
 /** Outline — transparent + border → dark fill on hover */
 export const BtnOutline   = CtaBase('btn-outline');
 
-/** Ghost — transparent + white border, white text · use on dark backgrounds */
-export const BtnGhost     = CtaBase('btn-ghost');
+/** Dark — black bg + white border → blue fill + black text on hover · use inside dark panels/dropdowns */
+export const BtnDark      = CtaBase('btn-dark');
 
 /** Link text button — no bg/border, muted white · use on dark backgrounds */
 export const BtnLink = forwardRef(function BtnLink(

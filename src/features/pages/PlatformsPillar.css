@@ -1,0 +1,8 @@
+/* ─────────────────────────────────────────
+   PLATFORMS PILLAR
+   A thin composition of Pattern components
+   (src/components/patterns/*) — see PlatformsPillar.jsx.
+   Section-specific styling lives alongside each
+   component; this file only holds page-level overrides
+   that don't belong in a shared component.
+───────────────────────────────────────── */

@@ -2,12 +2,10 @@ import Hero from '../../../patterns/hero/Hero';
 import AITravelProfiles    from './ai/AITravelProfiles';
 import AITranslation       from './ai/AITranslation';
 import AIEditorialAssistant from './ai/AIEditorialAssistant';
-import AIAssetGeneration   from './ai/AIAssetGeneration';
-import AITravelIntelligence from './ai/AITravelIntelligence';
 import AICommandCenter      from './ai/AICommandCenter';
 
 export default {
-  title: 'Patterns/Hero/AI',
+  title: 'Archived/Patterns/Hero/AI',
   parameters: { layout: 'fullscreen' },
 };
 
